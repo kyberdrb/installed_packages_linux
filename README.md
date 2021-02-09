@@ -1,3 +1,5 @@
+* shellcheck - shell script analysis tool and syntax checker
+
 * git - version control system
     - `~/.gitconfig` [[1]](https://stackoverflow.com/questions/5519007/how-do-i-make-git-merges-default-be-no-ff-no-commit/9252042#9252042)
     
@@ -120,7 +122,15 @@
         
             Source: https://discuss.atom.io/t/atom-doesnt-open-file-on-single-click-in-tree-view/27902/9
         - Edit -- Preferences -- Themes -- UI Theme: Atom Light; Syntax Theme: Atom Light
-        - Edit -- Preferences -- Editor -- disable _Atomic Soft Tabs_, Font Family: **Source Code Pro** (because of the clear distinction among the characters 'iI1l' 'oO0 - especially the zero :)' 'sS5' 'A4' 'g9' 'B8' ''Z2), Menlo, Consolas, DejaVu Sans Mono, monospace, Tab Length: 4, Tab Type: soft
+        - Edit -- Preferences -- Editor -- disable _Atomic Soft Tabs_
+            - Font Family: `Source Code Pro, Menlo, Consolas, DejaVu Sans Mono, monospace`
+                - because these monospace fonts have clearly distinguishable among the characters 'iI1l' 'oO0 - especially the zero :)' 'sS5' 'A4' 'g9' 'B8' ''Z2
+            - Tab Length: 4  
+            - Tab Type: soft
+        
+            For the list of all avaliable fonts, execue this command in terminal
+                
+                fc-list | cut -d ':' -f2 | cut -d' ' -f1 --complement | less
         
             Source: https://discuss.atom.io/t/how-do-you-use-spaces-instead-of-tabs/64730/2
         - Disable spell-cheking (it disturbs me when almost everything is red-squiggly-underlined)
@@ -151,11 +161,20 @@
         - AsciiDoc Preview: Ctrl-Shift-A
         - Duplicate Line: Ctrl + Shift + D
         
+* vscodium-bin-marketplace - debranded Visual Studio Code with Visual Studio Code's marketplace feature
+    - Extensions:
+        - AsciiDoc - `.adoc` files preview
+    - Preferences
+        - Text Editor -- Font -- Font Family: `'Source Code Pro', 'Menlo', 'Consolas', 'DejaVu Sans Mono', 'monospace', monospace, 'Droid Sans Fallback'`
+            - because these monospace fonts have clearly distinguishable among the characters 'iI1l' 'oO0 - especially the zero :)' 'sS5' 'A4' 'g9' 'B8' ''Z2
+        
 * obs - Open Broadcast Software - a tool to streaming and recording audio and video including desktop and system audio
 * parole - my preferred audio player
 * mpv libva youtube-dl - my favorite multimedia player for playing online streaming content e. g. YouTube videos with HW acceleration
     - `libva` package helps to enable accelerated video playback through GPU by for VAAPI enabled drivers and GPU.
     - `youtube-dl` enables playing online videos and streams.
+    
+    - [MPV player - mouse and keyboard shortcuts](https://defkey.com/mpv-media-player-shortcuts)
     
     **Configuration**
     
@@ -213,7 +232,7 @@
     - Youtube network streaming fix
         
             # Go to the VLC directory
-            cd /usr/lib/vlc/intf/playlist/
+            cd /usr/lib/vlc/lua/playlist/
             
             # Backup the original script for youtube streaming
             sudo mv youtube.luac youtube.luac.bak
@@ -306,6 +325,8 @@
         - by default black, but text is also by default black so I don't see usually any text
         - Configuraion for white background: background color: 255, 254, 254; main color: 255, 255, 255; size = 1
         - background color 255, 255, 255 or even 255, 255, 254 in Chromium reverts back the default black color for transparent background images
+    - uBlock Origin
+        - [adfilter](https://raw.githubusercontent.com/DandelionSprout/adfilt/master/BrowseWebsitesWithoutLoggingIn.txt) - use for annoyances
         
     - **Enabling Hardware Acceleration for Chromium** - offloading strain from CPU to GPU for video decoding. [How can I make sure what capabilities my Intel GPU has?](https://bbs.archlinux.org/viewtopic.php?id=257178), https://www.reddit.com/r/linux/comments/k5s4n5/google_chrome_v88_got_hardwareaccelerated/
         - The way that uses least CPU of the various ways I tried out is to forward video playback to external multimedia player. In a dedicated multimedia player the CPU usage is lower and GPU usage higher, which is what I wanted. Videos play smooth, without stutter or tearing with GPU hardware acceleration.
@@ -469,6 +490,10 @@
     - Tab `General`
         - check `Restore previous session`
         - uncheck `Ctrl+Tab cycles through tabs in recently used order`
+    - Extensions
+        - uBlock Origin - see `uBlock Origin` setup somewhere here
+    - Enable hardware acceleration TODO
+        - OpenGL/WebGL and VAAPI
         
 * redshift-minimal -> color temperature changer (spares eyes) -> run on background in tray with "redshift&"
     - Create environment for the config file
@@ -650,7 +675,7 @@
 * parallel - parallelize shell commands
 * thunar - favorite file manager
 * transmission-gtk / transmission-qt -> torrent klient
-* gparted -> disk and partition manager
+* gparted  exfatprogs - disk and partition manager
 * xorg-apps - additional utilities for easier Xorg management e.g. brightness adjustment etc.
 * picom - compositor with hardware acceleration through OpenGL
     - to set it up for LXDE (or maybe other environments), follow the guide [for fixing the tearing and stuttering](https://github.com/kyberdrb/Linux_tutorials/blob/master/LXDE-Fix_tearing_with_compositor.md)
