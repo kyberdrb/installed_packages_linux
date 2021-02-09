@@ -1,0 +1,8 @@
+[user]
+	email = kyberdrb@gmail.com
+	name = kyberdrb
+[merge]
+	commit = no
+	ff = no
+[pull]
+	ff = yes
