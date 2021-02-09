@@ -1,3 +1,5 @@
+# TODO link configuration files from `configs` into this package list
+
 * shellcheck - shell script analysis tool and syntax checker
 
 * git - version control system
