@@ -43,6 +43,11 @@
             - [MuQSS CPU Scheduler Explained](https://lkml.org/lkml/2016/10/29/4)
             
     - Benchmark the performance of different kernels to quantify the performance differences
+    - `virtualbox-host-dkms` broken in 5.10.17 for kernel `lqx` which renders the VirtualBox virtual machines unable to run. 
+        - Solution: https://forum.endeavouros.com/t/anyone-else-getting-errors-with-virtualbox-host-dkms-and-linux-lqx/11835/9
+        - Solution - origin: https://bbs.archlinux.org/viewtopic.php?id=263393
+        - Ticket: https://www.virtualbox.org/ticket/20178
+        - watch for errors during kernel upgrades when compiling dkms modules - maybe in the next updates they will fix this. For now I'll stick with the `pf` kernel.
     
 * unixbench interbench - benchmarking kernel and system performance
 
@@ -716,6 +721,13 @@ soundwire pulseaudio-alsa lib32-libpulse lib32-alsa-plugins - SoundWire and its 
             sudo systemctl start libvirtd.service
             sudo vim /etc/conf.d/libvirtd
     - Path to virtual disks: `/var/lib/libvirt/images`
+    - Sources
+        - https://wiki.archlinux.org/index.php/Libvirt
+        - https://wiki.archlinux.org/index.php/KVM
+        - https://wiki.archlinux.org/index.php/QEMU
+        - https://wiki.archlinux.org/index.php/Libvirt#Client
+        - https://wiki.archlinux.org/index.php/Libvirt#UEFI_Support
+        - https://wiki.archlinux.org/index.php/Libvirt#Server
 
 shotwell -> image viewer with nice features (crop, rotate, ...)
 
