@@ -706,14 +706,16 @@ pulseaudio-bluetooth -> umozni prehravat hudbu od inych zariadeni cez bluetooth
 
 soundwire pulseaudio-alsa lib32-libpulse lib32-alsa-plugins - SoundWire and its dependencies; enables the use of an Android phone as a wireless speaker; Configuration: open _PulseAudio_ GUI `pavucontrol[-qt]` -\> Recording tab -\> ALSA Capture from `Monitor of Built-in Audio Analog Stereo`
 
-* qemu qemu-arch-extra virt-viewer dnsmasq -> generic virtualizer
+* qemu qemu-arch-extra virt-manager ebtables dnsmasq bridge-utils edk2-ovmf -> generic virtualizer
     - `libvirt` - GUI
     - `dnsmasq` - internet connection sharing with the virtual machine, i.e. with the _guest_ system
+    - `edk2-ovmf` - UEFI support
     - Configuration:
         
             sudo systemctl enable libvirtd.service
             sudo systemctl start libvirtd.service
             sudo vim /etc/conf.d/libvirtd
+    - Path to virtual disks: `/var/lib/libvirt/images`
 
 shotwell -> image viewer with nice features (crop, rotate, ...)
 
