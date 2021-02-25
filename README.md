@@ -334,6 +334,10 @@
         - background color 255, 255, 255 or even 255, 255, 254 in Chromium reverts back the default black color for transparent background images
     - uBlock Origin
         - [adfilter](https://raw.githubusercontent.com/DandelionSprout/adfilt/master/BrowseWebsitesWithoutLoggingIn.txt) - use for annoyances
+    - Tab Suspender
+        - prevents from loading tabs - tabs are loaded only when they're active; tabs are unloaded from memory after a time period
+        - https://superuser.com/questions/811965/how-to-make-chrome-not-load-tabs-until-they-are-selected/883096#883096
+        - 
         
     - **Enabling Hardware Acceleration for Chromium** - offloading strain from CPU to GPU for video decoding. [How can I make sure what capabilities my Intel GPU has?](https://bbs.archlinux.org/viewtopic.php?id=257178), https://www.reddit.com/r/linux/comments/k5s4n5/google_chrome_v88_got_hardwareaccelerated/
         - The way that uses least CPU of the various ways I tried out is to forward video playback to external multimedia player. In a dedicated multimedia player the CPU usage is lower and GPU usage higher, which is what I wanted. Videos play smooth, without stutter or tearing with GPU hardware acceleration.
@@ -695,11 +699,14 @@
 ---
 
 * dmidecode - RAM info
+    - installation of this utility solves/removes the error message in `journalctl`: `libvirtd[568]: Cannot find 'dmidecode' in path: No such file or directory`
 * dcfldd - safe `dd`
 * lxqt - LXQt desktop environment
     - REMOVE `pcmanfm-qt` and replace it by `thunar` as a file manager
 * filezilla -> FTP client
 * mousepad -> po instalacii otvorit mousepad, ist do Edit->Preferences->View->Colour scheme->Cobalt (biele pismena na ciernom pozadi)
+* bluez bluez-utils blueman - Bluetooth activation
+* fwupd - updates BIOS and UEFI and other device's firmware from Linux, if the device is supported
 
 openvswitch -> virtual switch for bridging VMs and containers
 
