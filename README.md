@@ -1,7 +1,5 @@
 # TODO link configuration files from `configs` into this package list
 
-* flat-remix flat-remix-gtk - Flat Remix icon theme and system theme
-
 * linux-firmware-iwlwifi-git - linux firmware with the support of Intel wireless devices, such as bluetooth and Wi-Fi. Replaces the default `linux-firmware` package.
     - In my case it provided newer firmware for my 
         - Intel bluetooth device
