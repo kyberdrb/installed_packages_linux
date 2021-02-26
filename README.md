@@ -722,7 +722,31 @@
 * filezilla -> FTP client
 * mousepad -> po instalacii otvorit mousepad, ist do Edit->Preferences->View->Colour scheme->Cobalt (biele pismena na ciernom pozadi)
 * bluez bluez-utils blueman pulseaudio-bluetooth - enable Bluetooth support
-    - `pulseaudio-bluetooth` adds support for Bluetooth audio devices. Installation of this package resolves the error in Blueman `Connection Failed:  Protocol not available` when connencting to a bluetooth audio device (NOT CONFIRMED - TESTING...)
+    - `pulseaudio-bluetooth` adds support for Bluetooth audio devices. Installation of this package resolves the error in Blueman `Connection Failed:  Protocol not available` when connencting to a bluetooth audio device. Load the bluetooth audio modules at runtime via `pactl` or reboot the system. `pactl` commands:
+
+            pactl unload-module module-bluetooth-discover
+            pactl load-module module-bluetooth-discover
+            pactl unload-module module-bluetooth-policy
+            pactl load-module module-bluetooth-policy
+            
+        To make the changes persistent and load the bluetooth audio modules at each pulseaudio server start, run `sudo vim /etc/pulse/system.pa` and add/append these lines:
+        
+            ### Enable Bluetooth audio devices
+            load-module module-bluetooth-policy
+            load-module module-bluetooth-discover
+
+        Test the Bluetooth audio device
+
+        1. Enable Bluetooth. Connect to the bluetooth device via Blueman applet.
+        1. Start playing some audio stream.
+        1. The audio will start playing from the Bluetooth device.
+        1. If audio doesn't play from the bluetooth device, but instead plays from the original output, open the `Audio mixer...` from the `Volume applet` in the taskbar.
+        1. Go to the `Output Devices` tab and click on the green checkmark icon in the section of the bluetooth device. This makes the Bluetooth audio device the **default** audio device. This allows for adjusting the volume of the Bluetooth audio device, as opposed to only switching it on the `Playback` tab.
+        - Sources:
+            - https://wiki.archlinux.org/index.php/Blueman
+            - https://askubuntu.com/questions/1115671/blueman-protocol-not-available/1171274#1171274
+            - https://wiki.archlinux.org/index.php/Bluetooth#PulseAudio
+
 * fwupd - updates BIOS and UEFI and other device's firmware from Linux, if the device is supported
 
 openvswitch -> virtual switch for bridging VMs and containers
