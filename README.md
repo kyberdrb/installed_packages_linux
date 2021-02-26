@@ -740,32 +740,26 @@
         1. Enable Bluetooth. Connect to the bluetooth device via Blueman applet.
         1. Start playing some audio stream.
         1. The audio will start playing from the Bluetooth device.
-        1. If audio doesn't play from the bluetooth device, but instead plays from the original output, open the `Audio mixer...` from the `Volume applet` in the taskbar.
+        1. If the audio doesn't play from the Bluetooth device, left click on the speaker icon on the taskbar. There will be an arrow underneath the output volume slider. Select the bluetooth device from there. The sound will start playing from the Bluetooth audio device.
+        1. If the audio still doesn't play from the bluetooth device, but instead plays from the original output, open the `Audio mixer...` from the `Volume applet` in the taskbar.
         1. Go to the `Output Devices` tab and click on the green checkmark icon in the section of the bluetooth device. This makes the Bluetooth audio device the **default** audio device. This allows for adjusting the volume of the Bluetooth audio device, as opposed to only switching it on the `Playback` tab.
         - Sources:
             - https://wiki.archlinux.org/index.php/Blueman
             - https://askubuntu.com/questions/1115671/blueman-protocol-not-available/1171274#1171274
             - https://wiki.archlinux.org/index.php/Bluetooth#PulseAudio
 
-* fwupd - updates BIOS and UEFI and other device's firmware from Linux, if the device is supported
-
-openvswitch -> virtual switch for bridging VMs and containers
-
-dnsmasq -> internet connectivity support tool for LXC NAT bridge interface
-
-wireguard - open-source VPN platform
-
-soundwire pulseaudio-alsa lib32-libpulse lib32-alsa-plugins - SoundWire and its dependencies; enables the use of an Android phone as a wireless speaker; Configuration: open _PulseAudio_ GUI `pavucontrol[-qt]` -\> Recording tab -\> ALSA Capture from `Monitor of Built-in Audio Analog Stereo`
+    When you click at the Blueman applet, turn on the Bluetooth, and then click on the applet immediately after, then the Blueman applet doesn't respond to clicking. Restarting the panel with `xfce4-panel --restart` makes the applet clickable again. [Source](https://askubuntu.com/questions/891208/restart-xfce-panel-in-xubuntu/891209#891209)
 
 * qemu qemu-arch-extra virt-manager ebtables dnsmasq bridge-utils edk2-ovmf -> generic virtualizer
-    - `libvirt` - GUI
+    - `libvirt` - virtualization backend
     - `dnsmasq` - internet connection sharing with the virtual machine, i.e. with the _guest_ system
     - `edk2-ovmf` - UEFI support
+    - `virt-manager` - GUI
     - Configuration:
         
             sudo systemctl enable libvirtd.service
             sudo systemctl start libvirtd.service
-            sudo vim /etc/conf.d/libvirtd
+            
     - Path to virtual disks: `/var/lib/libvirt/images`
     - Sources
         - https://wiki.archlinux.org/index.php/Libvirt
@@ -774,6 +768,17 @@ soundwire pulseaudio-alsa lib32-libpulse lib32-alsa-plugins - SoundWire and its 
         - https://wiki.archlinux.org/index.php/Libvirt#Client
         - https://wiki.archlinux.org/index.php/Libvirt#UEFI_Support
         - https://wiki.archlinux.org/index.php/Libvirt#Server
+
+
+fwupd - updates BIOS and UEFI and other device's firmware from Linux, if the device is supported
+
+openvswitch -> virtual switch for bridging VMs and containers
+
+dnsmasq -> internet connectivity support tool for LXC NAT bridge interface
+
+wireguard - open-source VPN platform
+
+soundwire pulseaudio-alsa lib32-libpulse lib32-alsa-plugins - SoundWire and its dependencies; enables the use of an Android phone as a wireless speaker; Configuration: open _PulseAudio_ GUI `pavucontrol[-qt]` -\> Recording tab -\> ALSA Capture from `Monitor of Built-in Audio Analog Stereo`
 
 shotwell -> image viewer with nice features (crop, rotate, ...)
 
