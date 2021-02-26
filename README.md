@@ -1,5 +1,9 @@
 # TODO link configuration files from `configs` into this package list
 
+* canta-gtk-theme-git numix-circle-icon-theme-git - XFCE theme and icon pack
+    - Style: Canta-light-compact
+    - Icon: Numix Circle Light
+
 * linux-firmware-iwlwifi-git - linux firmware with the support of Intel wireless devices, such as bluetooth and Wi-Fi. Replaces the default `linux-firmware` package.
     - In my case it provided newer firmware for my 
         - Intel bluetooth device
