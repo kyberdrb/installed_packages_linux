@@ -755,8 +755,6 @@ dnsmasq -> internet connectivity support tool for LXC NAT bridge interface
 
 wireguard - open-source VPN platform
 
-pulseaudio-bluetooth -> umozni prehravat hudbu od inych zariadeni cez bluetooth
-
 soundwire pulseaudio-alsa lib32-libpulse lib32-alsa-plugins - SoundWire and its dependencies; enables the use of an Android phone as a wireless speaker; Configuration: open _PulseAudio_ GUI `pavucontrol[-qt]` -\> Recording tab -\> ALSA Capture from `Monitor of Built-in Audio Analog Stereo`
 
 * qemu qemu-arch-extra virt-manager ebtables dnsmasq bridge-utils edk2-ovmf -> generic virtualizer
