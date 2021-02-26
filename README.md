@@ -1,5 +1,7 @@
 # TODO link configuration files from `configs` into this package list
 
+* flat-remix flat-remix-gtk - Flat Remix icon theme and system theme
+
 * linux-firmware-iwlwifi-git - linux firmware with the support of Intel wireless devices, such as bluetooth and Wi-Fi. Replaces the default `linux-firmware` package.
     - In my case it provided newer firmware for my 
         - Intel bluetooth device
@@ -76,6 +78,7 @@
 
 * eidklient disig-web-signer - aplikacie pre pripojenie k portalu www.slovensko.sk
     - Start SmardCard service: `systemctl start pcscd.service`
+    - Enable SmartCart service at each system start: `systemctl enable pcscd.service`
     - pripravit si hesla k elektronickemu OP
     - spustit aplikaciu eID [XFCE: Applications - Other - Aplikacia pre eID]
     - vlozit elekronicky obciansky preukaz (OP) cipom nahor do lubovolnej SmartCard citacky: bud integrovanej v notoebooku/PC alebo externej citacky [napriklad do tej, ktora bola dodana spolu s OP]
@@ -793,8 +796,6 @@ unrar -> needed for dtrx to extract RAR archives
 virt-manager -> front-end ku QEMU
 
 wget -> terminal downloader utility
-
-xfce4
 
 xfce4-pulseaudio-plugin -> Volume control in notification tray
 
