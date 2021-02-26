@@ -721,7 +721,8 @@
     - REMOVE `pcmanfm-qt` and replace it by `thunar` as a file manager
 * filezilla -> FTP client
 * mousepad -> po instalacii otvorit mousepad, ist do Edit->Preferences->View->Colour scheme->Cobalt (biele pismena na ciernom pozadi)
-* bluez bluez-utils blueman - Bluetooth activation
+* bluez bluez-utils blueman pulseaudio-bluetooth - enable Bluetooth support
+    - `pulseaudio-bluetooth` adds support for Bluetooth audio devices. Installation of this package resolves the error in Blueman `Connection Failed:  Protocol not available` when connencting to a bluetooth audio device (NOT CONFIRMED - TESTING...)
 * fwupd - updates BIOS and UEFI and other device's firmware from Linux, if the device is supported
 
 openvswitch -> virtual switch for bridging VMs and containers
