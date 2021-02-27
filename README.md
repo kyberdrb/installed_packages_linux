@@ -1,5 +1,13 @@
 # TODO link configuration files from `configs` into this package list
 
+* xscreenserver gnome-keyring - screensaver and lockscreen support
+    - `gnome-keyring` serves as a prevention for `journalctl` error messages
+    
+            xfce4-screensaver-dialog[1225]: PAM unable to dlopen(/usr/lib/security/pam_gnome_keyring.so): /usr/lib/security/pam_gnome_keyring.so: cannot open sh>
+            xfce4-screensaver-dialog[1225]: PAM adding faulty module: /usr/lib/security/pam_gnome_keyring.so
+        
+        - https://bbs.archlinux.org/viewtopic.php?pid=1940513#p1940513
+
 * canta-gtk-theme-git numix-circle-icon-theme-git - XFCE theme and icon pack
     - Style: Canta-light-compact
     - Icon: Numix Circle Light
