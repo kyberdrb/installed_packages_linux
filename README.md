@@ -7,6 +7,9 @@
             xfce4-screensaver-dialog[1225]: PAM adding faulty module: /usr/lib/security/pam_gnome_keyring.so
         
         - https://bbs.archlinux.org/viewtopic.php?pid=1940513#p1940513
+        - To change the default keyring's password [delete the `keyrings` directory](https://wiki.archlinux.org/index.php/GNOME/Keyring#Resetting_the_keyring) with
+
+                rm -r .local/share/keyrings/
 
 * canta-gtk-theme-git numix-circle-icon-theme-git - XFCE theme and icon pack
     - Style: Canta-light-compact
