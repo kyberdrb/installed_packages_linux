@@ -357,19 +357,45 @@
 * chromium / (https://aur.archlinux.org/packages/ungoogled-chromium/)[ungoogled-chromium]: see (https://github.com/Eloston/ungoogled-chromium#enhancing-features)[ungoogled-chromium GitHub]
     - Maybe in the future I will try out [Chromium-VAAPI](https://aur.archlinux.org/packages/chromium-vaapi/) and see if it makes any difference when playing videos, e. g. lower CPU usage, hardware acceleration of videos through GPU, smoother - no stutter and tear-free - video playback.
     - [ungoogled-chromium for Android](https://uc.droidware.info/)
-    - [Pinterest without log-in prompting](https://www.lifehacker.com.au/2015/05/this-tweak-lets-you-browse-pinterest-without-signing-up/)
-        1. Install plugin `Tampermonkey` from https://chrome.google.com/webstore/detail/tampermonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo/related
-        1. Install script `Pinterest without registration` from https://greasyfork.org/en/scripts/6325-pinterest-without-registration
-    - [Image Transparency - configurable background color for images with transparent background](https://chrome.google.com/webstore/detail/image-transparency/ihnkmjaflangdaififmekbjicpafmdek/related)
-        - by default black, but text is also by default black so I don't see usually any text
-        - Configuraion for white background: background color: 255, 254, 254; main color: 255, 255, 255; size = 1
-        - background color 255, 255, 255 or even 255, 255, 254 in Chromium reverts back the default black color for transparent background images
-    - uBlock Origin
-        - [adfilter](https://raw.githubusercontent.com/DandelionSprout/adfilt/master/BrowseWebsitesWithoutLoggingIn.txt) - use for annoyances
-    - Tab Suspender
-        - prevents from loading tabs - tabs are loaded only when they're active; tabs are unloaded from memory after a time period
-        - https://superuser.com/questions/811965/how-to-make-chrome-not-load-tabs-until-they-are-selected/883096#883096
-        - 
+    - Extensions
+        - [Pinterest without log-in prompting](https://www.lifehacker.com.au/2015/05/this-tweak-lets-you-browse-pinterest-without-signing-up/)
+            1. Install plugin `Tampermonkey` from https://chrome.google.com/webstore/detail/tampermonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo/related
+            1. Install script `Pinterest without registration` from https://greasyfork.org/en/scripts/6325-pinterest-without-registration
+        - [Image Transparency - configurable background color for images with transparent background](https://chrome.google.com/webstore/detail/image-transparency/ihnkmjaflangdaififmekbjicpafmdek/related)
+            - by default black, but text is also by default black so I don't see usually any text
+            - Configuraion for white background: background color: 255, 254, 254; main color: 255, 255, 255; size = 1
+            - background color 255, 255, 255 or even 255, 255, 254 in Chromium reverts back the default black color for transparent background images
+        - uBlock Origin
+            - [adfilter](https://raw.githubusercontent.com/DandelionSprout/adfilt/master/BrowseWebsitesWithoutLoggingIn.txt) - use for annoyances
+        - Tab Suspender
+            - prevents from loading tabs - tabs are loaded only when they're active; tabs are unloaded from memory after a time period
+            - https://superuser.com/questions/811965/how-to-make-chrome-not-load-tabs-until-they-are-selected/883096#883096
+    
+    - ...
+        - Add '--password-store=basic' to remove prompt for 'gnome-keyring' password. 'gnome-keyring' has been installed to fix the error in `journalctl` from ´xfce4-screensaver`
+        
+                xfce4-screensaver-dialog[1225]: PAM unable to dlopen(/usr/lib/security/pam_gnome_keyring.so): /usr/lib/security/pam_gnome_keyring.so: cannot open sh>
+                xfce4-screensaver-dialog[1225]: PAM adding faulty module: /usr/lib/security/pam_gnome_keyring.so
+                
+        - To solve this, you can provide any, ideally strong, password for the gnome-keyring. To prevent the gnome-keyring password prompt at the Chromium run, edit the shortcut:
+
+                sudo vim /usr/share/applications/chromium.desktop
+
+            and append to each `Exec` attribute the option `password-store=basic`
+
+                ...
+                Exec=/usr/bin/chromium %U --password-store=basic
+                ...
+                Exec=/usr/bin/chromium --password-store=basic
+                ...
+                Exec=/usr/bin/chromium --incognito --password-store=basic
+      
+    Then open Chromium's Preferences and disable 'Offer to save passwords' because now they're stored in the browser in plain text. From now on, you will not be prompted by the gnome-keyring for a password, nor you'll be notified to save password in the browser.
+
+      - https://wiki.archlinux.org/index.php/GNOME/Keyring#Resetting_the_keyring
+      - https://askubuntu.com/questions/867/how-can-i-stop-being-prompted-to-unlock-the-default-keyring-on-boot
+      - https://askubuntu.com/questions/495957/how-to-disable-the-unlock-your-keyring-popup/1034053#1034053
+      - https://duckduckgo.com/?q=chromium+--password-store%3Dbasic+%2B+settings+--+uncheck+Offer+to+save+passwords&ia=web
         
     - **Enabling Hardware Acceleration for Chromium** - offloading strain from CPU to GPU for video decoding. [How can I make sure what capabilities my Intel GPU has?](https://bbs.archlinux.org/viewtopic.php?id=257178), https://www.reddit.com/r/linux/comments/k5s4n5/google_chrome_v88_got_hardwareaccelerated/
         - The way that uses least CPU of the various ways I tried out is to forward video playback to external multimedia player. In a dedicated multimedia player the CPU usage is lower and GPU usage higher, which is what I wanted. Videos play smooth, without stutter or tearing with GPU hardware acceleration.
