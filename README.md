@@ -563,7 +563,7 @@
         - uBlock Origin - see `uBlock Origin` setup somewhere here
     - Enable hardware acceleration
         - OpenGL/WebGL and VAAPI
-        - `about:config`
+        - `about:config` (minimal configuration at [1](https://www.reddit.com/r/debian/comments/ii49a6/as_anyone_been_able_to_get_video_acceleration/g34cz4b/?utm_source=reddit&utm_medium=web2x&context=3), [2](https://askubuntu.com/questions/1291279/ubuntu-20-10-firefox-82-intel-hd-500-vaapi-hardware-acceleration/1291873#1291873), [3](https://www.reddit.com/r/debian/comments/ii49a6/as_anyone_been_able_to_get_video_acceleration/gexwqs3/?utm_source=reddit&utm_medium=web2x&context=3))
             - media.ffmpeg.vaapi.enabled: true
             - media.ffvpx.enabled: false
             - media.rdd-vpx.enabled: false
@@ -573,16 +573,33 @@
             - gfx.webrender.software: false
         - add to `/etc/environment`
         
+                #https://wiki.archlinux.org/index.php/Firefox#Hardware_video_acceleration
                 MOZ_X11_EGL=1
+                #https://www.phoronix.com/scan.php?page=news_item&px=Firefox-80-VA-API-X11
+                MOZ_ACCELERATED=1
+                MOZ_WEBRENDER=1
+                #https://bugzilla.mozilla.org/show_bug.cgi?id=1673184#c16
+                MOZ_DISABLE_RDD_SANDBOX=1
+                #https://forum.manjaro.org/t/firefox-webrender/36254/8
+                PAN_MESA_DEBUG=gl3
             
             which enables Firefox to use hardware acceleration under X11/Xorg server. Wayland uses different one: `MOZ_ENABLE_WAYLAND`.
         - Install `h264ify` or [`enhanced-h264ify` (I'm using this one)](https://addons.mozilla.org/sk/firefox/addon/enhanced-h264ify/) extension to enable only, prefferably, h264 codecs because they're usually hardware accelerated by most GPUs and their drivers.
 
         - reboot to reload variables in `/etc/environment`
+        - run firefox again from terminal with 
+
+        - verify that the hardware acceleration is enabled:
+            - `about:support`
+                - Graphics -- Features -- Compositing: WebRender
+            - https://www.quora.com/How-do-I-check-if-Firefox-and-Chrome-are-really-using-hardware-acceleration?share=1
+            - https://www.quora.com/How-do-I-check-if-Firefox-and-Chrome-are-really-using-hardware-acceleration/answer/Vladislav-Zorov
+            - https://www.ghacks.net/2020/12/14/how-to-find-out-if-webrender-is-enabled-in-firefox-and-how-to-enable-it-if-it-is-not/
 
         - https://wiki.archlinux.org/index.php/Firefox#Hardware_video_acceleration
         - https://forum.manjaro.org/t/please-enable-va-api-support-and-gpu-rendering-in-firefox-by-default/17323
         - https://www.ghacks.net/2020/12/14/how-to-find-out-if-webrender-is-enabled-in-firefox-and-how-to-enable-it-if-it-is-not/
+        - https://www.phoronix.com/scan.php?page=news_item&px=Firefox-80-VA-API-X11
         
 * redshift-minimal -> color temperature changer (spares eyes) -> run on background in tray with "redshift&"
     - Create environment for the config file
