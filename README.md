@@ -561,8 +561,28 @@
         - uncheck `Ctrl+Tab cycles through tabs in recently used order`
     - Extensions
         - uBlock Origin - see `uBlock Origin` setup somewhere here
-    - Enable hardware acceleration TODO
+    - Enable hardware acceleration
         - OpenGL/WebGL and VAAPI
+        - `about:config`
+            - media.ffmpeg.vaapi.enabled: true
+            - media.ffvpx.enabled: false
+            - media.rdd-vpx.enabled: false
+            - layers.acceleration.force-enabled: true
+            - gfx.webrender.all: true
+            - media.ffmpeg.vaapi-drm-display.enabled: true
+            - gfx.webrender.software: false
+        - add to `/etc/environment`
+        
+                MOZ_X11_EGL=1
+            
+            which enables Firefox to use hardware acceleration under X11/Xorg server. Wayland uses different one: `MOZ_ENABLE_WAYLAND`.
+        - Install `h264ify` or [`enhanced-h264ify` (I'm using this one)](https://addons.mozilla.org/sk/firefox/addon/enhanced-h264ify/) extension to enable only, prefferably, h264 codecs because they're usually hardware accelerated by most GPUs and their drivers.
+
+        - reboot to reload variables in `/etc/environment`
+
+        - https://wiki.archlinux.org/index.php/Firefox#Hardware_video_acceleration
+        - https://forum.manjaro.org/t/please-enable-va-api-support-and-gpu-rendering-in-firefox-by-default/17323
+        - https://www.ghacks.net/2020/12/14/how-to-find-out-if-webrender-is-enabled-in-firefox-and-how-to-enable-it-if-it-is-not/
         
 * redshift-minimal -> color temperature changer (spares eyes) -> run on background in tray with "redshift&"
     - Create environment for the config file
