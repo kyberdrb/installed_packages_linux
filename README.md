@@ -795,8 +795,15 @@
     - perf - profiling tool for Linux kernel; useful for CLion; set it up in CLion under "File -> Settings -> Build, Execution, Deployment -> Dynamic analysis tools" - run profiler via "Run -> Profile '<ProjectName>'"
     - valgrind - memory leaks test; useful for CLion; set it up in CLion under "File -> Settings -> Build, Execution, Deployment -> Dynamic analysis tools" - run Valgrind via "Run -> Run '<ProjectName>' with Valgrind Memcheck"
     - gdb: I chose to disable colors in the GDB because I found some words harder to read on Terminal with black background, e.g. the `auto` keyword which was blue. Therefore, I created a file `~/.gdbinit` with this content
-    
+
             set style enabled off
+
+    - Setting a unified black look
+      1. File -- Settings... -- Appearance & Behavior -- UI Options -- Background Image...
+      1. Select and image, e.g. `./configs/black.jpg`
+      1. Set opacity to `100`
+      1. Click on the tab _Empty Frame_ and set the image and opacity again.
+      1. Save and exit. Changes take effect immediately.
             
         The setting will be loaded for each gdb session, unless a project-specific configuration file for GDB is present in the directory of the project, which is the directory where we'll be launching the GDB utility.
     
