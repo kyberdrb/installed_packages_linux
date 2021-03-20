@@ -885,10 +885,16 @@
     - `edk2-ovmf` - UEFI support
     - `virt-manager` - GUI
     - Configuration:
+      - Enable QEMU/KVM server as daemon
         
-            sudo systemctl enable libvirtd.service
-            sudo systemctl start libvirtd.service
+              sudo systemctl enable libvirtd.service
+              sudo systemctl start libvirtd.service
+
+      - Enable default NAT bridge network. Prevention for error `Error starting domain: internal error Network 'default' is not active.` when starting a virtual machine from `virt-manager` [[1]](https://dwaves.de/2015/07/21/linux-kvm-how-to-fix-a-error-starting-domain-requested-operation-is-not-valid-network-default-is-not-active/), [[2]](https://github.com/kubernetes/minikube/issues/828), [[3]](https://github.com/kubernetes/minikube/issues/828#issuecomment-271781003)
             
+              sudo virsh net-autostart default
+              sudo virsh net-start default
+
     - Path to virtual disks: `/var/lib/libvirt/images`
     - Sources
         - https://wiki.archlinux.org/index.php/Libvirt
