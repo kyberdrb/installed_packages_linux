@@ -905,9 +905,28 @@
 
                 sudo vboxmanage clonehd --format RAW "/home/laptop/VirtualBoxVMs/Windows_10_Pro_2004.546_x64_LITE/Win_10_x64_Lite.vdi" /mnt/Win_10_x64_Lite.img
 
-      1. Convert raw disk into QEMU7KVM compatible format
+      1. Convert raw disk into QEMU/KVM compatible format
 
                 sudo qemu-img convert -f raw /mnt/Win_10_x64_Lite.img -O qcow2 /mnt/Win_10_x64_Lite.qcow2
+
+      1. If the disk comes from a UEFI installation, check box _"Customize configuration before install"_ when creating the virtual machine in `virt-manager` and then select under _Overview -- Hypervisor Details -- Firmware_ option `UEFI x86_64: /usr/share/edk2-ovmf/x64/OVMF_CODE.fd`
+
+      1. Run the virtual machine. For optimal performance under Windows, uninstall _VirtualBox Guest Additions_ or other guest packages for previous hypervisor, and install QEMU/KVM Guest Additions, a.k.a. `virtio-win` drivers, reboot and then [download the ISO containing drivers [latest or stable - I'm using latest]](https://github.com/virtio-win/virtio-win-pkg-scripts/blob/master/README.md) and install them, then reboot again. After successful reboot, you may want to change the resolution to the native resolution of the screen for better usage experience, and then unsing the virtual machine in fullscreen mode.
+
+    - Use `virt-manager` as a regular user [not as root or sudo] [[1]](https://computingforgeeks.com/use-virt-manager-as-non-root-user/)
+      1. `sudo vim /etc/libvirt/libvirtd.conf`
+      1. Uncomment/Change lines
+
+              unix_sock_group = "libvirt"
+              unix_sock_rw_perms = "0770"
+
+      1. Save and exit with `Esc` and the `:wq`
+      1. Add user to the group defined in `unix_sock_group`
+
+              sudo usermod -a -G libvirt $USER
+
+      1. Reload groups e.g. by rebooting
+      1. After the next login, start `virt-manager`. The password prompt will be ommitted.
 
     - Sources
         - https://wiki.archlinux.org/index.php/Libvirt
