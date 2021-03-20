@@ -797,6 +797,13 @@
     - gdb: I chose to disable colors in the GDB because I found some words harder to read on Terminal with black background, e.g. the `auto` keyword which was blue. Therefore, I created a file `~/.gdbinit` with this content
 
             set style enabled off
+ 
+        The setting will be loaded for each gdb session, unless a project-specific configuration file for GDB is present in the directory of the project, which is the directory where we'll be launching the GDB utility.
+    
+        - Sources:
+            - https://sourceware.org/gdb/current/onlinedocs/gdb/Output-Styling.html
+            - https://stackoverflow.com/questions/2045509/how-to-save-settings-in-gdb/2045532#2045532
+            - https://github.com/gdbinit/Gdbinit/blob/master/gdbinit
 
     - Setting a unified black look
       1. File -- Settings... -- Appearance & Behavior -- UI Options -- Background Image...
@@ -804,13 +811,14 @@
       1. Set opacity to `100`
       1. Click on the tab _Empty Frame_ and set the image and opacity again.
       1. Save and exit. Changes take effect immediately.
-            
-        The setting will be loaded for each gdb session, unless a project-specific configuration file for GDB is present in the directory of the project, which is the directory where we'll be launching the GDB utility.
-    
-        - Sources:
-            - https://sourceware.org/gdb/current/onlinedocs/gdb/Output-Styling.html
-            - https://stackoverflow.com/questions/2045509/how-to-save-settings-in-gdb/2045532#2045532
-            - https://github.com/gdbinit/Gdbinit/blob/master/gdbinit
+      1. Install theme _One Dark theme_ from _Plugins_
+      1. Go to _File -- Settings... -- Editor -- Color Scheme -- General_
+        1. Select scheme `One Dark Vivid`
+        1. Click on the gear icon next to the rolldown menu and select _Duplicate_ and press Enter to confirm. This will back up the original profile in case something breaks.
+        1. Change color or style of some elements for better readablility and clarity:
+          - _Editor -- Selection background_ -- check option _Background_: `C8C8C8`
+          - _Errors and Warnings_ -- for _Typo_, _Warning_ and _Weak Warning_ check _Effects_ and change it from the original line type to `Underscored`
+
 * qtcreator - IDE for Qt Framework
 * python-pip - pip package installer
     
