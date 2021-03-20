@@ -896,6 +896,19 @@
               sudo virsh net-start default
 
     - Path to virtual disks: `/var/lib/libvirt/images`
+    - Convert disk from VirtualBox virtual machine (VDI )into disk compatible with QEMU/KVM virtual machine (QCOW2) [[1]](https://github.com/kubernetes/minikube/issues/828#issuecomment-266272451), [[2]](https://github.com/kubernetes/minikube/issues/828), [[3]](https://ostechnix.com/how-to-migrate-virtualbox-vms-into-kvm-vms-in-linux/), [[4]](https://dwaves.de/2015/07/21/linux-kvm-how-to-fix-a-error-starting-domain-requested-operation-is-not-valid-network-default-is-not-active/)
+      1. Choose the disk to convert. Copy the `Location:` of the disk.
+
+                vboxmanage list hdds
+
+      1. Convert VBox disk into raw disk
+
+                sudo vboxmanage clonehd --format RAW "/home/laptop/VirtualBoxVMs/Windows_10_Pro_2004.546_x64_LITE/Win_10_x64_Lite.vdi" /mnt/Win_10_x64_Lite.img
+
+      1. Convert raw disk into QEMU7KVM compatible format
+
+                sudo qemu-img convert -f raw /mnt/Win_10_x64_Lite.img -O qcow2 /mnt/Win_10_x64_Lite.qcow2
+
     - Sources
         - https://wiki.archlinux.org/index.php/Libvirt
         - https://wiki.archlinux.org/index.php/KVM
