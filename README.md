@@ -90,13 +90,13 @@
     - https://linux.die.net/man/8/interbench
 
 * eidklient disig-web-signer - aplikacie pre pripojenie k portalu www.slovensko.sk
-    - Start SmardCard service: `systemctl start pcscd.service`
-    - Enable SmartCart service at each system start: `systemctl enable pcscd.service`
+    - Spustime SmardCard sluzbu: `systemctl start pcscd.service`
     - pripravit si hesla k elektronickemu OP
     - spustit aplikaciu eID [XFCE: Applications - Other - Aplikacia pre eID]
     - vlozit elekronicky obciansky preukaz (OP) cipom nahor do lubovolnej SmartCard citacky: bud integrovanej v notoebooku/PC alebo externej citacky [napriklad do tej, ktora bola dodana spolu s OP]
     - nasledovat instrukcie v aplikacii eID
-    - pripojit sa k portalu slovensko.sk
+    - pripojit sa k portalu [slovensko.sk](slovensko.sk)
+    - pre vacsie pohodlie mozeme zapnut automaticke spustanie smartcard sluzby pri kazdom spusteni pocitaca alebo restarte prikazom `systemctl enable pcscd.service`
     - Sources:
         - https://wiki.archlinux.org/index.php/Smartcards#Installation
         - https://aur.archlinux.org/packages/eidklient/
@@ -970,11 +970,11 @@ virt-manager -> front-end ku QEMU
 
 wget -> terminal downloader utility
 
-xfce4-pulseaudio-plugin -> Volume control in notification tray
-
-xfce4-screenshooter -> Screenshots for XFCE; to enable PrintScreen key go to Application Menu -> Keyboard -> Application Shortcuts tab -> Add button -> as command enter "xfce4-screenshooter" without quotes -> as key press "PrintScreen (PrtSc)" key.
-
-xfce4-xkb-plugin -> Keyboard layout changer in notification tray
+* xfce4
+  - xfce4-pulseaudio-plugin - Volume control in notification tray
+  - xfce4-screenshooter - Screenshots for XFCE; to enable PrintScreen key go to Application Menu -> Keyboard -> Application Shortcuts tab -> Add button -> as command enter "xfce4-screenshooter" without quotes -> as key press "PrintScreen (PrtSc)" key.
+  - xfce4-xkb-plugin - Keyboard layout changer in notification tray
+  - xfce4-appfinder - the history file with commands history is located at `~/.cache/xfce4/xfce4-appfinder/history` [[1]](https://forum.xfce.org/viewtopic.php?pid=38253#p38253), [[2]](http://xfce.10915.n7.nabble.com/Application-Finder-history-file-location-in-docs-xfce-org-td49112.html)
 
 ---
 
