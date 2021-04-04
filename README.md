@@ -963,10 +963,26 @@
         
                 [laptop@laptop ~]$ #kvm file sharing
                 [laptop@laptop ~]$ #host: ssh server configured to allow root login with password [[1]](https://linuxhint.com/arch_linux_ssh_server/), [[2]](https://www.liquidweb.com/kb/enable-root-login-via-ssh/)
-                [laptop@laptop ~]$ #guest: sshfs-win, winfsp, sshfs-win-manager; then open sshfs-win-manager, create a connection and connect to the host system. The SSH connection to the host directory will be mapped automatically in Windows guest as a separate local drive
+                [laptop@laptop ~]$ #sudo pacman -S openssh
+                [laptop@laptop ~]$ #sudo systemctl status sshd
+                [laptop@laptop ~]$ #sudo systemctl start sshd
+                [laptop@laptop ~]$ #sudo systemctl status sshd
+                [laptop@laptop ~]$ # test the connection from the virtual machine
+                [laptop@laptop ~]$ #sudo vim /etc/ssh/sshd_config
+                [laptop@laptop ~]$ # enable in the sshd config root login with PermitRootLogin yes (rest of the config is default)
+                [laptop@laptop ~]$ cat /etc/ssh/sshd_config | grep -v '#' | grep -v "^$"
+                PermitRootLogin yes
+                AuthorizedKeysFile	.ssh/authorized_keys
+                ChallengeResponseAuthentication no
+                UsePAM yes
+                Subsystem	sftp	/usr/lib/ssh/sftp-server
+                [laptop@laptop ~]$ #sudo systemctl restart sshd
+                [laptop@laptop ~]$ # connect from the virtual machine to the host via SSH as root
+                [laptop@laptop ~]$ #set up SSH filesystem with the three guest utilities
+                [laptop@laptop ~]$ #guest: guest utilities: sshfs-win, winfsp, sshfs-win-manager; then open sshfs-win-manager, create a connection and connect to the host system. The SSH connection to the host directory will be mapped automatically in Windows guest as a separate local drive
         
         - Filesystem Passtrough: `spice-webdavd` - Spice channel [preferred and recommended for Linux VMs] [[1 - GUI based]](https://dausruddin.com/how-to-enable-clipboard-and-folder-sharing-in-qemu-kvm-on-windows-guest/), [[2 - terminal based]](https://cialu.net/qemu-kvm-on-ubuntu-and-sharing-files-between-host-and-guests/#fromHistory), [[QEMU/KVM - Virt-Manager | Folder sharing and USB Redirection: until 6:08 - YouTube]](https://www.youtube.com/watch?v=crDuKm6XNv4), [[3]](https://askubuntu.com/questions/899916/how-to-share-folder-with-windows-10-guest-using-virt-manager-kvm), [[4]](https://www.guyrutenberg.com/2018/10/25/sharing-a-folder-a-windows-guest-under-virt-manager/), [[5]](https://unix.stackexchange.com/questions/528166/impossible-folder-sharing-by-virt-viewer-in-windows-client)
-            - Didn't work for my Windows VM. I was unable to launch the virtual machine because of a permissions issue with the directory I wanted to share, even after hours-long troubleshooting.
+            - Didn't work for my Windows VM through `virt-viewer`. I was unable to launch the virtual machine because of a permissions issue with the directory I wanted to share, even after hours-long troubleshooting.
             - Not persistent after shutdown [[1]](https://gitlab.com/virt-viewer/virt-viewer/-/issues/13)
             - Possible solution for the permissions issue: [[host]](https://ask.fedoraproject.org/t/virt-manager-and-shared-folder-host-guest-permission-issue/10938/10), [[guest]](https://serverfault.com/questions/394645/qemu-virt-manager-no-permisson-on-shared-folder)
         - USB Redirection: usb storage device: USB drive/external disk [fallback option - when everything else fails] [[QEMU/KVM - Virt-Manager | Folder sharing and USB Redirection: from 6:08 - YouTube]](https://www.youtube.com/watch?v=crDuKm6XNv4&t=368s),
