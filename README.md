@@ -888,13 +888,14 @@
 
     When you click at the Blueman applet, turn on the Bluetooth, and then click on the applet immediately after, then the Blueman applet doesn't respond to clicking. Restarting the panel with `xfce4-panel --restart` makes the applet clickable again. [Source](https://askubuntu.com/questions/891208/restart-xfce-panel-in-xubuntu/891209#891209)
 
-* qemu qemu-arch-extra virt-manager ebtables dnsmasq bridge-utils edk2-ovmf -> generic virtualizer
-    - `libvirt` - virtualization backend
-    - `dnsmasq` - internet connection sharing with the virtual machine, i.e. with the _guest_ system
+* qemu qemu-arch-extra virt-manager ebtables dnsmasq bridge-utils edk2-ovmf cockpit cockpit-machines virt-viewer - operating system virtualization
+    - - `virt-manager` - GUI
+    - `ebtables dnsmasq bridge-utils` - internet connection sharing with the virtual machine, i.e. with the _guest_ system
     - `edk2-ovmf` - UEFI support
-    - `virt-manager` - GUI
+    - `cockpit cockpit-machines` - simpler virtual machines management
+    - `virt-viewer` - sharper, less blurred, image and fonts, of the virtual screen from the virtual machine - Desktop viewer for Cockpit
     - Configuration:
-      - Enable QEMU/KVM server as daemon
+      - Enable QEMU/KVM server as daemon - deamon serves as a server that is doing all the backend operations
         
               sudo systemctl enable libvirtd.service
               sudo systemctl start libvirtd.service
@@ -945,6 +946,45 @@
         - https://wiki.archlinux.org/index.php/Libvirt#UEFI_Support
         - https://wiki.archlinux.org/index.php/Libvirt#Server
 
+    - Use `Cockpit` for simpler virtual machines management [[1]](https://cockpit-project.org/running.html), [[2]](https://cockpit-project.org/running.html#archlinux)
+        1. Cockpit is a web-based management tool for KVM virtual machines
+        
+                [laptop@laptop ~]$ #sudo systemctl enable --now cockpit.socket
+                [laptop@laptop ~]$ #sudo systemctl start cockpit.socket
+                [laptop@laptop ~]$ #sudo systemctl status cockpit.socket
+                [laptop@laptop ~]$ # open in browser the Cockpit server at
+                [laptop@laptop ~]$ #   http://localhost:9090/
+                [laptop@laptop ~]$ # log in with the same username and password as to your Linux user account
+                [laptop@laptop ~]$ #play with the UI. You'll figure it out on your own, I'm sure ;)
+                [laptop@laptop ~]$ #cockpit uses virt-viewer for displaying the graphical interface of the virtual machine, which displays, in my opinion, sharper image, less blurred fonts, than the default viewer in virt-manager.
+
+    - Enable shared folder between Linux (host operating system - environment for virtual machines) and Windows (guest operating system - the virtual machine) [[1]](https://unix.stackexchange.com/questions/86071/use-virt-manager-to-share-files-between-linux-host-and-windows-guest)
+        - SSH Filesystem [preferred and recommended for Windows VMs]
+        
+                [laptop@laptop ~]$ #kvm file sharing
+                [laptop@laptop ~]$ #host: ssh server configured to allow root login with password [[1]](https://linuxhint.com/arch_linux_ssh_server/), [[2]](https://www.liquidweb.com/kb/enable-root-login-via-ssh/)
+                [laptop@laptop ~]$ #guest: sshfs-win, winfsp, sshfs-win-manager; then open sshfs-win-manager, create a connection and connect to the host system. The SSH connection to the host directory will be mapped automatically in Windows guest as a separate local drive
+        
+        - Filesystem Passtrough: `spice-webdavd` - Spice channel [preferred and recommended for Linux VMs] [[1 - GUI based]](https://dausruddin.com/how-to-enable-clipboard-and-folder-sharing-in-qemu-kvm-on-windows-guest/), [[2 - terminal based]](https://cialu.net/qemu-kvm-on-ubuntu-and-sharing-files-between-host-and-guests/#fromHistory), [[QEMU/KVM - Virt-Manager | Folder sharing and USB Redirection: until 6:08 - YouTube]](https://www.youtube.com/watch?v=crDuKm6XNv4), [[3]](https://askubuntu.com/questions/899916/how-to-share-folder-with-windows-10-guest-using-virt-manager-kvm), [[4]](https://www.guyrutenberg.com/2018/10/25/sharing-a-folder-a-windows-guest-under-virt-manager/), [[5]](https://unix.stackexchange.com/questions/528166/impossible-folder-sharing-by-virt-viewer-in-windows-client)
+            - Didn't work for my Windows VM. I was unable to launch the virtual machine because of a permissions issue with the directory I wanted to share, even after hours-long troubleshooting.
+            - Not persistent after shutdown [[1]](https://gitlab.com/virt-viewer/virt-viewer/-/issues/13)
+            - Possible solution for the permissions issue: [[host]](https://ask.fedoraproject.org/t/virt-manager-and-shared-folder-host-guest-permission-issue/10938/10), [[guest]](https://serverfault.com/questions/394645/qemu-virt-manager-no-permisson-on-shared-folder)
+        - USB Redirection: usb storage device: USB drive/external disk [fallback option - when everything else fails] [[QEMU/KVM - Virt-Manager | Folder sharing and USB Redirection: from 6:08 - YouTube]](https://www.youtube.com/watch?v=crDuKm6XNv4&t=368s),
+            
+                [laptop@laptop ~]$ #shared folder in kvm
+                [laptop@laptop ~]$ #start VM in cockpit/virt-manager
+                [laptop@laptop ~]$ #insert USB
+                [laptop@laptop ~]$ #click on the VM name in cockpit
+                [laptop@laptop ~]$ #in the Console section select 'Desktop viewer'
+                [laptop@laptop ~]$ #click on Launch remote viewer
+                [laptop@laptop ~]$ #open the downloaded file. a virt-viewer window will open with the windows UI
+                [laptop@laptop ~]$ #click on File -- USB device selection
+                [laptop@laptop ~]$ #from the list select the USB drive you've inserted
+                [laptop@laptop ~]$ #the USB drive will then be mounted in windows. you can now use this USB drive for file sharing, although only in half-duplex mode, i.e. only in one operating system at a time - first only for guest (Windows), then only for host (Arch Linux), then back to guest, and so on. this is the simplest way that worked for me. Neither webdavd or virtio-fs hadn't worked for me, no matter how hard I tried.
+                [laptop@laptop ~]$ #even cockpit's folder sharing in virt-viewer didn't work. the 'map-folder.bat' script from Program Files\spice was failing consistently on error 67, even thouth the service was running, and even after restarting the service. Whatever, hardware solution trumps the software once again.
+        - Samba [[1]](https://www.iodocs.com/use-virt-manager-share-files-linux-host-windows-guest/), [[2]](https://web.archive.org/web/20160102195151/http://www.linux-kvm.com/content/tip-how-you-can-share-files-your-linux-host-windows-guest-using-samba)
+            - I couldn't install Samba/CIFS feature support into my Windows VM. The installation ended up with error.
+        - Virtio-FS [gave up on this one - too complicated and hardware intensive] [[1]](https://unix.stackexchange.com/questions/86071/use-virt-manager-to-share-files-between-linux-host-and-windows-guest), [[2]](https://libvirt.org/kbase/virtiofs.html), [[3]](https://libvirt.org/kbase/virtiofs.html#fromHistory), [[4]](https://www.tauceti.blog/post/qemu-kvm-share-host-directory-with-vm-with-virtio/#fromHistory), [[5]](https://www.tauceti.blog/post/qemu-kvm-share-host-directory-with-vm-with-virtio/#fromHistory)
 
 fwupd - updates BIOS and UEFI and other device's firmware from Linux, if the device is supported
 
