@@ -958,34 +958,49 @@
                 [laptop@laptop ~]$ #play with the UI. You'll figure it out on your own, I'm sure ;)
                 [laptop@laptop ~]$ #cockpit uses virt-viewer for displaying the graphical interface of the virtual machine, which displays, in my opinion, sharper image, less blurred fonts, than the default viewer in virt-manager.
 
-    - Enable shared folder between Linux (host operating system - environment for virtual machines) and Windows (guest operating system - the virtual machine) [[1]](https://unix.stackexchange.com/questions/86071/use-virt-manager-to-share-files-between-linux-host-and-windows-guest)
-        - SSH Filesystem [preferred and recommended for Windows VMs]
+    - Enable clipboard and folder sharing between Linux (host operating system - environment for virtual machines) and Windows (guest operating system - the virtual machine) [[1]](https://unix.stackexchange.com/questions/86071/use-virt-manager-to-share-files-between-linux-host-and-windows-guest)
+        - SSH Filesystem [preferred and recommended for Windows VMs] [[1]](https://www.digitalocean.com/community/tutorials/how-to-use-sshfs-to-mount-remote-file-systems-over-ssh)
         
-                [laptop@laptop ~]$ #kvm file sharing
-                [laptop@laptop ~]$ #host: ssh server configured to allow root login with password [[1]](https://linuxhint.com/arch_linux_ssh_server/), [[2]](https://www.liquidweb.com/kb/enable-root-login-via-ssh/)
-                [laptop@laptop ~]$ #sudo pacman -S openssh
-                [laptop@laptop ~]$ #sudo systemctl status sshd
-                [laptop@laptop ~]$ #sudo systemctl start sshd
-                [laptop@laptop ~]$ #sudo systemctl status sshd
-                [laptop@laptop ~]$ # test the connection from the virtual machine
-                [laptop@laptop ~]$ #sudo vim /etc/ssh/sshd_config
-                [laptop@laptop ~]$ # enable in the sshd config root login with PermitRootLogin yes (rest of the config is default)
-                [laptop@laptop ~]$ cat /etc/ssh/sshd_config | grep -v '#' | grep -v "^$"
-                PermitRootLogin yes
-                AuthorizedKeysFile	.ssh/authorized_keys
-                ChallengeResponseAuthentication no
-                UsePAM yes
-                Subsystem	sftp	/usr/lib/ssh/sftp-server
-                [laptop@laptop ~]$ #sudo systemctl restart sshd
-                [laptop@laptop ~]$ # connect from the virtual machine to the host via SSH as root
-                [laptop@laptop ~]$ #set up SSH filesystem with the three guest utilities
-                [laptop@laptop ~]$ #guest: guest utilities: sshfs-win, winfsp, sshfs-win-manager; then open sshfs-win-manager, create a connection and connect to the host system. The SSH connection to the host directory will be mapped automatically in Windows guest as a separate local drive
+           1. **Host (Linux-based OS):** ssh server configured to allow root login with password [[1]](https://linuxhint.com/arch_linux_ssh_server/), [[2]](https://www.liquidweb.com/kb/enable-root-login-via-ssh/)
+            
+                sudo pacman -S openssh
+                sudo systemctl status sshd
+                sudo systemctl enable --now sshd
+                [sudo systemctl status sshd
+            
+            1. test the connection from the virtual machine, e.g. with the `ssh` from the PowerShell [[1]](https://devblogs.microsoft.com/powershell/using-the-openssh-beta-in-windows-10-fall-creators-update-and-windows-server-1709/), [[2]](https://winaero.com/enable-openssh-server-windows-10/), [[3]](https://docs.microsoft.com/en-us/windows-server/administration/openssh/openssh_install_firstuse):
+            
+                    ssh laptop@192.168.0.12
+                
+                For me this didn't work because Xwrap error didn't allow me to proceed to the console. Therefore I enabled root login with password on default SSH port (22) [which I would rather don't do on a production machine for security reasons ;) ]
+                
+            1. enable in the sshd config root login with `PermitRootLogin yes` (rest of the config is default)
+            
+                    sudo vim /etc/ssh/sshd_config
+                    cat /etc/ssh/sshd_config | grep -v '#' | grep -v "^$"
+
+                    PermitRootLogin yes
+                    AuthorizedKeysFile	.ssh/authorized_keys
+                    ChallengeResponseAuthentication no
+                    UsePAM yes
+                    Subsystem	sftp	/usr/lib/ssh/sftp-server
+
+            1. Restart SSH daemon to apply changes
+
+                    sudo systemctl restart sshd
+             
+            1. connect from the virtual machine to the host via SSH again as root e.g. from PowerShell. The connection with the host will now be established through SSH.
+            1. **Guest: (Windows OS)** set up SSH filesystem with the three guest utilities in this order
+                1. [winfsp](https://github.com/billziss-gh/winfsp) - [link of the latest WinFSP release](https://github.com/billziss-gh/winfsp/releases/latest)
+                1. [sshfs-win](https://github.com/billziss-gh/sshfs-win) - [link of the latest SSHFS-Win release](https://github.com/billziss-gh/sshfs-win/releases/latest)
+                1. [sshfs-win-manager](https://github.com/evsar3/sshfs-win-manager) - [link of the latest SSHFS-Win Manager release](https://github.com/evsar3/sshfs-win-manager/releases/latest)
+            1. then open `SSHFS-Win Manager`, create a connection, fill parameters and connect to the host system. The SSH connection to the host directory will be mapped automatically in Windows guest as a separate local drive. Everything will function seamlessly as if it was mounted locally. Even without internet, because the connection is made locally ;)
         
         - Filesystem Passtrough: `spice-webdavd` - Spice channel [preferred and recommended for Linux VMs] [[1 - GUI based]](https://dausruddin.com/how-to-enable-clipboard-and-folder-sharing-in-qemu-kvm-on-windows-guest/), [[2 - terminal based]](https://cialu.net/qemu-kvm-on-ubuntu-and-sharing-files-between-host-and-guests/#fromHistory), [[QEMU/KVM - Virt-Manager | Folder sharing and USB Redirection: until 6:08 - YouTube]](https://www.youtube.com/watch?v=crDuKm6XNv4), [[3]](https://askubuntu.com/questions/899916/how-to-share-folder-with-windows-10-guest-using-virt-manager-kvm), [[4]](https://www.guyrutenberg.com/2018/10/25/sharing-a-folder-a-windows-guest-under-virt-manager/), [[5]](https://unix.stackexchange.com/questions/528166/impossible-folder-sharing-by-virt-viewer-in-windows-client)
             - Didn't work for my Windows VM through `virt-viewer`. I was unable to launch the virtual machine because of a permissions issue with the directory I wanted to share, even after hours-long troubleshooting.
             - Not persistent after shutdown [[1]](https://gitlab.com/virt-viewer/virt-viewer/-/issues/13)
             - Possible solution for the permissions issue: [[host]](https://ask.fedoraproject.org/t/virt-manager-and-shared-folder-host-guest-permission-issue/10938/10), [[guest]](https://serverfault.com/questions/394645/qemu-virt-manager-no-permisson-on-shared-folder)
-        - USB Redirection: usb storage device: USB drive/external disk [fallback option - when everything else fails] [[QEMU/KVM - Virt-Manager | Folder sharing and USB Redirection: from 6:08 - YouTube]](https://www.youtube.com/watch?v=crDuKm6XNv4&t=368s),
+        - USB Redirection: usb storage device: USB drive/external disk [fallback option - when everything else fails] [[QEMU/KVM - Virt-Manager | Folder sharing and USB Redirection: from 6:08 - YouTube]](https://www.youtube.com/watch?v=crDuKm6XNv4&t=368s)
             
                 [laptop@laptop ~]$ #shared folder in kvm
                 [laptop@laptop ~]$ #start VM in cockpit/virt-manager
