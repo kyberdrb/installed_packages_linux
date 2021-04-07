@@ -888,8 +888,29 @@
 
     When you click at the Blueman applet, turn on the Bluetooth, and then click on the applet immediately after, then the Blueman applet doesn't respond to clicking. Restarting the panel with `xfce4-panel --restart` makes the applet clickable again. [Source](https://askubuntu.com/questions/891208/restart-xfce-panel-in-xubuntu/891209#891209)
 
-* qemu qemu-arch-extra virt-manager ebtables dnsmasq bridge-utils edk2-ovmf cockpit cockpit-machines virt-viewer - operating system virtualization
-    - - `virt-manager` - GUI
+* qemu qemu-arch-extra virt-manager ebtables dnsmasq bridge-utils edk2-ovmf cockpit cockpit-machines virt-viewer - operating system virtualization. Why another hypervisor? Because with some kernels, namely `linux-lqx`, I was getting an error message when compiling VirtualBox module into the kernel
+
+        output of '/var/log/pacman.log'
+
+        ...
+        [2021-04-07T20:59:02+0200] [ALPM-SCRIPTLET] ==> dkms install --no-depmod -m vboxhost -v 6.1.18_OSE -k 5.11.12-lqx1-1-lqx
+        [2021-04-07T20:59:07+0200] [ALPM-SCRIPTLET] Error! Bad return status for module build on kernel: 5.11.12-lqx1-1-lqx (x86_64)
+        [2021-04-07T20:59:07+0200] [ALPM-SCRIPTLET] Consult /var/lib/dkms/vboxhost/6.1.18_OSE/build/make.log for more information.
+        [2021-04-07T20:59:07+0200] [ALPM-SCRIPTLET] ==> Warning, `dkms install --no-depmod -m vboxhost -v 6.1.18_OSE -k 5.11.12-lqx1-1-lqx' returned 10
+        ...
+        
+        output of kernel compilation
+        
+        ...
+        ==> dkms install --no-depmod -m vboxhost -v 6.1.18_OSE -k 5.11.12-lqx1-1-lqx
+        Error! Bad return status for module build on kernel: 5.11.12-lqx1-1-lqx (x86_64)
+        Consult /var/lib/dkms/vboxhost/6.1.18_OSE/build/make.log for more information.
+        ==> Warning, `dkms install --no-depmod -m vboxhost -v 6.1.18_OSE -k 5.11.12-lqx1-1-lqx' returned 10
+        ...
+        
+    So therefore I want to have an alternative hypervisor, that on one hand is platform specific only for Linux-based operating systems, but on the other hand stable with any of my favourite kernels: `linux-muqss` and `linux-lqx`, and maybe `linux-lts` as a fallback. So far I'm satisfied with the functionality and performance of QEMU/KVM. Little bit slower than VirtualBox, but I am willing to wait, because I get freedom and stability in return.
+
+    - `virt-manager` - GUI
     - `ebtables dnsmasq bridge-utils` - internet connection sharing with the virtual machine, i.e. with the _guest_ system
     - `edk2-ovmf` - UEFI support
     - `cockpit cockpit-machines` - simpler virtual machines management
