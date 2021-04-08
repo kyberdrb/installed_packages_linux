@@ -908,6 +908,15 @@
         ==> Warning, `dkms install --no-depmod -m vboxhost -v 6.1.18_OSE -k 5.11.12-lqx1-1-lqx' returned 10
         ...
         
+    I'm also sceptical of the robustness and have worries about system stability when I see messages about _kernel tainting_ in the system's log:
+    
+        journalctl --boot --reverse
+        
+        ...
+        Apr 08 10:36:18 laptop kernel: vboxdrv: module verification failed: signature and/or required key missing - tainting kernel
+        Apr 08 10:36:18 laptop kernel: vboxdrv: loading out-of-tree module taints kernel.
+        ...
+        
     So therefore I want to have an alternative hypervisor, that on one hand is platform specific only for Linux-based operating systems, but on the other hand stable with any of my favourite kernels: `linux-muqss` and `linux-lqx`, and maybe `linux-lts` as a fallback. So far I'm satisfied with the functionality and performance of QEMU/KVM. Little bit slower than VirtualBox, but I am willing to wait, because I get freedom and stability in return.
 
     - `virt-manager` - GUI
