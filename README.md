@@ -680,6 +680,7 @@
 ---
 
 * virtualbox virtualbox-ext-oracle virtualbox-guest-iso
+    - I rather use QEMU/KVM/libvirt/virt-manager/Cockpit combo instad of VirtualBox, because VirtualBox modules taint the kernel which may have unpredictable consequences. Therefore I feel safer and calmer when I use the native kernel hypervisor instead of additional one.
     - choose the option 
         - `virtualbox-host-modules-arch`, if you have the default arch kernel, ...  
             ... but if you have any custom kernel installed, like `linux-pf` use the package `virtualbox-host-dkms` see https://wiki.archlinux.org/index.php/VirtualBox#Install_the_core_packages
