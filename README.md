@@ -920,7 +920,7 @@
     So therefore I want to have an alternative hypervisor, that on one hand is platform specific only for Linux-based operating systems, but on the other hand stable with any of my favourite kernels: `linux-muqss` and `linux-lqx`, and maybe `linux-lts` as a fallback. So far I'm satisfied with the functionality and performance of QEMU/KVM. Little bit slower than VirtualBox, but I am willing to wait, because I get freedom and stability in return.
 
     - `virt-manager` - GUI
-    - `ebtables-git nftables dnsmasq bridge-utils` - installing `ebtables-git` instad of `ebtables` because of the latter package had been dropped in favor of `nftables`, but the `libvirt` packages still needs the removed `ebtables` in order to provide default NAT internet connection for guest systems (virtual machines)
+    - `ebtables-git nftables dnsmasq bridge-utils` - installing `ebtables-git` instad of `ebtables` because of the latter package had been dropped in favor of `nftables` [1](https://www.reddit.com/r/archlinux/comments/mq3k0w/does_anybody_know_why_ebtables_got_removed/), but the `libvirt` packages still needs the removed `ebtables` in order to provide default NAT internet connection for guest systems (virtual machines)
     - `edk2-ovmf` - UEFI support
     - `cockpit cockpit-machines` - simpler virtual machines management
     - `virt-viewer` - sharper, less blurred, image and fonts, of the virtual screen from the virtual machine - Desktop viewer for Cockpit
