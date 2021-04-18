@@ -903,7 +903,7 @@
 
     When you click at the Blueman applet, turn on the Bluetooth, and then click on the applet immediately after, then the Blueman applet doesn't respond to clicking. Restarting the panel with `xfce4-panel --restart` makes the applet clickable again. [Source](https://askubuntu.com/questions/891208/restart-xfce-panel-in-xubuntu/891209#891209)
 
-* qemu qemu-arch-extra virt-manager ebtables-git nftables dnsmasq bridge-utils edk2-ovmf cockpit cockpit-machines virt-viewer - operating system virtualization. Why another hypervisor? Because with some kernels, namely `linux-lqx`, I was getting an error message when compiling VirtualBox module into the kernel
+* qemu qemu-arch-extra virt-manager iptables-nft dnsmasq bridge-utils edk2-ovmf cockpit cockpit-machines virt-viewer - operating system virtualization. Why another hypervisor? Because with some kernels, namely `linux-lqx`, I was getting an error message when compiling VirtualBox module into the kernel
 
         output of '/var/log/pacman.log'
 
@@ -935,7 +935,7 @@
     So therefore I want to have an alternative hypervisor, that on one hand is platform specific only for Linux-based operating systems, but on the other hand stable with any of my favourite kernels: `linux-muqss` and `linux-lqx`, and maybe `linux-lts` as a fallback. So far I'm satisfied with the functionality and performance of QEMU/KVM. Little bit slower than VirtualBox, but I am willing to wait, because I get freedom and stability in return.
 
     - `virt-manager` - GUI
-    - `ebtables-git nftables dnsmasq bridge-utils` - installing `ebtables-git` instad of `ebtables` because of the latter package had been dropped in favor of `nftables` [1](https://www.reddit.com/r/archlinux/comments/mq3k0w/does_anybody_know_why_ebtables_got_removed/), but the `libvirt` packages still needs the removed `ebtables` in order to provide default NAT internet connection for guest systems (virtual machines)
+    - `iptables-nft dnsmasq bridge-utils` - installing `iptables-nft` instad of `ebtables` because of the latter package had been dropped in favor of `nftables` for performance and maintenance reasons [1](https://www.reddit.com/r/archlinux/comments/mq3k0w/does_anybody_know_why_ebtables_got_removed/), [[2]](https://lists.archlinux.org/pipermail/arch-dev-public/2020-December/030231.html). The `iptables-nft` provides the `ebtables` utility in order to use the default NAT interface for internet connection for guest systems/virtual machines
     - `edk2-ovmf` - UEFI support
     - `cockpit cockpit-machines` - simpler virtual machines management
     - `virt-viewer` - sharper, less blurred, image and fonts, of the virtual screen from the virtual machine - Desktop viewer for Cockpit
