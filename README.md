@@ -1,5 +1,19 @@
 # TODO link configuration files from `configs` into this package list
 
+* android-tools - for `adb` utility
+    - fixing unresponsive edges and navigation bar on my Android phone Sony Xperia XA1 (G3121 - Android 8.0.0); inspired by [[1]](https://techsable.com/change-screen-resolution-in-android-without-root/)
+        1. Enable developer mode [[2]](https://wiki.archlinux.org/index.php/Android_Debug_Bridge)
+        1. Enable USB Debugging [[2]](https://wiki.archlinux.org/index.php/Android_Debug_Bridge)
+        1. Connect the phone with the computer via USB cable
+        1. `adb device` - confirm and, eventually, save device, when prompted
+        1. Create screen padding with command [[3]](https://nerdschalk.com/android-change-navigation-bar-height/)
+
+                adb shell wm overscan 7,5,7,40
+
+            Numbers represent [LEFT,TOP,RIGHT,BOTTOM] edge of the screen
+
+            This increases the height of the navigation bar - moves the navigation bar higher - and pads the sides and top of the software displaying area into the hardware area from the screen edges unresponsive to the touch towards the touch-responsive parts of the screen, for more fluent and comfortable usage of the phone.
+
 * xscreenserver gnome-keyring - screensaver and lockscreen support
     - `gnome-keyring` serves as a prevention for `journalctl` error messages
     
