@@ -5,14 +5,14 @@
         1. Enable developer mode [[2]](https://wiki.archlinux.org/index.php/Android_Debug_Bridge)
         1. Enable USB Debugging [[2]](https://wiki.archlinux.org/index.php/Android_Debug_Bridge)
         1. Connect the phone with the computer via USB cable
-        1. `adb device` - confirm and, eventually, save device, when prompted
+        1. `adb devices` - confirm and, eventually, save device, when prompted
         1. Create screen padding with command [[3]](https://nerdschalk.com/android-change-navigation-bar-height/)
 
-                adb shell wm overscan 7,5,7,40
+                adb shell wm overscan 20,0,20,40
 
             Numbers represent [LEFT,TOP,RIGHT,BOTTOM] edge of the screen
 
-            This increases the height of the navigation bar - moves the navigation bar higher - and pads the sides and top of the software displaying area into the hardware area from the screen edges unresponsive to the touch towards the touch-responsive parts of the screen, for more fluent and comfortable usage of the phone.
+            This increases the height of the navigation bar - moves the navigation bar higher - and pads the sides and top of the software displaying area into the hardware area from the screen edges unresponsive to the touch towards the touch-responsive parts of the screen, for more fluent and comfortable usage of the phone. The keyboard is responsive to the corner and edge buttons 'q', 'p' and other control buttons. The cursor can be now dragged to the very edge of the screen, behind the first character on a line with ease. Context menus in the left and right top corner are now responsive to touch immediately. So much functionality for a little bit of discomfort, less usable screen space and a little bit uglier graphical interfaces of some applications. For zero money, zero waste. That's efficient :D Efficiency. Redefined.
 
 * xscreenserver gnome-keyring - screensaver and lockscreen support
     - `gnome-keyring` serves as a prevention for `journalctl` error messages
