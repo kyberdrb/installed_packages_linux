@@ -368,7 +368,15 @@
 * minitube - my favorite player for playing videos in 1440p/2K/4K with lower GPU power consumption than hardware accelerated MPV `mpv --hwdec=auto`, but only at those higher video resolutions, i. e. 1440p+, and with hardware acceleration just like VNC.
     - it combines the advantages of MPV and VNC for smooth Youtube playback: seeking function from MPV and hardware acceleration from VNC
 
-* chromium / (https://aur.archlinux.org/packages/ungoogled-chromium/)[ungoogled-chromium]: see (https://github.com/Eloston/ungoogled-chromium#enhancing-features)[ungoogled-chromium GitHub]
+* ungoogled-chromium
+    - https://aur.archlinux.org/packages/ungoogled-chromium/
+    - https://github.com/Eloston/ungoogled-chromium#enhancing-features
+    - Extensions
+        - if standard installation fails, install them via extracting the `crx` and drag-and-dropping to folder to the `chrome://extensions/` (https://github.com/NeverDecaf/chromium-web-store#if-drag-and-dropping-does-not-work-try-this-workaround)[[1]]
+        - (https://github.com/NeverDecaf/chromium-web-store)[chromium-web-store] - Enabling Chrome Store in order to install extensions comfortably
+        - (https://chrome.google.com/webstore/detail/google-analytics-opt-out/fllaojicojecljbmefodhfapmkghcbnh?hl=en)[Google Analytics Opt-out Add-on (by Google)]
+
+* chromium
     - Maybe in the future I will try out [Chromium-VAAPI](https://aur.archlinux.org/packages/chromium-vaapi/) and see if it makes any difference when playing videos, e. g. lower CPU usage, hardware acceleration of videos through GPU, smoother - no stutter and tear-free - video playback.
     - [ungoogled-chromium for Android](https://uc.droidware.info/)
     - Extensions
