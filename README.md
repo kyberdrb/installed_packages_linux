@@ -152,67 +152,13 @@
 
         - Sources
             - https://vi.stackexchange.com/questions/4141/how-to-indent-as-spaces-instead-of-tab/4175#4175
-            - https://vim.fandom.com/wiki/Working_with_long_lines
+            - https://vim.fandom.com/wiki/Working_with_long_lines#Navigating_long_lines_with_Vim.27s_built-in_capabilities - `display+=lastline`
             - https://vimawesome.com/plugin/nerdtree-red
-            - (https://github.com/preservim/nerdtree/issues/928#issuecomment-445755327)[fix for `^G` in the nerdtree]
+            - https://github.com/preservim/nerdtree/issues/928#issuecomment-445755327 - [fix for `^G` in the nerdtree]
             - https://github.com/tpope/vim-surround
             - https://vi.stackexchange.com/questions/82/how-to-get-intelligent-c-auto-completion/389#389
             - https://vimawesome.com/plugin/clang-complete-please-everybody
             - https://superuser.com/questions/280500/how-does-one-switch-between-windows-on-vim/280501#280501
-    
-* atom - text editor
-    - Installed packages - Edit → Preferences → Install:
-        - asciidoc-preview
-            - AsciiDoc support
-        - highlight-selected
-            - Highlights the current word selected when double clicking
-        
-    - Configuration:
-        - Disable welcome screen: uncheck the “Show Welcome Guide when opening Atom” box.
-        
-            Source: https://discuss.atom.io/t/how-to-get-rid-of-welcome-md/12838/10
-        - Edit -- Preferences -- Core -- disable _Allow Pending Pane Items_ - temporary preview of files - fixes the bug with opening a file permanently from the tree view
-        
-            Source: https://discuss.atom.io/t/atom-doesnt-open-file-on-single-click-in-tree-view/27902/9
-        - Edit -- Preferences -- Themes -- UI Theme: Atom Light; Syntax Theme: Atom Light
-        - Edit -- Preferences -- Editor -- disable _Atomic Soft Tabs_
-            - Font Family: `Source Code Pro, Menlo, Consolas, DejaVu Sans Mono, monospace`
-                - because these monospace fonts have clearly distinguishable among the characters 'iI1l' 'oO0 - especially the zero :)' 'sS5' 'A4' 'g9' 'B8' ''Z2
-            - Tab Length: 4  
-            - Tab Type: soft
-        
-            For the list of all avaliable fonts, execue this command in terminal
-                
-                fc-list | cut -d ':' -f2 | cut -d' ' -f1 --complement | less
-        
-            Source: https://discuss.atom.io/t/how-do-you-use-spaces-instead-of-tabs/64730/2
-        - Disable spell-cheking (it disturbs me when almost everything is red-squiggly-underlined)
-            - Edit → Preferences → Packages → search for `spell` → disable package `spell-check`
-            
-            Source: https://superuser.com/questions/999695/how-to-disable-spell-checking-in-atom/1022779#1022779
-        - Keybindings -- click on _your keymap file_. Copy this to it:
-         
-                'atom-workspace atom-text-editor':
-                    'ctrl-left': 'editor:move-to-previous-word-boundary'
-                    'ctrl-right': 'editor:move-to-next-word-boundary'
-                    'ctrl-shift-left': 'editor:select-to-previous-word-boundary'
-                    'ctrl-shift-right': 'editor:select-to-next-word-boundary'
-                    'ctrl-backspace': 'editor:delete-to-previous-word-boundary'
-                    'ctrl-delete': 'editor:delete-to-next-word-boundary'
-                    'ctrl-shift-S': 'window:save-all'
-                    'ctrl-alt-S': 'core:save-as'
-                    'alt-z':'editor:toggle-soft-wrap'
-                     
-             Sources:
-             - https://www.reddit.com/r/Atom/comments/534mno/how_to_configure_atom_to_properly_delete_words/
-             - https://discuss.atom.io/t/ctrl-backspace-deletes-last-character-from-line-above/56256/3
-             - https://discuss.atom.io/t/toggle-soft-wrap-key-binding/2643
-
-    - Keyboard shortcuts:
-        - Command Pallete: Ctrl-Shift-P
-        - Markdown Preview: Ctrl-Shift-M
-        - AsciiDoc Preview: Ctrl-Shift-A
-        - Duplicate Line: Ctrl + Shift + D
         
 * vscodium-bin-marketplace - debranded Visual Studio Code with Visual Studio Code's marketplace feature
     - Extensions:
@@ -1101,6 +1047,60 @@ wget -> terminal downloader utility
   - xfce4-appfinder - the history file with commands history is located at `~/.cache/xfce4/xfce4-appfinder/history` [[1]](https://forum.xfce.org/viewtopic.php?pid=38253#p38253), [[2]](http://xfce.10915.n7.nabble.com/Application-Finder-history-file-location-in-docs-xfce-org-td49112.html)
 
 ---
+
+* atom - text editor
+    - Installed packages - Edit → Preferences → Install:
+        - asciidoc-preview
+            - AsciiDoc support
+        - highlight-selected
+            - Highlights the current word selected when double clicking
+        
+    - Configuration:
+        - Disable welcome screen: uncheck the “Show Welcome Guide when opening Atom” box.
+        
+            Source: https://discuss.atom.io/t/how-to-get-rid-of-welcome-md/12838/10
+        - Edit -- Preferences -- Core -- disable _Allow Pending Pane Items_ - temporary preview of files - fixes the bug with opening a file permanently from the tree view
+        
+            Source: https://discuss.atom.io/t/atom-doesnt-open-file-on-single-click-in-tree-view/27902/9
+        - Edit -- Preferences -- Themes -- UI Theme: Atom Light; Syntax Theme: Atom Light
+        - Edit -- Preferences -- Editor -- disable _Atomic Soft Tabs_
+            - Font Family: `Source Code Pro, Menlo, Consolas, DejaVu Sans Mono, monospace`
+                - because these monospace fonts have clearly distinguishable among the characters 'iI1l' 'oO0 - especially the zero :)' 'sS5' 'A4' 'g9' 'B8' ''Z2
+            - Tab Length: 4  
+            - Tab Type: soft
+        
+            For the list of all avaliable fonts, execue this command in terminal
+                
+                fc-list | cut -d ':' -f2 | cut -d' ' -f1 --complement | less
+        
+            Source: https://discuss.atom.io/t/how-do-you-use-spaces-instead-of-tabs/64730/2
+        - Disable spell-cheking (it disturbs me when almost everything is red-squiggly-underlined)
+            - Edit → Preferences → Packages → search for `spell` → disable package `spell-check`
+            
+            Source: https://superuser.com/questions/999695/how-to-disable-spell-checking-in-atom/1022779#1022779
+        - Keybindings -- click on _your keymap file_. Copy this to it:
+         
+                'atom-workspace atom-text-editor':
+                    'ctrl-left': 'editor:move-to-previous-word-boundary'
+                    'ctrl-right': 'editor:move-to-next-word-boundary'
+                    'ctrl-shift-left': 'editor:select-to-previous-word-boundary'
+                    'ctrl-shift-right': 'editor:select-to-next-word-boundary'
+                    'ctrl-backspace': 'editor:delete-to-previous-word-boundary'
+                    'ctrl-delete': 'editor:delete-to-next-word-boundary'
+                    'ctrl-shift-S': 'window:save-all'
+                    'ctrl-alt-S': 'core:save-as'
+                    'alt-z':'editor:toggle-soft-wrap'
+                     
+             Sources:
+             - https://www.reddit.com/r/Atom/comments/534mno/how_to_configure_atom_to_properly_delete_words/
+             - https://discuss.atom.io/t/ctrl-backspace-deletes-last-character-from-line-above/56256/3
+             - https://discuss.atom.io/t/toggle-soft-wrap-key-binding/2643
+
+    - Keyboard shortcuts:
+        - Command Pallete: Ctrl-Shift-P
+        - Markdown Preview: Ctrl-Shift-M
+        - AsciiDoc Preview: Ctrl-Shift-A
+        - Duplicate Line: Ctrl + Shift + D
 
 bc- > command line calculator => set default scale (decimal precision) - https://askubuntu.com/questions/621017/how-to-set-default-scale-for-bc-calculator
 blueman -> then execute: su -c 'systemctl enable bluetooth.service' -> this will enable the Bluetooth icon in notification tray
