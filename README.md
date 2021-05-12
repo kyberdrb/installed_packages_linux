@@ -8,7 +8,7 @@
         1. `adb devices` - confirm and, eventually, save device, when prompted
         1. Create screen padding with command [[3]](https://nerdschalk.com/android-change-navigation-bar-height/)
 
-                adb shell wm overscan 50,5,50,40
+                adb shell wm overscan 60,5,60,40
 
             Numbers represent [LEFT,TOP,RIGHT,BOTTOM] edge of the screen
 
