@@ -1,7 +1,7 @@
 * ntp - keep the time up to date
     
         pikaur -Sy ntp networkmanager-dispatcher-ntpd
-        sudo cp ~/git/kyberdrb/installed_packages_linux/configs/ntp.conf /etc/ntp.conf
+        sudo ln -s ~/git/kyberdrb/installed_packages_linux/configs/ntp.conf /etc/ntp.conf
         sudo systemctl status ntpd.service
         sudo systemctl status ntpdate.service
         sudo systemctl enable ntpd.service
