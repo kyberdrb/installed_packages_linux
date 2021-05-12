@@ -8,6 +8,12 @@
         sudo systemctl enable ntpdate.service
         reboot
         timedatectl
+        
+    - Sources
+        - https://wiki.archlinux.org/title/Network_Time_Protocol_daemon
+        - https://wiki.archlinux.org/title/Network_Time_Protocol_daemon#Start_ntpd_at_boot
+        - https://wiki.archlinux.org/title/Network_Time_Protocol_daemon#Start_ntpd_on_network_connection
+        - https://superuser.com/questions/444733/linux-ntpd-and-ntpdate-service
 
 * android-tools - for `adb` utility
     - fixing unresponsive edges and navigation bar on my Android phone Sony Xperia XA1 (G3121 - Android 8.0.0); inspired by [[1]](https://techsable.com/change-screen-resolution-in-android-without-root/)
