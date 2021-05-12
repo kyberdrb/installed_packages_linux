@@ -1,4 +1,13 @@
-# TODO link configuration files from `configs` into this package list
+* ntp - keep the time up to date
+    
+        pikaur -Sy ntp networkmanager-dispatcher-ntpd
+        sudo cp ~/git/kyberdrb/installed_packages_linux/configs/ntp.conf /etc/ntp.conf
+        sudo systemctl status ntpd.service
+        sudo systemctl status ntpdate.service
+        sudo systemctl enable ntpd.service
+        sudo systemctl enable ntpdate.service
+        reboot
+        timedatectl
 
 * android-tools - for `adb` utility
     - fixing unresponsive edges and navigation bar on my Android phone Sony Xperia XA1 (G3121 - Android 8.0.0); inspired by [[1]](https://techsable.com/change-screen-resolution-in-android-without-root/)
