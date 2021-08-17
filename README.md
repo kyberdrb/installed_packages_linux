@@ -329,6 +329,8 @@
 * minitube - my favorite player for playing videos in 1440p/2K/4K with lower GPU power consumption than hardware accelerated MPV `mpv --hwdec=auto`, but only at those higher video resolutions, i. e. 1440p+, and with hardware acceleration just like VNC.
     - it combines the advantages of MPV and VNC for smooth Youtube playback: seeking function from MPV and hardware acceleration from VNC
 
+* brave - Brave Browser: internet browser with focus on privacy
+
 * ungoogled-chromium
     - https://aur.archlinux.org/packages/ungoogled-chromium/
     - https://github.com/Eloston/ungoogled-chromium#enhancing-features
