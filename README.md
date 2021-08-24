@@ -629,30 +629,19 @@
             - https://www.ghacks.net/2020/12/14/how-to-find-out-if-webrender-is-enabled-in-firefox-and-how-to-enable-it-if-it-is-not/
             - https://www.phoronix.com/scan.php?page=news_item&px=Firefox-80-VA-API-X11
         
-* redshift-minimal -> color temperature changer (spares eyes) -> run on background in tray with "redshift&"
+* redshift-minimal python-xdg safeeyes xprintidle python-croniter - utilities to preventing eye strain, to increase melatonin levels, to relieve from dry eye syndrome symptoms
+    - redshift-minimal - color temperature changer usually warmer tint (spares eyes) -> run on background in tray with "redshift&"
+    - python-xdg - dependency for redshift-gtk (tray icon) to launch and run correctly
+    - Alternatives for Windows:
+        - f.lux - alternative to `redshift`
+        - eyeblink, EyeLeo - alternatives for `safeeyes`
     - Create environment for the config file
     
             mkdir -p ~/.config/redshift/
             cd ~/.config/redshift/
             vim redshift.conf
     
-    - Sample `redshift.conf`
-    
-            [redshift]
-            temp-day=2600
-            temp-night=2600
-            fade=0
-            gamma=0.8
-            location-provider=manual
-            adjustment-method=randr
-
-            [manual]
-            lat=48
-            lon=11
-
-            [randr]
-            screen=0
-            
+    - Sample [`redshift.conf`](https://github.com/kyberdrb/installed_packages_linux/blob/master/configs/redshift.conf)        
     - Add to autostart XFCE4 if you want in `Applications -> Settings -> Session and Startup -> Application autostart`. Set command as `redshift &`. I assume that the configuration file is present and correct.
 
     - Sources
@@ -661,6 +650,9 @@
         - If you want to create the config file from scratch
             - [`cp redshift.conf redshift.conf.original && sed -e '/^;/d' redshift.conf.original > redshift.conf.config_with_removed_comments`](https://unix.stackexchange.com/questions/13525/sed-one-liner-to-delete-any-line-that-begins-with-a-digit/13526#13526)
             - [`sed '/^$/d' redshift.conf.config_with_removed_comments > redshift.conf` - then open the file manually and insert a new line before each section for better readability](https://www.cyberciti.biz/faq/using-sed-to-delete-empty-lines/)
+        - Lipiflow, eyeblink, f.lux - https://www.nazdravie.sk/zdrave-oci-pri-praci-s-pocitacom/)
+        - eyeblink - https://www.blinkingmatters.com/
+        - safeeyes - https://itsfoss.com/reduce-computer-eye-strain-linux/
 
 ---
 
@@ -1160,8 +1152,6 @@ pycharm-professional -> Python/HTML/CSS/JS IDE from JetBrains; the community edi
 mono - c# support for linux - see "https://wiki.archlinux.org/index.php/mono" for compilation and run instructions
 
 python -> python3 support
-
-python-xdg -> dependency for redshift-gtk (tray icon) to launch and run correctly
 
 python-virtualenv python2-virtualenv -> virtualne prostredia pre python2 a python3
 
