@@ -629,7 +629,7 @@
             - https://www.ghacks.net/2020/12/14/how-to-find-out-if-webrender-is-enabled-in-firefox-and-how-to-enable-it-if-it-is-not/
             - https://www.phoronix.com/scan.php?page=news_item&px=Firefox-80-VA-API-X11
         
-* redshift-minimal python-xdg safeeyes xprintidle python-croniter - utilities to preventing eye strain, to increase melatonin levels, to relieve from dry eye syndrome symptoms
+* redshift python-xdg safeeyes xprintidle python-croniter - utilities to preventing eye strain, to increase melatonin levels, to relieve from dry eye syndrome symptoms
     - redshift-minimal - color temperature changer usually warmer tint (spares eyes) -> run on background in tray with "redshift&"
     - python-xdg - dependency for redshift-gtk (tray icon) to launch and run correctly
     - Alternatives for Windows:
