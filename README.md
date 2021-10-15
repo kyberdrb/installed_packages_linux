@@ -706,6 +706,8 @@
             - TTS: https://bugs.archlinux.org/task/62629
         - `ebook-tools` adds support to okular for ebooks in `epub` format
             - https://bbs.archlinux.org/viewtopic.php?pid=1418697#p1418697
+        - Hide/Show menu bar: Ctrl + M
+            - https://forums.opensuse.org/showthread.php/403839-Menu-bar-and-Tool-bar-lost-in-Okular-KDE4
             
 * ocrmypdf tesseract-data-eng tesseract-data-slk tesseract-data-dan tesseract-data-ces tesseract-data-deu - utility to make a PDF document searchable with trained datasets for the `tesseract` utility; 
     - trained datasets are stored in firectory `/usr/share/tessdata/`
