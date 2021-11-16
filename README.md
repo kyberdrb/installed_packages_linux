@@ -771,7 +771,26 @@
         Source: https://wiki.archlinux.org/index.php/Media_Transfer_Protocol#gvfs-mtp
 
 * make cmake gdb lldb libc++ gtest perf valgrind - C/C++ toolchain; `libc++`is a C++ standard library for LLVM
-* clion clion-cmake clion-gdb clion-jre clion-lldb - C/C++ IDE from JetBrains with bundled toolchains and Google Test Framework; all packages must be installed to have a fully functional IDE
+* clion=2021.2.2-1 clion-cmake=2021.2.2-1 clion-gdb=2021.2.2-1 clion-jre=2021.2.2-1 clion-lldb=2021.2.2-1 - C/C++ IDE from JetBrains with bundled toolchains and Google Test Framework; all packages must be installed to have a fully functional IDE
+    - I'm using the version 2021.2.2-1 because it's the last version for which the trial period depends on the local machine - offline evaluation - and thus the evaluation period can be reset indefinitely by saving current CLion configuration and relaunching a [evaluation reset script](https://github.com/kyberdrb/JetBrains_Utilities_Unlimited/blob/master/reset_clion_evaluation.sh) locally, as opposed to the version >2021.2.3, in which the evaluation period depends on the user's JetBrains account which is controlled by the JetBrains company, not by the user. Once the evaluation period for CLion on the user's JetBrains account expires, the evaluation period cannot be resetted and the user either 
+        - buys the license, 
+        - rolls back to the 2021.2.2-1 version and will be using this older version, 
+        - or starts using other IDE for C/C++ (i.e. Eclipse, CodeBlocks, ...)
+    - To install CLion 2021.2.2-1 from the cache, I used the command
+
+            sudo pacman -U \
+                /var/cache/pacman/pkg/clion-1\:2021.2.2-1-x86_64.pkg.tar.zst \
+                /var/cache/pacman/pkg/clion-cmake-1\:2021.2.2-1-x86_64.pkg.tar.zst \
+                /var/cache/pacman/pkg/clion-gdb-1\:2021.2.2-1-x86_64.pkg.tar.zst \
+                /var/cache/pacman/pkg/clion-jre-1\:2021.2.2-1-x86_64.pkg.tar.zst \
+                /var/cache/pacman/pkg/clion-lldb-1\:2021.2.2-1-x86_64.pkg.tar.zst
+    
+    - I want to have all my project on my git repo. First I created a repo `CLionProjects` on GitHub which I cloned into `~/git/kyberdrb/`. Then I copied the content of the `~/CLionProjects` into `~/git/kyberdrb/CLionProjects`. Then I created the `.gitignore` file to exclude JetBrains IDE files. Finally I created a shortcut to redirect the default path for CLion projects from `~/CLionProjects` to `~/git/kyberdrb/CLionProjects` with command:
+    
+            ln -s /home/laptop/git/kyberdrb/CLionProjects /home/laptop/CLionProjects
+            
+        Now all new CLion projects will be by default redirected to my git repository for CLion Projects, thus changing the defaul directory for all subsequent CLion projects.
+    
     - perf - profiling tool for Linux kernel; useful for CLion; set it up in CLion under "File -> Settings -> Build, Execution, Deployment -> Dynamic analysis tools" - run profiler via "Run -> Profile '<ProjectName>'"
     - valgrind - memory leaks test; useful for CLion; set it up in CLion under "File -> Settings -> Build, Execution, Deployment -> Dynamic analysis tools" - run Valgrind via "Run -> Run '<ProjectName>' with Valgrind Memcheck"
     - gdb: I chose to disable colors in the GDB because I found some words harder to read on Terminal with black background, e.g. the `auto` keyword which was blue. Therefore, I created a file `~/.gdbinit` with this content
