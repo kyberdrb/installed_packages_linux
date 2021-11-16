@@ -785,9 +785,9 @@
                 /var/cache/pacman/pkg/clion-jre-1\:2021.2.2-1-x86_64.pkg.tar.zst \
                 /var/cache/pacman/pkg/clion-lldb-1\:2021.2.2-1-x86_64.pkg.tar.zst
     
-    - I want to have all my project on my git repo. First I created a repo `CLionProjects` on GitHub which I cloned into `~/git/kyberdrb/`. Then I copied the content of the `~/CLionProjects` into `~/git/kyberdrb/CLionProjects`. Then I created the `.gitignore` file to exclude JetBrains IDE files. Finally I created a shortcut to redirect the default path for CLion projects from `~/CLionProjects` to `~/git/kyberdrb/CLionProjects` with command:
+    - I want to have all my project on my git repo. First I created a repo `CLionProjects` on GitHub which I cloned into `${HOME}/git/kyberdrb/`. Then I copied the content of the `${HOME}/CLionProjects` into `${HOME}/git/kyberdrb/CLionProjects`. Then I created the `.gitignore` file to exclude JetBrains IDE files. Finally I created a shortcut to redirect the default path for CLion projects from `${HOME}/CLionProjects` to `${HOME}/git/kyberdrb/CLionProjects` with command:
     
-            ln -s /home/laptop/git/kyberdrb/CLionProjects /home/laptop/CLionProjects
+            ln -s "${HOME}/git/kyberdrb/CLionProjects" "${HOME}/CLionProjects"
             
         Now all new CLion projects will be by default redirected to my git repository for CLion Projects, thus changing the defaul directory for all subsequent CLion projects.
     
