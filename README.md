@@ -771,11 +771,14 @@
         Source: https://wiki.archlinux.org/index.php/Media_Transfer_Protocol#gvfs-mtp
 
 * make cmake gdb lldb libc++ gtest perf valgrind - C/C++ toolchain; `libc++`is a C++ standard library for LLVM
-* clion=2021.2.2-1 clion-cmake=2021.2.2-1 clion-gdb=2021.2.2-1 clion-jre=2021.2.2-1 clion-lldb=2021.2.2-1 - C/C++ IDE from JetBrains with bundled toolchains and Google Test Framework; all packages must be installed to have a fully functional IDE
+* clion=2021.2.2-1 clion-cmake=2021.2.2-1 clion-gdb=2021.2.2-1 clion-jre=2021.2.2-1 clion-lldb=2021.2.2-1
+    - C/C++ IDE from JetBrains with bundled toolchains and Google Test Framework; all packages must be installed to have a fully functional IDE
+        - **Maybe I'll switch later from CLion to CodeLite for IDE**  
+          **and from Google Test to `doctest` for testing framework**
     - I'm using the version 2021.2.2-1 because it's the last version for which the trial period depends on the local machine - offline evaluation - and thus the evaluation period can be reset indefinitely by saving current CLion configuration and relaunching a [evaluation reset script](https://github.com/kyberdrb/JetBrains_Utilities_Unlimited/blob/master/reset_clion_evaluation.sh) locally, as opposed to the version >2021.2.3, in which the evaluation period depends on the user's JetBrains account which is controlled by the JetBrains company, not by the user. Once the evaluation period for CLion on the user's JetBrains account expires, the evaluation period cannot be resetted and the user either 
         - buys the license, 
         - rolls back to the 2021.2.2-1 version and will be using this older version, 
-        - or starts using other IDE for C/C++ (i.e. Eclipse, CodeBlocks, ...)
+        - or starts using other IDE for C/C++ (i.e. Eclipse, CodeBlocks, **CodeLite**...)
     - To install CLion 2021.2.2-1 from the cache, I used the command
 
             sudo pacman -U \
