@@ -710,7 +710,8 @@
             - https://forums.opensuse.org/showthread.php/403839-Menu-bar-and-Tool-bar-lost-in-Okular-KDE4
             
 * ocrmypdf tesseract-data-eng tesseract-data-slk tesseract-data-dan tesseract-data-ces tesseract-data-deu - utility to make a PDF document searchable with trained datasets for the `tesseract` utility; 
-    - trained datasets are stored in firectory `/usr/share/tessdata/`
+    - trained datasets for various languages are stored in directory `/usr/share/tessdata/`
+        - the text after the last dash is the code of the language which is used by the `--language` option
     - A document is unsearchable, if it's composed of images, or the text cannot be searched, e.g. by `Ctrl + F`, or text cannot by selected
     - The command to make a PDF document searchable
     
