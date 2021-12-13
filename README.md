@@ -154,7 +154,7 @@
     - Running gvim with NERDtree with all tabs from previous session
         Run this command from **Application Finder** `Alt + F2` or from terminal
     
-            gvim -S ~/git/freiwillige_aufgaben/vim_Sitzungen/Sitzung.vim -c "tabdo NERDTree" -c "tabdo wincmd l" -c "tabnext"
+            gvim -S ~/git/persoenliche_Angelegenheiten/vim_Sitzungen/Sitzung.vim -c "tabdo NERDTree" -c "tabdo wincmd l" -c "tabnext"
             
         Description: Open a session in vim, for each tab add NERD Tree, for each tab move the focus from NERD Tree to editing area, and move the focus to the next (first) tab.
             
@@ -162,6 +162,12 @@
         Copy the below line, press `:` [colon] to get in to command line and paste it there with keyboard shortcut `Ctrl + R` and then `*`
     
             tabdo NERDTreeClose | tabnext | mks! ~/git/freiwillige_aufgaben/vim_Sitzungen/Sitzung.vim
+            
+        or
+        
+            tabdo wincmd h | tabnext
+            tabdo q | tabnext
+            mksession! /home/laptop/git/persoenliche_Angelegenheiten/vim_Sitzungen/Sitzung.vim
             
         Description: For each tab close NERD Tree, move the focus to the next (first) tab, and save current session to a file overriding the previous one.
 
@@ -770,6 +776,49 @@
     - reboot
         
         Source: https://wiki.archlinux.org/index.php/Media_Transfer_Protocol#gvfs-mtp
+        
+* android-tools - Android platform tools; `adb` etc.; make sure to have "USB Debugging" activated on Android device otherwise it will be hidden from `adb devices` command
+    - When you can't edit files directly due to the lack of write access, use this "pull-push" method
+        1. Pull desired file
+            
+                adb pull /storage/extSdCard/buffer.txt /tmp/buffer.txt
+    
+        1. Edit it in the new location
+    
+                vscodium /tmp/buffer.txt
+    
+        1. Push the file back to the phone
+    
+                adb push /tmp/buffer.txt /storage/extSdCard/buffer.txt
+                
+* wmctrl - modify properties of windows
+          1. Go to `Application Menu -> Settings -> Session and Startup -> Application Autostart [tab]`
+          1. Add a new autostart task by clicking on the `+` button
+          1. **TODO finish steps + upload script**
+        - Sources - video output:
+          - https://askubuntu.com/questions/214977/how-can-i-find-out-the-supported-webcam-resolutions/995302#995302
+          - https://github.com/mpv-player/mpv/wiki/Video4Linux2-Input
+          - https://wiki.archlinux.org/title/Webcam_setup#mpv
+          - https://mpv.io/manual/master/
+          - https://mpv.io/manual/master/#list-options
+          - https://mpv.io/manual/master/#video-filters
+          - http://ffmpeg.org/ffmpeg-filters.html#rotate
+          - https://github.com/mpv-player/mpv/issues/5869
+        - Sources - xargs
+          - https://code-examples.net/en/q/1cf63c
+          - https://www.howtogeek.com/435164/how-to-use-the-xargs-command-on-linux/
+        - Sources - set window always on top via terminal
+          - XFCE - set window always on top manually via shortcut - https://bbs.archlinux.org/viewtopic.php?id=147977
+          - https://www.linuxuprising.com/2020/12/how-to-use-keyboard-shortcut-to-toggle.html
+          - https://www.makeuseof.com/keep-a-window-always-on-top-linux/
+          - https://forum.xfce.org/viewtopic.php?id=2894
+          - https://archlinux.org/packages/community/x86_64/wmctrl/
+          - https://itectec.com/ubuntu/ubuntu-wmctrl-doesnt-work-for-certain-windows/
+        - Sources - move window
+          - https://unix.stackexchange.com/questions/14159/how-do-i-find-the-window-dimensions-and-position-accurately-including-decoration/14170#14170
+          - https://www.cyberciti.biz/faq/how-do-i-find-out-screen-resolution-of-my-linux-desktop/
+          - https://www.linuxquestions.org/questions/linux-desktop-74/wmctrl-moving-current-window-up-down-left-right-4175455312/#post4918676
+          - https://unix.stackexchange.com/questions/102008/how-do-i-trim-leading-and-trailing-whitespace-from-each-line-of-some-output/102021#102021
 
 * make cmake gdb lldb libc++ gtest perf valgrind - C/C++ toolchain; `libc++`is a C++ standard library for LLVM
 * clion=2021.2.2-1 clion-cmake=2021.2.2-1 clion-gdb=2021.2.2-1 clion-jre=2021.2.2-1 clion-lldb=2021.2.2-1
@@ -1140,7 +1189,6 @@ bc- > command line calculator => set default scale (decimal precision) - https:/
 blueman -> then execute: su -c 'systemctl enable bluetooth.service' -> this will enable the Bluetooth icon in notification tray
 
 android-file-transfer - transfer data with a mobile device via MTP
-android-tools - Android platform tools; `adb` etc.; make sure to have "USB Debugging" activated on Android device otherwise it will be hidden from `adb devices` command
 
 iw -> Sprava bezdrotovych adapterov (skenovanie Wi-Fi sieti)
 
