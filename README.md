@@ -180,6 +180,9 @@
             - https://vi.stackexchange.com/questions/82/how-to-get-intelligent-c-auto-completion/389#389
             - https://vimawesome.com/plugin/clang-complete-please-everybody
             - https://superuser.com/questions/280500/how-does-one-switch-between-windows-on-vim/280501#280501
+    - Navigating between panes/windows
+        - `Ctrl + W` and then `h` (left) `j` (down) `k` (up) `l` (right)
+        - Source: https://superuser.com/questions/280500/how-does-one-switch-between-windows-on-vim/280501#280501
         
 * vscodium-bin-marketplace - debranded Visual Studio Code with Visual Studio Code's marketplace feature
     - Extensions:
