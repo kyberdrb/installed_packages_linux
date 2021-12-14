@@ -795,9 +795,15 @@
                 adb push /tmp/buffer.txt /storage/extSdCard/buffer.txt
                 
 * wmctrl - modify properties of windows
-          1. Go to `Application Menu -> Settings -> Session and Startup -> Application Autostart [tab]`
-          1. Add a new autostart task by clicking on the `+` button
-          1. **TODO finish steps + upload script**
+    - **Making a Webcam Mirror**
+        1. Go to `Application Menu -> Settings -> Session and Startup -> Application Autostart [tab]`
+        1. Add a new autostart task by clicking on the `+` button
+        1. Fill out following fields
+            - Name: `Webcam view in lower left corner`
+            - Command: `/home/laptop/git/kyberdrb/installed_packages_linux/scripts/show_webcam_persistent_window_on_screen.sh`
+            - Trigger: `on login`
+        1. Click `OK` to save changes.
+        1. At the next login/reboot, the window with the screen will be shown in the lower left corner of the active screen.
         - Sources - video output:
           - https://askubuntu.com/questions/214977/how-can-i-find-out-the-supported-webcam-resolutions/995302#995302
           - https://github.com/mpv-player/mpv/wiki/Video4Linux2-Input
