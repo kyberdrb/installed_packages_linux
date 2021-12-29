@@ -834,20 +834,21 @@
     - C/C++ IDE from JetBrains with bundled toolchains and Google Test Framework; all packages must be installed to have a fully functional IDE
         - **Maybe I'll switch later from CLion to CodeLite for IDE**  
           **and from Google Test to `doctest` for testing framework**
-    - I'm using the version 2021.2.2-1 because it's the last version for which the trial period depends on the local machine - offline evaluation - and thus the evaluation period can be reset indefinitely by saving current CLion configuration and relaunching a [evaluation reset script](https://github.com/kyberdrb/JetBrains_Utilities_Unlimited/blob/master/reset_clion_evaluation.sh) locally, as opposed to the version >=2021.2.3, in which the evaluation period depends on the user's JetBrains account which is controlled by the JetBrains company, not by the user. Once the evaluation period for CLion on the user's JetBrains account expires, the evaluation period cannot be resetted and the user either 
+    - I'm using the version 2021.2.2-1 because it's the last version for which the trial period depends on the local machine - offline evaluation - and thus the evaluation period can be reset indefinitely by saving current CLion configuration and relaunching a [evaluation reset script](https://github.com/kyberdrb/JetBrains_Utilities_Unlimited/blob/master/reset_clion_evaluation.sh) locally, as opposed to the version >=2021.2.3, in which the evaluation period depends on the user's JetBrains account which is controlled by the JetBrains company servers, not by the user. Once the evaluation period for CLion on the user's JetBrains account expires, the evaluation period cannot be resetted and the user either 
         - buys the license, 
         - rolls back to the 2021.2.2-1 version and will be using this older version, 
-        - start using other IDE for C/C++ (i.e. Eclipse, CodeBlocks, **CodeLite**...)
-        - for CLion from version `2021.2.3` onwards, use _disposable email_, register with it on jetbrains, open CLion, click _Evaluation_, enter the disposable email address, and enjoy the development :)  
-            When the trial period expires, delete expired account, use another disposable email address to create antoher jetbrains account, and use this new disposable email to start another evaluation. Repeat indefinitely, until jetbrains figures it out :P Inventiveness and ingeniosity in the name of science, education and freedom.
-    - To install CLion 2021.2.2-1 from the cache, I used the command
+            - To install CLion 2021.2.2-1 from the cache, I used the command
 
-            sudo pacman -U \
-                /var/cache/pacman/pkg/clion-1\:2021.2.2-1-x86_64.pkg.tar.zst \
-                /var/cache/pacman/pkg/clion-cmake-1\:2021.2.2-1-x86_64.pkg.tar.zst \
-                /var/cache/pacman/pkg/clion-gdb-1\:2021.2.2-1-x86_64.pkg.tar.zst \
-                /var/cache/pacman/pkg/clion-jre-1\:2021.2.2-1-x86_64.pkg.tar.zst \
-                /var/cache/pacman/pkg/clion-lldb-1\:2021.2.2-1-x86_64.pkg.tar.zst
+                    sudo pacman -U \
+                        /var/cache/pacman/pkg/clion-1\:2021.2.2-1-x86_64.pkg.tar.zst \
+                        /var/cache/pacman/pkg/clion-cmake-1\:2021.2.2-1-x86_64.pkg.tar.zst \
+                        /var/cache/pacman/pkg/clion-gdb-1\:2021.2.2-1-x86_64.pkg.tar.zst \
+                        /var/cache/pacman/pkg/clion-jre-1\:2021.2.2-1-x86_64.pkg.tar.zst \
+                        /var/cache/pacman/pkg/clion-lldb-1\:2021.2.2-1-x86_64.pkg.tar.zst
+                        
+        - start using other IDE for C/C++ (i.e. Eclipse, CodeBlocks, **CodeLite**...)
+        - for CLion from version `2021.2.3` onwards, use [_disposable email_](https://temporarymail.com/), register with it on [jetbrains](https://account.jetbrains.com/login) in the section `Create JetBrains Account`, open CLion, click _Evaluation_, enter the disposable email address, and enjoy the development :)
+            - When the trial period expires, [delete expired account](https://account.jetbrains.com/profile-details) - in the _Your Profile_ tab click on `Delete JetBrains Account`, then use another disposable email address to create antoher jetbrains account, and use this new disposable email to start another evaluation. Repeat indefinitely, until jetbrains figures it out :P Inventiveness and ingeniosity in the name of science, education and freedom.
     
     - I want to have all my project on my git repo. First I created a repo `CLionProjects` on GitHub which I cloned into `${HOME}/git/kyberdrb/`. Then I copied the content of the `${HOME}/CLionProjects` into `${HOME}/git/kyberdrb/CLionProjects`. Then I created the `.gitignore` file to exclude JetBrains IDE files. Finally I created a shortcut to redirect the default path for CLion projects from `${HOME}/CLionProjects` to `${HOME}/git/kyberdrb/CLionProjects` with command:
     
