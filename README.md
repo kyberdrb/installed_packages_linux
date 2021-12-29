@@ -834,10 +834,12 @@
     - C/C++ IDE from JetBrains with bundled toolchains and Google Test Framework; all packages must be installed to have a fully functional IDE
         - **Maybe I'll switch later from CLion to CodeLite for IDE**  
           **and from Google Test to `doctest` for testing framework**
-    - I'm using the version 2021.2.2-1 because it's the last version for which the trial period depends on the local machine - offline evaluation - and thus the evaluation period can be reset indefinitely by saving current CLion configuration and relaunching a [evaluation reset script](https://github.com/kyberdrb/JetBrains_Utilities_Unlimited/blob/master/reset_clion_evaluation.sh) locally, as opposed to the version >2021.2.3, in which the evaluation period depends on the user's JetBrains account which is controlled by the JetBrains company, not by the user. Once the evaluation period for CLion on the user's JetBrains account expires, the evaluation period cannot be resetted and the user either 
+    - I'm using the version 2021.2.2-1 because it's the last version for which the trial period depends on the local machine - offline evaluation - and thus the evaluation period can be reset indefinitely by saving current CLion configuration and relaunching a [evaluation reset script](https://github.com/kyberdrb/JetBrains_Utilities_Unlimited/blob/master/reset_clion_evaluation.sh) locally, as opposed to the version >=2021.2.3, in which the evaluation period depends on the user's JetBrains account which is controlled by the JetBrains company, not by the user. Once the evaluation period for CLion on the user's JetBrains account expires, the evaluation period cannot be resetted and the user either 
         - buys the license, 
         - rolls back to the 2021.2.2-1 version and will be using this older version, 
-        - or starts using other IDE for C/C++ (i.e. Eclipse, CodeBlocks, **CodeLite**...)
+        - start using other IDE for C/C++ (i.e. Eclipse, CodeBlocks, **CodeLite**...)
+        - for CLion from version `2021.2.3` onwards, use _disposable email_, register with it on jetbrains, open CLion, click _Evaluation_, enter the disposable email address, and enjoy the development :)  
+            When the trial period expires, delete expired account, use another disposable email address to create antoher jetbrains account, and use this new disposable email to start another evaluation. Repeat indefinitely, until jetbrains figures it out :P Inventiveness and ingeniosity in the name of science, education and freedom.
     - To install CLion 2021.2.2-1 from the cache, I used the command
 
             sudo pacman -U \
