@@ -684,6 +684,20 @@
 * intel-gpu-tools - provides `intel-gpu-top` Intel GPU utilization monitor - run as `sudo intel-gpu-top`
     - only useful if you have an Intel GPU
 
+* noto-fonts-emoji
+    - test emoji rendering in a text editor browser on any page that contains emojis which render as rectangle or in black and white e.g. on some emoji test page, e.g. https://www.fileformat.info/info/emoji/browsertest.htm
+    - according to '/etc/fonts/fonts.conf' the contents of the font directory '/usr/share/fonts/' is scanned automatically, so there is no need to modify any configs in the system
+    
+            (1/3) Arming ConditionNeedsUpdate... 
+            (2/3) Updating fontconfig cache... 
+            (3/3) Updating X fontdir indices...
+    
+    - Sources
+        - https://www.fileformat.info/info/emoji/browsertest.htm
+        - https://duckduckgo.com/?q=arch+linux+font+emoji+support&ia=web
+        - https://chrpaul.de/2019/07/Enable-colour-emoji-support-on-Manjaro-Linux.html
+        - https://www.fileformat.info/info/emoji/browsertest.htm
+
 ---
 
 * whonix - not an utiity, but an entire operating system for anonymous internet browsing
