@@ -640,6 +640,23 @@
             - https://forum.manjaro.org/t/please-enable-va-api-support-and-gpu-rendering-in-firefox-by-default/17323
             - https://www.ghacks.net/2020/12/14/how-to-find-out-if-webrender-is-enabled-in-firefox-and-how-to-enable-it-if-it-is-not/
             - https://www.phoronix.com/scan.php?page=news_item&px=Firefox-80-VA-API-X11
+
+* axel - accelerated file downloader; non-interactive and terminal-based
+    - follows redirects by default
+    - Example usage:
+    
+            axel --verbose --num-connections=20 "URL" --output="/path/to/destination/file"
+            
+            axel --verbose https://sourceforge.net/projects/clonezilla/files/clonezilla_live_alternative/20220103-impish/clonezilla-live-20220103-impish-amd64.zip/download --output="/tmp/clonezilla_latest.zip"
+
+    - Sources:
+        - https://duckduckgo.com/?q=linux+terminal+download+accelerator&ia=web
+        - https://www.tecmint.com/commandline-download-accelerators-for-linux/
+        - https://archlinux.org/packages/community/x86_64/axel/
+        - https://duckduckgo.com/?q=axel+no+state+file+cannot+resume&ia=web&iax=qa
+            - one way to fix: delete the existing file before downloading
+        - https://duckduckgo.com/?q=axel+no+state+file+cannot+resume&ia=web&iax=qa
+        - https://stackoverflow.com/questions/13217700/dont-download-an-existing-file-with-axel
         
 * redshift python-xdg safeeyes xprintidle python-croniter - utilities to preventing eye strain, to increase melatonin levels, to relieve from dry eye syndrome symptoms
     - redshift-minimal - color temperature changer usually warmer tint (spares eyes) -> run on background in tray with "redshift&"
