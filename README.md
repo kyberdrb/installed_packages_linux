@@ -364,6 +364,9 @@
         - Tab Suspender
             - prevents from loading tabs - tabs are loaded only when they're active; tabs are unloaded from memory after a time period
             - https://superuser.com/questions/811965/how-to-make-chrome-not-load-tabs-until-they-are-selected/883096#883096
+        - IG Downloader
+            - Download photos, videos and stories from Instagram
+            - https://chrome.google.com/webstore/detail/ig-downloader/cpgaheeihidjmolbakklolchdplenjai
     
     - ...
         - Add '--password-store=basic' to remove prompt for 'gnome-keyring' password. 'gnome-keyring' has been installed to fix the error in `journalctl` from ´xfce4-screensaver`
