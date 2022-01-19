@@ -932,7 +932,32 @@
 * parallel - utility for parallel execution of commands
 * ttf-vlgothic - Japanese font to support Japanese characters in the operating system and apps like webbrowsers etc.; https://wiki.archlinux.de/title/Schriftarten
 * xclip - terminal clipboard manipulation utility
+* upd72020x-fw
+    - AUR: https://aur.archlinux.org/packages/upd72020x-fw/
+    - firmware for Renesas USB 3.0 controller
+    - I installed it because `mkinitcpio` was reporting a warning message about missing firmware for `xhci_pci`.
+    - When I investigated it further I foud out that the `xhci_pci_renesas` was loaded from the output of  
+        `lsmod | grep xhci_pci` and `lsmod | grep renesas`  
+        but the command `lspci` and `lspci | grep -i renesas` don't report any Renesas device.  
+        According to the `lspci` and `lspci | grep -i usb` output, I have a different manufacturer of the USB 3.0 controller
+    
+                ...
+                00:14.0 USB controller: Intel Corporation Sunrise Point-LP USB 3.0 xHCI Controller (rev 21)
+                ...
+    - Before and after installation all USB ports - all of them are USB 3.0 on my machine - were, and still are, fully functional at maximum capable speeds.
+    - Sources
+        - Arch Linux Forum: [Solved] Missing xhci_pci firmware on upgrade to linux-5.8.1: https://bbs.archlinux.org/viewtopic.php?pid=1925250#p1925250
+        - https://duckduckgo.com/?q=WARNING%3A+Possibly+missing+firmware+for+module%3A+xhci_pci&ia=web
+        - https://duckduckgo.com/?q=WARNING%3A+Possibly+missing+firmware+for+module%3A+qed&ia=web
+        - imrvelj/Arch Linux mkinitcpio: Possibly missing firmware for module.md: https://gist.github.com/imrvelj/c65cd5ca7f5505a65e59204f5a3f7a6d
+        - https://aur.archlinux.org/packages/?O=0&SeB=nd&K=upd72020x-fw&outdated=&SB=n&SO=a&PP=50&do_Search=Go
+        - https://aur.archlinux.org/packages/?O=0&K=xhci_pci
+        - https://www.linuxquestions.org/questions/linux-newbie-8/possibly-missing-firmware-for-multiple-things-4175686320/
+        
+                Yeah, loads of firmware can go missing and it doesn't matter.
 
+                The key thing is - do all the little bits in your box work? If you have no wifi, no usb, etc, then it's a problem. If your box works, however all the firmware for the bits you do not have are not needed.
+    
 ---
 
 * parallel - parallelize shell commands
