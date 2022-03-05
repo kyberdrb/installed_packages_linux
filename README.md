@@ -15,7 +15,19 @@
         - https://wiki.archlinux.org/title/Network_Time_Protocol_daemon#Start_ntpd_on_network_connection
         - https://superuser.com/questions/444733/linux-ntpd-and-ntpdate-service
 
-* android-tools - for `adb` utility
+* android-tools - Android platform tools; for `adb` utility etc.; make sure to have "USB Debugging" activated on Android device otherwise it will be hidden from `adb devices` command
+    - When you can't edit files directly due to the lack of write access, use this "pull-push" method
+        1. Pull desired file
+            
+                adb pull /storage/extSdCard/buffer.txt /tmp/buffer.txt
+    
+        1. Edit it in the new location
+    
+                vscodium /tmp/buffer.txt
+    
+        1. Push the file back to the phone
+    
+                adb push /tmp/buffer.txt /storage/extSdCard/buffer.txt
     - fixing unresponsive edges and navigation bar on my Android phone Sony Xperia XA1 (G3121 - Android 8.0.0); inspired by [[1]](https://techsable.com/change-screen-resolution-in-android-without-root/)
         1. Enable developer mode [[2]](https://wiki.archlinux.org/index.php/Android_Debug_Bridge)
         1. Enable USB Debugging [[2]](https://wiki.archlinux.org/index.php/Android_Debug_Bridge)
@@ -23,6 +35,7 @@
         1. `adb devices` - confirm and, eventually, save device, when prompted
         1. Create screen padding with command [[3]](https://nerdschalk.com/android-change-navigation-bar-height/)
 
+                adb shell wm overscan 25,0,25,0
                 adb shell wm overscan 60,5,60,40
 
             Numbers represent [LEFT,TOP,RIGHT,BOTTOM] edge of the screen
@@ -812,21 +825,7 @@
         
     - reboot
         
-        Source: https://wiki.archlinux.org/index.php/Media_Transfer_Protocol#gvfs-mtp
-        
-* android-tools - Android platform tools; `adb` etc.; make sure to have "USB Debugging" activated on Android device otherwise it will be hidden from `adb devices` command
-    - When you can't edit files directly due to the lack of write access, use this "pull-push" method
-        1. Pull desired file
-            
-                adb pull /storage/extSdCard/buffer.txt /tmp/buffer.txt
-    
-        1. Edit it in the new location
-    
-                vscodium /tmp/buffer.txt
-    
-        1. Push the file back to the phone
-    
-                adb push /tmp/buffer.txt /storage/extSdCard/buffer.txt
+        Source: https://wiki.archlinux.org/index.php/Media_Transfer_Protocol#gvfs-mtp        
                 
 * wmctrl - modify properties of windows
     - **Making a Webcam Mirror**
@@ -862,6 +861,16 @@
           - https://www.cyberciti.biz/faq/how-do-i-find-out-screen-resolution-of-my-linux-desktop/
           - https://www.linuxquestions.org/questions/linux-desktop-74/wmctrl-moving-current-window-up-down-left-right-4175455312/#post4918676
           - https://unix.stackexchange.com/questions/102008/how-do-i-trim-leading-and-trailing-whitespace-from-each-line-of-some-output/102021#102021
+
+* sane-airscan ipp-usb - scanner support
+  - `sudo systemctl enable --now ipp-usb.service`
+  - Sources:
+    - https://wiki.archlinux.org/title/SANE
+    - https://archlinux.org/packages/?name=ipp-usb
+    - https://archlinux.org/packages/?name=sane-airscan
+
+* cups cups-pdf - printing support
+  - `sudo systemctl enable --now cups.service`
 
 * make cmake gdb lldb libc++ gtest perf valgrind - C/C++ toolchain; `libc++`is a C++ standard library for LLVM
 * clion=2021.2.2-1 clion-cmake=2021.2.2-1 clion-gdb=2021.2.2-1 clion-jre=2021.2.2-1 clion-lldb=2021.2.2-1
