@@ -863,9 +863,26 @@
           - https://unix.stackexchange.com/questions/102008/how-do-i-trim-leading-and-trailing-whitespace-from-each-line-of-some-output/102021#102021
 
 * sane-airscan ipp-usb - scanner support
-  - `sudo systemctl enable --now ipp-usb.service`
+        
+        # Enable and start the scanner service
+        sudo systemctl enable --now ipp-usb.service
+        
+        # List scanner devices. You may need to plug and unplug the scanner if not recognized
+        scanimage --list-devices
+        
+        # Request an image scan
+        scanimage --device "pixma:04A91749_247936" --format=png --output-file "~/Downloads/scan.png" --progress
+        
+        # For device specific scanning options you can use the commands for the particular scanner...
+        scanimage --help --device-name dev
+        # ... where 'dev' is the device name of the scanner given from the output of the command 'scanimage --list-devices'
+        # ...or with...
+        scanimage -A
+        # for currently connected scanner (don't know what happens if more scanners are available for the computer)
+  
   - Sources:
     - https://wiki.archlinux.org/title/SANE
+    - https://wiki.archlinux.org/title/SANE#Verification
     - https://archlinux.org/packages/?name=ipp-usb
     - https://archlinux.org/packages/?name=sane-airscan
 
