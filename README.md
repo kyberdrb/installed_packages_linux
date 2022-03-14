@@ -871,15 +871,13 @@
         scanimage --list-devices
         
         # Request an image scan
-        scanimage --device "pixma:04A91749_247936" --format=png --output-file "~/Downloads/scan.png" --progress
+        scanimage --device "xerox_mfp:libusb:001:032" --format=png --output-file "${HOME}/Downloads/priepustka-vyplnena.png" --progress --resolution 600
         
-        # For device specific scanning options you can use the commands for the particular scanner...
-        scanimage --help --device-name dev
-        # ... where 'dev' is the device name of the scanner given from the output of the command 'scanimage --list-devices'
-        # ...or with...
+        # For device specific scanning options you can use the commands for currently connected scanner
         scanimage -A
-        # for currently connected scanner (don't know what happens if more scanners are available for the computer)
-  
+        # ... where 'dev' is the device name of the scanner given from the output of the command 'scanimage --list-devices'
+        # If multiple scanners are available to the computer/system, show the device specific options with
+        scanimage --help --device-name dev
   - Sources:
     - https://wiki.archlinux.org/title/SANE
     - https://wiki.archlinux.org/title/SANE#Verification
