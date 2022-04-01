@@ -918,11 +918,43 @@
           - https://unix.stackexchange.com/questions/102008/how-do-i-trim-leading-and-trailing-whitespace-from-each-line-of-some-output/102021#102021
 
 * sane-airscan ipp-usb - scanner support
-  - `sudo systemctl enable --now ipp-usb.service`
+        
+        # Enable and start the scanner service
+        sudo systemctl enable --now ipp-usb.service
+        
+        # List scanner devices. You may need to plug and unplug the scanner if not recognized
+        scanimage --list-devices
+        
+        # Request an image scan from a currently connected/default scanner
+        scanimage --format=png --output-file "${HOME}/Downloads/output_image.png" --progress --resolution 600
+        
+        # Request an image scan from a particular scanner
+        scanimage --device "xerox_mfp:libusb:001:032" --format=png --output-file "${HOME}/Downloads/output_image.png" --progress --resolution 600
+        
+        # For device specific scanning options you can use the commands for currently connected scanner
+        scanimage -A
+        # ... where 'dev' is the device name of the scanner given from the output of the command 'scanimage --list-devices'
+        # If multiple scanners are available to the computer/system, show the device specific options with
+        scanimage --help --device-name device_name
   - Sources:
     - https://wiki.archlinux.org/title/SANE
+    - https://wiki.archlinux.org/title/SANE#Verification
     - https://archlinux.org/packages/?name=ipp-usb
     - https://archlinux.org/packages/?name=sane-airscan
+  - Image post-processing
+    - Rotating image clockwise 90 degrees
+    
+            convert -rotate 90 "original.png" "rotated.png"
+    
+    - Crop rotated image
+        
+            # find out dimensions
+            identify "image.png"
+            geeqie "image.png"
+            
+            # crop rotated image by template
+            #   image_width x image_height + beginning_x_coordinate + beginning_y_coordinate
+            convert "original.png" -crop 2565x3094+4573+0 "cropped.png"
 
 * cups cups-pdf - printing support
   - `sudo systemctl enable --now cups.service`
