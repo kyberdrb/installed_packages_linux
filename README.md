@@ -41,6 +41,10 @@
             Numbers represent [LEFT,TOP,RIGHT,BOTTOM] edge of the screen
 
             This increases the height of the navigation bar - moves the navigation bar higher - and pads the sides and top of the software displaying area into the hardware area from the screen edges unresponsive to the touch towards the touch-responsive parts of the screen, for more fluent and comfortable usage of the phone. The keyboard is responsive to the corner and edge buttons 'q', 'p' and other control buttons. The cursor can be now dragged to the very edge of the screen, behind the first character on a line with ease. Context menus in the left and right top corner are now responsive to touch immediately. So much functionality for a little bit of discomfort, less usable screen space and a little bit uglier graphical interfaces of some applications. For zero money, zero waste. That's efficient :D Efficiency. Redefined.
+            
+* scrcpy - Mirror screen and interact with your Android device
+    - requires `ADB` and `USB debugging` to be enabled
+    - https://github.com/Genymobile/scrcpy
 
 * xscreenserver gnome-keyring - screensaver and lockscreen support
     - `gnome-keyring` serves as a prevention for `journalctl` error messages
@@ -918,29 +922,30 @@
           - https://unix.stackexchange.com/questions/102008/how-do-i-trim-leading-and-trailing-whitespace-from-each-line-of-some-output/102021#102021
 
 * sane-airscan ipp-usb - scanner support
-        
-        # Enable and start the scanner service
+    - Enable and start the scanner service
+    
         sudo systemctl enable --now ipp-usb.service
+    - Scanning commands
+            # List scanner devices. You may need to plug and unplug the scanner if not recognized
+            scanimage --list-devices
+
+            # Request an image scan from a currently connected/default scanner
+            scanimage --format=png --output-file "${HOME}/Downloads/output_image.png" --progress --resolution 600
+
+            # Request an image scan from a particular scanner
+            scanimage --device "xerox_mfp:libusb:001:032" --format=png --output-file "${HOME}/Downloads/output_image.png" --progress --resolution 600
+
+            # For device specific scanning options you can use the commands for currently connected scanner
+            scanimage -A
+            # ... where 'dev' is the device name of the scanner given from the output of the command 'scanimage --list-devices'
+            # If multiple scanners are available to the computer/system, show the device specific options with
+            scanimage --help --device-name device_name
         
-        # List scanner devices. You may need to plug and unplug the scanner if not recognized
-        scanimage --list-devices
-        
-        # Request an image scan from a currently connected/default scanner
-        scanimage --format=png --output-file "${HOME}/Downloads/output_image.png" --progress --resolution 600
-        
-        # Request an image scan from a particular scanner
-        scanimage --device "xerox_mfp:libusb:001:032" --format=png --output-file "${HOME}/Downloads/output_image.png" --progress --resolution 600
-        
-        # For device specific scanning options you can use the commands for currently connected scanner
-        scanimage -A
-        # ... where 'dev' is the device name of the scanner given from the output of the command 'scanimage --list-devices'
-        # If multiple scanners are available to the computer/system, show the device specific options with
-        scanimage --help --device-name device_name
-  - Sources:
-    - https://wiki.archlinux.org/title/SANE
-    - https://wiki.archlinux.org/title/SANE#Verification
-    - https://archlinux.org/packages/?name=ipp-usb
-    - https://archlinux.org/packages/?name=sane-airscan
+      - Sources:
+        - https://wiki.archlinux.org/title/SANE
+        - https://wiki.archlinux.org/title/SANE#Verification
+        - https://archlinux.org/packages/?name=ipp-usb
+        - https://archlinux.org/packages/?name=sane-airscan
   - Image post-processing
     - Rotating image clockwise 90 degrees
     
@@ -952,9 +957,15 @@
             identify "image.png"
             geeqie "image.png"
             
-            # crop rotated image by template
-            #   image_width x image_height + beginning_x_coordinate + beginning_y_coordinate
+            # crop rotated image by template 'WIDTHxHEIGHT+LEFT+TOP'
+            #   explanation: cropped_image_width x cropped_image_height + beginning_x_coordinate_in_input_image + beginning_y_coordinate_in_input_image
             convert "original.png" -crop 2565x3094+4573+0 "cropped.png"
+            
+        - Sources
+            - https://duckduckgo.com/?q=crop+imagemagic+terminal+linux&ia=web&iax=qa
+            - https://infoheap.com/crop-image-using-imagemagick-convert/
+            - https://duckduckgo.com/?q=crop+image+terminal+linux+convert&ia=web
+            - https://askubuntu.com/questions/631689/cropping-images-using-command-line-tools-only#631695
 
 * cups cups-pdf - printing support
   - `sudo systemctl enable --now cups.service`
