@@ -1012,7 +1012,23 @@
             - https://sourceware.org/gdb/current/onlinedocs/gdb/Output-Styling.html
             - https://stackoverflow.com/questions/2045509/how-to-save-settings-in-gdb/2045532#2045532
             - https://github.com/gdbinit/Gdbinit/blob/master/gdbinit
+    - CLion Settings (`File -> Settings (Ctrl + Alt + S)`)
+        - `General`
+            - `Code folding`
+                - `Fold by default:` section
+                    - `General` subsection
+                        - uncheck "Imports" (in order to see all imports at once immediately which may be a source of compilation errors)
+            - `Editor tabs`
+                - `Appearance` section
+                    - uncheck `Hide tabs if there is no space`
+                    - check `Mark modified (*)`
+                - `Closing Policy` section
+                    - Tab limit: 50 (in order to have full overview of all relevant files for lookup and editing)
+        - `Plugins`
+            - AsciiDoc
+            - unicode escaper - translate escaped UTF codes (e.g. \u1234) to readable characters
 
+        
     - Setting a unified black look
       1. File -- Settings... -- Appearance & Behavior -- UI Options -- Background Image...
       1. Select and image, e.g. `./configs/black.jpg`
