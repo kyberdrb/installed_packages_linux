@@ -1013,17 +1013,52 @@
             - https://stackoverflow.com/questions/2045509/how-to-save-settings-in-gdb/2045532#2045532
             - https://github.com/gdbinit/Gdbinit/blob/master/gdbinit
     - CLion Settings (`File -> Settings (Ctrl + Alt + S)`)
-        - `General`
-            - `Code folding`
-                - `Fold by default:` section
-                    - `General` subsection
-                        - uncheck "Imports" (in order to see all imports at once immediately which may be a source of compilation errors)
-            - `Editor tabs`
-                - `Appearance` section
-                    - uncheck `Hide tabs if there is no space`
-                    - check `Mark modified (*)`
-                - `Closing Policy` section
-                    - Tab limit: 50 (in order to have full overview of all relevant files for lookup and editing)
+        - `Editor`
+            - `General`
+                - `Code Folding`
+                    - `Fold by default:` section
+                        - `General` subsection
+                            - uncheck "Imports" (in order to see all imports at once immediately which may be a source of compilation errors)
+                - `Editor Tabs`
+                    - `Appearance` section
+                        - uncheck `Hide tabs if there is no space`
+                        - check `Mark modified (*)`
+                    - `Closing Policy` section
+                        - Tab limit: 50 (in order to have full overview of all relevant files for lookup and editing)
+                - `File and Code Templates`
+                    - `File` tab
+                        - `C++ Class Header`
+                            - change the template from the default template
+        
+                                    #parse("C File Header.h")
+                                    #[[#ifndef]]# ${INCLUDE_GUARD}
+                                    #[[#define]]# ${INCLUDE_GUARD}
+
+                                    ${NAMESPACES_OPEN}
+
+                                    class ${NAME} {
+
+                                    };
+
+                                    ${NAMESPACES_CLOSE}
+
+                                    #[[#endif]]# //${INCLUDE_GUARD}
+                                    
+                                to the one with `#pragma once` header guard and optional namespace block
+        
+                                    #parse("C File Header.h")
+                                    #[[#pragma]]# once
+
+                                    #if (${NAMESPACE})
+                                    ${NAMESPACES_OPEN}
+                                    #end
+                                    class ${NAME} {
+
+                                    };
+                                    #if (${NAMESPACE})
+                                    ${NAMESPACES_CLOSE}
+                                    #end
+
         - `Plugins`
             - AsciiDoc
             - unicode escaper - translate escaped UTF codes (e.g. \u1234) to readable characters
