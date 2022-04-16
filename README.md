@@ -980,11 +980,10 @@
         1. Register with my old email address.
         2. Link the JetBrains account with CLion.
         3. After evaluation expiration delete the account and register with the same email address again. I'm very curious how long this lasts :D
-    - for CLion from version `2021.2.3` onwards, use [_disposable email_](https://temporarymail.com/), register with it on [jetbrains](https://account.jetbrains.com/login) in the section `Create JetBrains Account`, open CLion, click _Evaluation_, enter the disposable email address, and enjoy the development :)
+    - for CLion from version `2021.2.3` onwards, use [_disposable email_](https://temporarymail.com/), register with it on [jetbrains](https://account.jetbrains.com/login) in the section `Create JetBrains Account`, open CLion, click _Evaluation_, enter the disposable email address, and enjoy the development :) For more ways how to extend or reset the activation and trial evaluation, see **various methods of activation** further down in this section.
         - When the trial period expires, [delete expired account](https://account.jetbrains.com/profile-details) - in the _Your Profile_ tab click on `Delete JetBrains Account`, then use another disposable email address to create antoher jetbrains account, open CLion - after the evaluation expired, CLion will prompt you - Click `Enter License`, in the next dialog window `Licenses` click in the lower left corner on your account and select `Log out`, then click in the upper part on `Start trial` radio button, then click on `Log In to JetBrains account` and use this new disposable email to start another evaluation. Repeat indefinitely, until jetbrains figures it out :P Inventiveness and ingeniosity in the name of science, education and freedom.
-    - The version 2021.2.2-1 is the last version in which can be activated offline i.e. locally i.e. the trial period depends on the local machine - offline evaluation - and thus the evaluation period can be reset indefinitely by saving current CLion configuration and relaunching a [evaluation reset script](https://github.com/kyberdrb/JetBrains_Utilities_Unlimited/blob/master/reset_clion_evaluation.sh) locally, as opposed to the version >=2021.2.3, in which the evaluation period depends on the user's JetBrains account which is controlled by the JetBrains company servers, not by the user. Once the evaluation period for CLion on the user's JetBrains account expires, the evaluation period cannot be resetted and the user either 
-        - buys the license, 
-        - rolls back to the 2021.2.2-1 version and will be using this older version, 
+    - The version 2021.2.2-1 is the last version in which can be activated offline i.e. locally i.e. the trial period depends on the local machine - offline evaluation - and thus the evaluation period can be reset indefinitely by saving current CLion configuration and relaunching a [evaluation reset script](https://github.com/kyberdrb/JetBrains_Utilities_Unlimited/blob/master/reset_clion_evaluation.sh) locally, as opposed to the version >=2021.2.3, in which the evaluation period depends on the user's JetBrains account which is controlled by the JetBrains company servers, not by the user. Once the evaluation period for CLion on the user's JetBrains account expires, the evaluation period cannot be resetted and the user some of these **various methods of activation:**
+        - roll back to the 2021.2.2-1 version and will be using this older version, 
             - To install CLion 2021.2.2-1 from the cache, I used the command
 
                     sudo pacman -U \
@@ -995,6 +994,42 @@
                         /var/cache/pacman/pkg/clion-lldb-1\:2021.2.2-1-x86_64.pkg.tar.zst
                         
         - start using other IDE for C/C++ (i.e. Eclipse, CodeBlocks, **CodeLite**...)    
+        - ~~use disposable email address for creating a JetBrains account~~ tested on 14.4.2022 - no longer works
+        - create a JetBrains account with a legitimate email address, delete the JetBrains account after the trial expiration and then create a JetBrains account again with the same email address.
+        - hosts - blocking jetbrains domains
+
+            - example of `/etc/hosts` that blocks jetbrains activation servers
+            
+                    $ sudo vim /etc/hosts
+
+                    # Static table lookup for hostnames.
+                    # See hosts(5) for details.
+                    127.0.0.1 account.jetbrains.com
+                    127.0.0.1 jetbrains.com
+                    127.0.0.1 www.jetbrains.com
+
+            - https://duckduckgo.com/?q=block+domain+name+linux&ia=web
+            - https://forums.linuxmint.com/viewtopic.php?t=81657
+        - iptables/firewall
+            - by blocking IP address range 13.32.110.0/24
+            - https://duckduckgo.com/?q=block+ip+adress+wildcard+linux&ia=web
+            - https://www.nstec.com/how-to-block-ip-address-in-firewall-linux/
+        - docker-jetbrains-license-server
+            - by faking the activation
+            - https://duckduckgo.com/?q=offline+jetbrains+activation+server+github&ia=web
+            - https://github.com/topics/license-server
+            - https://github.com/crazy-max/docker-jetbrains-license-server
+        - firejail - block internet access for CLion altogether
+            - firejail -r -n clion &
+            - https://duckduckgo.com/?q=arch+linux+block+internet+access+application&ia=web
+            - https://fasterland.net/how-to-restrict-internet-access-to-a-single-program-on-arch-linux-with-firejail.html
+            - https://serverfault.com/questions/550276/how-to-block-internet-access-to-certain-programs-on-linux
+            - https://duckduckgo.com/?q=firejail+arch+linux&ia=web
+            - https://wiki.archlinux.org/title/Firejail
+        - Special Offers: For Open Source Projects - free license for CLion
+            - https://www.jetbrains.com/community/opensource/#support
+            - https://www.jetbrains.com/clion/buy/#discounts?billing=monthly
+        - buy the license
     - I want to have all my project on my git repo. First I created a repo `CLionProjects` on GitHub which I cloned into `${HOME}/git/kyberdrb/`. Then I copied the content of the `${HOME}/CLionProjects` into `${HOME}/git/kyberdrb/CLionProjects`. Then I created the `.gitignore` file to exclude JetBrains IDE files. Finally I created a shortcut to redirect the default path for CLion projects from `${HOME}/CLionProjects` to `${HOME}/git/kyberdrb/CLionProjects` with command:
     
             ln -s "${HOME}/git/kyberdrb/CLionProjects" "${HOME}/CLionProjects"
