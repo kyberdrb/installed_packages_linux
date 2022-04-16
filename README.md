@@ -15,6 +15,13 @@
         - https://wiki.archlinux.org/title/Network_Time_Protocol_daemon#Start_ntpd_on_network_connection
         - https://superuser.com/questions/444733/linux-ntpd-and-ntpdate-service
 
+* adobe-source-han-sans-otc-fonts adobe-source-han-serif-otc-fonts - displaying Asian characters
+    - https://duckduckgo.com/?q=asian+font+arch+linux+chrome+firefox&ia=web
+    - https://bbs.archlinux.org/viewtopic.php?id=110153
+    - https://wiki.archlinux.org/title/Fonts#Chinese,_Japanese,_Korean,_Vietnamese
+    - https://duckduckgo.com/?q=adobe-source-han-serif-otc-fonts&ia=web
+    - https://duckduckgo.com/?q=adobe-source-han-sans-otc-fonts&ia=software
+
 * android-tools - Android platform tools; for `adb` utility etc.; make sure to have "USB Debugging" activated on Android device otherwise it will be hidden from `adb devices` command
     - When you can't edit files directly due to the lack of write access, use this "pull-push" method
         1. Pull desired file
