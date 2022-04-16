@@ -850,6 +850,7 @@
         - https://www.archlinux.org/packages/community/any/tesseract-data-dan/
         - `ocrmypdf --help`
 - jbig2enc-git - optional dependency for `ocrmypdf` utility - takes advantage of the lossy compression to JPEG image format in order to reduce the size of the final document to the minimum
+
 * pocketsphinx - audio transcription
     - Usage
             pocketsphinx_continuous -time yes -infile file.wav 2> pocketsphinx.log > subtitle_file.txt
@@ -1080,13 +1081,16 @@
           - Editor -- Color Scheme -- Language Defaults -- `Function call` + `Function declaration`: changed `Foreground color` from `61AFEF` to `B9DFFF` - brighter color for clearer visibility on a dark background
 
 * qtcreator - IDE for Qt Framework
-* python-pip - pip package installer
+* doxygen - documentation generator for software projects; UML and text docs
+* graphviz - utility for graphically generating UML diagrams
     
 ---
 
 * musescore - music notation software. For development, uninstall `musescore` package via `sudo pacman -R musescore`. This will leave only one copy of the application installed on the system when we build it. The dependent packages will still remain present which will be helpful when compiling the application. For `musescore` dependencies see the [Arch-Based OS Compilation Instructions](https://musescore.org/en/handbook/developers-handbook/compilation/compile-instructions-archlinux-based-distros-git)
-* doxygen - documentation generator for software projects; UML and text docs
-* graphviz - utility for graphically generating UML diagrams
+* **wireshark**/wireshark-qt - network traffic inspector
+    - In order to capture packets from network devices as a regular user, i.e. without root or sudo priviledges, add current or desired user to the `wireshark` group
+    
+            sudo usermod -a -G wireshark $USER
 
 ---
 
@@ -1363,7 +1367,7 @@ wget -> terminal downloader utility
 
 ---
 
-* atom - text editor
+- atom - text editor
     - Installed packages - Edit → Preferences → Install:
         - asciidoc-preview
             - AsciiDoc support
@@ -1424,8 +1428,6 @@ android-file-transfer - transfer data with a mobile device via MTP
 
 iw -> Sprava bezdrotovych adapterov (skenovanie Wi-Fi sieti)
 
-wireshark-qt - network traffic inspector
-
 -VIRTUALIZATION
 
 lxc -> base LXC support
@@ -1435,7 +1437,7 @@ arch-install-scripts -> base LXC support
 debootstrap -> support for Debian based LXC containers in Arch Linux
 
 docker -> base Docker support
-
+Aďo Šišila
 ---
 
 dtrx -> command line extraction utility
@@ -1457,6 +1459,8 @@ pycharm-professional -> Python/HTML/CSS/JS IDE from JetBrains; the community edi
 mono - c# support for linux - see "https://wiki.archlinux.org/index.php/mono" for compilation and run instructions
 
 python -> python3 support
+    
+python-pip - pip package installer
 
 python-virtualenv python2-virtualenv -> virtualne prostredia pre python2 a python3
 
