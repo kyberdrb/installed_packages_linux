@@ -1091,6 +1091,7 @@
     - In order to capture packets from network devices as a regular user, i.e. without root or sudo priviledges, add current or desired user to the `wireshark` group
     
             sudo usermod -a -G wireshark $USER
+        - Source: https://diego.assencio.com/?index=e48aa7b74bd7acb76c30de0a240108c2
 
 ---
 
