@@ -230,15 +230,21 @@
 * imagemagick - image and graphics processing set of utilities
 
 * pulseaudio - enables sound support
-    - When the HDMI audio seems to be delayed for a few seconds (1-3s), disable `idle` mode with
+    - When the HDMI audio seems to be delayed for a few seconds (1-3s), observe the output of the states of audio sinks when you start playing of some audio/video with audio with the command:
+
+            watch --interval 1 pactl list sinks short
+
+        Then pause the audio and close the player/click on some tab without audio. Continue observing the terminal output
+    
+        Disable the suspending and the `IDLE` state with command:
 
             sudo sed --in-place 's/^load-module module-suspend-on-idle/#load-module module-suspend-on-idle/g' "/etc/pulse/default.pa"
             
-        and then reboot. After reboot, verify if the audio starts playing immediately without delay with the command
+        and then `reboot`. After reboot, verify if the audio starts playing immediately without delay with the command
         
             watch --interval 1 pactl list sinks short
             
-        Watch the output of the command in the terminal continuously. Start playing of some audio/video with audio, pause the audio and close the player/click on some tab without audio.
+        Watch the output of the command in the terminal continuously. Start some audio playback just as before reboot. The `State` will now oscilate between `IDLE` and `RUNNING` and not go to `SUSPENDED` state anymore, making the audio playback instantaneous.
         - Sources
           - https://forums.linuxmint.com/viewtopic.php?p=1979366&sid=d7c83ac00beb15afae8889c2cc01bfd0#p1979366 
           - https://duckduckgo.com/?q=linux+hdmi+audio+delay+start&ia=web
@@ -247,6 +253,10 @@
           - https://wiki.archlinux.org/title/PulseAudio/Examples#Monitor_specific_output
           - https://duckduckgo.com/?q=pactl+list+sinks&ia=web
           - https://linuxcommandlibrary.com/man/pactl
+          - https://duckduckgo.com/?q=reddit+pulseaudio+suspend-on-idle&ia=web
+          - https://www.reddit.com/r/archlinux/comments/fhy0kh/pulseaudio_has_suspendonidle_feature_is/
+          - https://duckduckgo.com/?q=arch+linux+pops+when+starting+and+stopping+playback&ia=web
+          - https://wiki.archlinux.org/title/Advanced_Linux_Sound_Architecture/Troubleshooting#Pops_when_starting_and_stopping_playback
 
 * obs - Open Broadcast Software - a tool to streaming and recording audio and video including desktop and system audio
 * parole - my preferred audio player
