@@ -224,11 +224,30 @@
         - AsciiDoc - `.adoc` files preview
     - Preferences
         - Text Editor -- Font -- Font Family: `'Source Code Pro', 'Menlo', 'Consolas', 'DejaVu Sans Mono', 'monospace', monospace, 'Droid Sans Fallback'`
-            - because these monospace fonts have clearly distinguishable among the characters 'iI1l' 'oO0 - especially the zero :)' 'sS5' 'A4' 'g9' 'B8' ''Z2
+            - because these monospace fonts have clearly distinguishable among the characters 'iI1l' 'oO0 - especially the zero :)' 'sS5' 'A4' 'g9' 'B8' 'Z2'
 
 * geeqie - image viewer with coordinates indicator for X an Y axis
 * imagemagick - image and graphics processing set of utilities
+
+* pulseaudio - enables sound support
+    - When the HDMI audio seems to be delayed for a few seconds (1-3s), disable `idle` mode with
+
+            sudo sed --in-place 's/^load-module module-suspend-on-idle/#load-module module-suspend-on-idle/g' "/etc/pulse/default.pa"
+            
+        and then reboot. After reboot, verify if the audio starts playing immediately without delay with the command
         
+            watch --interval 1 pactl list sinks short
+            
+        Watch the output of the command in the terminal continuously. Start playing of some audio/video with audio, pause the audio and close the player/click on some tab without audio.
+        - Sources
+          - https://forums.linuxmint.com/viewtopic.php?p=1979366&sid=d7c83ac00beb15afae8889c2cc01bfd0#p1979366 
+          - https://duckduckgo.com/?q=linux+hdmi+audio+delay+start&ia=web
+          - https://duckduckgo.com/?q=radeon+hdmi+aduio+starts+delayed&ia=web
+          - https://duckduckgo.com/?q=pulseaudio+do+not+suspend&ia=web
+          - https://wiki.archlinux.org/title/PulseAudio/Examples#Monitor_specific_output
+          - https://duckduckgo.com/?q=pactl+list+sinks&ia=web
+          - https://linuxcommandlibrary.com/man/pactl
+
 * obs - Open Broadcast Software - a tool to streaming and recording audio and video including desktop and system audio
 * parole - my preferred audio player
 * mpv libva youtube-dl - my favorite multimedia player for playing online streaming content e. g. YouTube videos with HW acceleration
@@ -1130,7 +1149,8 @@
 * parallel - parallelize shell commands
 * thunar - favorite file manager
 * transmission-gtk / transmission-qt -> torrent klient
-* gparted  exfatprogs - disk and partition manager
+* gparted exfatprogs dosfstools - disk and partition manager
+    - `dosfstools` - utils for FAT filesystems (naming partitions with `fatlabel` utility for example)
 * xorg-apps - additional utilities for easier Xorg management e.g. brightness adjustment etc.
 * picom - compositor with hardware acceleration through OpenGL
     - to set it up for LXDE (or maybe other environments), follow the guide [for fixing the tearing and stuttering](https://github.com/kyberdrb/Linux_tutorials/blob/master/LXDE-Fix_tearing_with_compositor.md)
