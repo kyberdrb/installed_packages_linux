@@ -12,7 +12,7 @@
     - Sources
         - https://wiki.archlinux.org/title/Network_Time_Protocol_daemon
         - https://wiki.archlinux.org/title/Network_Time_Protocol_daemon#Start_ntpd_at_boot
-        - https://wiki.archlinux.org/title/Network_Time_Protocol_daemon#Start_ntpd_on_network_connection
+        - https://wiki.archlinux.org/title/Network_Time_Protocol_daemon#Start_ntpd_on_network_connectiongit - 
         - https://superuser.com/questions/444733/linux-ntpd-and-ntpdate-service
 
 * adobe-source-han-sans-otc-fonts adobe-source-han-serif-otc-fonts - displaying Asian characters
@@ -108,6 +108,20 @@
                 ff = no
             [pull]
                 ff = yes
+                
+    - immediately display diff without scrolling down manually, by creating an alias for `git` as `git --no-pager`
+    
+            $ vim ~/.bashrc
+
+            ...
+            alias git='git --no-pager'
+            ...
+        
+        - Soures:
+            - https://duckduckgo.com/?q=git+diff+without+scrolling&ia=web
+            - https://stackoverflow.com/questions/2183900/how-do-i-prevent-git-diff-from-using-a-pager/2183920#2183920
+            - https://stackoverflow.com/questions/2183900/how-do-i-prevent-git-diff-from-using-a-pager/2183920#comment8461627_2183920
+            - https://stackoverflow.com/questions/60175925/how-to-make-git-diff-show-everything-without-having-to-press-enter-to-scroll-dow
 
 * clonezilla - backup utility/environment
     - [automatize the creation of UEFI bootable USB for Clonezilla](https://github.com/kyberdrb/clonezilla_bootable_uefi_usb_creator)
