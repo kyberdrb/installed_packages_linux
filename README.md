@@ -1,3 +1,33 @@
+* pacman - package manager in Arch Linux
+    - Enable parallel downloads, colored output and verbose package list (with displayed current and upgraded versions) at upgrading
+    
+            $ sudo /etc/pacman.conf
+            
+            [options]
+            ...
+            ParallelDownloads = 20
+            Color
+            VerbosePkgLists
+            ...
+            
+        - https://ostechnix.com/enable-parallel-downloading-in-pacman-in-arch-linux/
+        - https://bbs.archlinux.org/viewtopic.php?pid=1488827#p1488827
+    - Find dependent packages of a package
+    
+            pacman -Qi lame
+            pacman --query --info lame
+            pacman --query --info lame | grep "Depends On" | cut --delimiter=':' --fields=1 --complement | sed 's/^\s*//g'
+            pacman --query --info <PACKAGE_NAME> | grep "Depends On" | cut --delimiter=':' --fields=1 --complement | sed 's/^\s*//g'
+    
+        - https://bbs.archlinux.org/viewtopic.php?id=92287
+    - Find out, what package holds a file
+
+            pacman -Qo /etc/pulse/default.pa
+            pacman --query --owns /etc/pulse/default.pa
+
+        - https://duckduckgo.com/?q=pacman+how+to+find+which+package+holds+a+file&ia=web
+        - https://bbs.archlinux.org/viewtopic.php?id=90635
+
 * ntp - keep the time up to date
     
         pikaur -Sy ntp networkmanager-dispatcher-ntpd
