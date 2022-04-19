@@ -660,6 +660,8 @@
             
         - check HW acceleration for videos at `chrome://media-internals/`. Look for `MojoVideoDecoder` which indicates that the video is decoded using hardware acceleration through GPU
             - [chromium: hardware video acceleration with VA-API](https://bbs.archlinux.org/viewtopic.php?id=244031)
+
+        - Custom configuration files for Chrome/Chromium: https://github.com/kyberdrb/Linux_utils_and_gists/tree/master/Chromium_modified_flags-HW_GPU_acceleration-performance
         
 * firefox
     - in the upper right corner click on a hamburger icon with a label `Open menu`
@@ -748,9 +750,11 @@
                 - https://fedoraproject.org/wiki/How_to_debug_Firefox_problems#Check_WebRedner
 
             - https://wiki.archlinux.org/index.php/Firefox#Hardware_video_acceleration
+            - https://duckduckgo.com/?q=enable+vaapi+support+gpu+rendering+firefox&ia=web
             - https://forum.manjaro.org/t/please-enable-va-api-support-and-gpu-rendering-in-firefox-by-default/17323
             - https://www.ghacks.net/2020/12/14/how-to-find-out-if-webrender-is-enabled-in-firefox-and-how-to-enable-it-if-it-is-not/
             - https://www.phoronix.com/scan.php?page=news_item&px=Firefox-80-VA-API-X11
+            - https://duckduckgo.com/?q=firefox+about%3Aconfig&ia=web
 
 * axel - accelerated file downloader; non-interactive and terminal-based
     - follows redirects by default
