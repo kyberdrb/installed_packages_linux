@@ -161,6 +161,9 @@
     - `syslinux` - DOWNLOAD ONLY!!! with pacman with `--downloadonly`
     - [automatize the creation of bootable USB for Memtest86+](https://github.com/kyberdrb/memtest86plus_bootable_usb_creator)
 
+* ext4magic foremost testdisk scalpel-git ddrescue ddrescue-gui - data recovery tools
+    - linux restore undelete deleted file folder directory data recovery utilities
+
 * linux-lqx linux-lqx-headers linux-ck-skylake linux-ck-skylake-headers linux-tkg-muqss-skylake linux-tkg-muqss-skylake-headers linux-pf-skylake linux-pf-headers-skylake linux-clear-bin linux-clear-headers-bin
     - Building a kernel from source, e.g. linux-ck on my laptop with i5-6300U, took approximately 3 hours.
     - BEFORE BUILDING A KERNEL, REMOUNT THE `BOOT` PARTITION AS WRITABLE (if it's not already)
