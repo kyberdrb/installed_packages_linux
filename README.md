@@ -1024,7 +1024,7 @@
 * cups cups-pdf - printing support
   - `sudo systemctl enable --now cups.service`
 
-* make cmake gdb lldb libc++ gtest perf valgrind - C/C++ toolchain; `libc++`is a C++ standard library for LLVM
+* make cmake gdb clang lld lldb libc++ gtest perf valgrind ninja - C/C++ toolchain; `libc++`is a C++ standard library for LLVM
 * clion=2021.2.2-1 clion-cmake=2021.2.2-1 clion-gdb=2021.2.2-1 clion-jre=2021.2.2-1 clion-lldb=2021.2.2-1
     - C/C++ IDE from JetBrains with bundled toolchains and Google Test Framework; all packages must be installed to have a fully functional IDE
         - **Maybe I'll switch later from CLion to CodeLite for IDE**  
@@ -1092,6 +1092,7 @@
     - perf - profiling tool for Linux kernel; useful for CLion; set it up in CLion under "File -> Settings -> Build, Execution, Deployment -> Dynamic analysis tools" - run profiler via "Run -> Profile '<ProjectName>'"
     - valgrind - memory leaks test; useful for CLion; set it up in CLion under "File -> Settings -> Build, Execution, Deployment -> Dynamic analysis tools" - run Valgrind via "Run -> Run '<ProjectName>' with Valgrind Memcheck"
     - gdb: I chose to disable colors in the GDB because I found some words harder to read on Terminal with black background, e.g. the `auto` keyword which was blue. Therefore, I created a file `~/.gdbinit` with this content
+    - ´clang lld lldb libc++` - LLVM toolchain
 
             set style enabled off
  
@@ -1147,11 +1148,22 @@
                                     #if (${NAMESPACE})
                                     ${NAMESPACES_CLOSE}
                                     #end
-
+    
+            - `Code Style`
+                - `C/C++`
+                    - `Spaces` tab at the top
+                        - `Other` collapsable section in the scrollable pane on the left to the code editor area
+                            - uncheck `Before '*' in declarations` and `Before '&' in declarations`
+                            - check `After '*' in declarations` and `After '&' in declarations`
         - `Plugins`
             - AsciiDoc
             - unicode escaper - translate escaped UTF codes (e.g. \u1234) to readable characters
-
+        - `Build, Execution, Deployment`
+            - `Toolchains`
+                - TODO
+        - `Advanced Settings`
+            - `Terminal` section
+                - change `Terminal scrollback buffer size:` to `10000`
         
     - Setting a unified black look
       1. File -- Settings... -- Appearance & Behavior -- UI Options -- Background Image...
