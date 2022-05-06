@@ -146,12 +146,36 @@
             ...
             alias git='git --no-pager'
             ...
+            
+        To add the pager back use the option `--add-pager`
+        
+            git diff --add-pager
+            
+        or prefix the `git` command with a backslash `\` which disables the alias (appliable for any aliased command)
+        
+            \git diff
         
         - Soures:
             - https://duckduckgo.com/?q=git+diff+without+scrolling&ia=web
             - https://stackoverflow.com/questions/2183900/how-do-i-prevent-git-diff-from-using-a-pager/2183920#2183920
             - https://stackoverflow.com/questions/2183900/how-do-i-prevent-git-diff-from-using-a-pager/2183920#comment8461627_2183920
             - https://stackoverflow.com/questions/60175925/how-to-make-git-diff-show-everything-without-having-to-press-enter-to-scroll-dow
+
+    - Remove file or directory from entire history of a git repository
+    
+            git filter-branch --index-filter "git rm -rf --cached --ignore-unmatch path_to_file" HEAD
+            
+        for example
+        
+            git filter-branch --index-filter 'git rm -rf --cached --ignore-unmatch Ernaehrung/' HEADRe
+    
+        - Sources
+            - https://duckduckgo.com/?q=remove+file+from+entire+github+history&ia=web
+            - https://stackoverflow.com/questions/43762338/how-to-remove-file-from-git-history
+            - https://stackoverflow.com/questions/43762338/how-to-remove-file-from-git-history/52643437#52643437
+            - https://myopswork.com/how-remove-files-completely-from-git-repository-history-47ed3e0c4c35
+            - https://duckduckgo.com/?q=remove+git+file+from+all_history+github+gist+pourmand1376&ia=web
+            - https://gist.github.com/pourmand1376/aaa519389734215cd8518c94d6b39ba3
 
 * clonezilla - backup utility/environment
     - [automatize the creation of UEFI bootable USB for Clonezilla](https://github.com/kyberdrb/clonezilla_bootable_uefi_usb_creator)
