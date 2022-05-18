@@ -1185,6 +1185,20 @@
         - `Build, Execution, Deployment`
             - `Toolchains`
                 - TODO
+        - `Languages & Frameworks`
+            - `C/C++`
+                - `Clangd`
+                    - `Clang Errors and Warnings` section
+                        - `diagnostic flags`
+        
+                                -Wno-unused-variable,-Wno-infinite-recursion,-Werror=implicit-function-declaration,-Wshadow,-Wno-shadow-field-in-constructor-modified,-Wno-shadow-ivar,-Wuninitialized,-Wunused-label,-Wunused-lambda-capture, -Wbugprone-use-after-move, -Wperformance-move-const-arg
+    
+                            - Sources
+                                - https://duckduckgo.com/?t=ffab&q=c%2B%2B+std+move+on+const+variable+has+no+effect&ia=web
+                                - https://stackoverflow.com/questions/60372691/is-there-a-compile-warning-about-this-use-of-stdmove
+                                - https://clang.llvm.org/extra/clang-tidy/checks/bugprone-use-after-move.html
+                                - https://clang.llvm.org/extra/clang-tidy/checks/performance-move-const-arg.html
+    
         - `Advanced Settings`
             - `Terminal` section
                 - change `Terminal scrollback buffer size:` to `10000`
