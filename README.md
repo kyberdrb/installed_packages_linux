@@ -1174,6 +1174,8 @@
                                     #end
     
             - `Code Style`
+                - `General` tab
+                    - `Hard wrap at:` 140 `columns`
                 - `C/C++`
                     - `Spaces` tab at the top
                         - `Other` collapsable section in the scrollable pane on the left to the code editor area
