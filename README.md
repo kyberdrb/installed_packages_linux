@@ -149,7 +149,7 @@
             
         To add the pager back use the option `--add-pager`
         
-            git diff --add-pager
+            git --paginate diff
             
         or prefix the `git` command with a backslash `\` which disables the alias (appliable for any aliased command)
         
