@@ -161,6 +161,31 @@
             - https://stackoverflow.com/questions/2183900/how-do-i-prevent-git-diff-from-using-a-pager/2183920#comment8461627_2183920
             - https://stackoverflow.com/questions/60175925/how-to-make-git-diff-show-everything-without-having-to-press-enter-to-scroll-dow
 
+
+    - Show upstream `origin` URL of a git repository
+
+            git remote get-url origin
+            
+        or
+        
+            cat .git/config | grep url | tr -d '\t' | tr -d ' ' | cut -d'=' -f2 | xclip -se c
+
+        Change `origin` URL of a git repository
+
+            git remote set-url origin <new_git_upstream_url>
+
+        Source: https://duckduckgo.com/?q=git+set+remote+origin+url&ia=web
+        
+    - Fix for `.gitignore` file **not** ignoring files
+
+        ```
+        git rm -r --cached /path/to/repo
+        git add --all,
+        git commit --message="fixed untracked files"
+        ```
+        
+        - Source: https://stackoverflow.com/questions/11451535/gitignore-is-not-working/11451731#11451731
+
     - Remove file or directory from entire history of a git repository
     
             git filter-branch --index-filter "git rm -rf --cached --ignore-unmatch path_to_file" HEAD
@@ -176,19 +201,6 @@
             - https://myopswork.com/how-remove-files-completely-from-git-repository-history-47ed3e0c4c35
             - https://duckduckgo.com/?q=remove+git+file+from+all_history+github+gist+pourmand1376&ia=web
             - https://gist.github.com/pourmand1376/aaa519389734215cd8518c94d6b39ba3
-    - Show upstream `origin` URL of a git repository
-
-            git remote get-url origin
-            
-        or
-        
-            cat .git/config | grep url | tr -d '\t' | tr -d ' ' | cut -d'=' -f2 | xclip -se c
-
-        Change `origin` URL of a git repository
-
-            git remote set-url origin <new_git_upstream_url>
-
-        Source: https://duckduckgo.com/?q=git+set+remote+origin+url&ia=web
 
 * clonezilla - backup utility/environment
     - [automatize the creation of UEFI bootable USB for Clonezilla](https://github.com/kyberdrb/clonezilla_bootable_uefi_usb_creator)
