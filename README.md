@@ -31,19 +31,61 @@
 * ntp - keep the time up to date
     
         pikaur -Sy ntp networkmanager-dispatcher-ntpd
-        sudo ln -s ~/git/kyberdrb/installed_packages_linux/configs/ntp.conf /etc/ntp.conf
+        sudo cp /etc/ntp.conf /etc/ntp.conf.original
+        sudo cp ~/git/kyberdrb/installed_packages_linux/configs/ntp.conf /etc/ntp.conf
+        
         sudo systemctl status ntpd.service
         sudo systemctl status ntpdate.service
-        sudo systemctl enable ntpd.service
-        sudo systemctl enable ntpdate.service
-        reboot
+        ntpq -p
         timedatectl
         
+        sudo systemctl enable --now ntpd.service
+        sudo systemctl enable --now ntpdate.service
+        
+        sudo systemctl status ntpd.service
+        sudo systemctl status ntpdate.service
+        ntpq -p
+        timedatectl
+        
+    Output of `timedatectl` before setting NTP time
+
+    ```
+                   Local time: Tue 2022-05-24 13:29:25 CEST
+               Universal time: Tue 2022-05-24 11:29:25 UTC
+                     RTC time: Tue 2022-05-24 11:29:25
+                    Time zone: Europe/Bratislava (CEST, +0200)
+    System clock synchronized: yes
+                  NTP service: inactive
+              RTC in local TZ: no
+    ```
+        
+    Enable NTP time synchronization for `timedatectl`
+        
+        timedatectl set-ntp 1
+        
+    Enter `sudo`/`root` password when needed
+    
+    Verify that the `timedatectl` uses synchronized time from NTP
+        
+        timedatectl
+        
+    ```
+                   Local time: Tue 2022-05-24 13:31:56 CEST
+               Universal time: Tue 2022-05-24 11:31:56 UTC
+                     RTC time: Tue 2022-05-24 11:31:56
+                    Time zone: Europe/Bratislava (CEST, +0200)
+    System clock synchronized: yes
+                  NTP service: active
+              RTC in local TZ: no
+    ```
+        
     - Sources
+        - https://duckduckgo.com/?q=arch+linux+ntp&ia=web
         - https://wiki.archlinux.org/title/Network_Time_Protocol_daemon
         - https://wiki.archlinux.org/title/Network_Time_Protocol_daemon#Start_ntpd_at_boot
         - https://wiki.archlinux.org/title/Network_Time_Protocol_daemon#Start_ntpd_on_network_connectiongit - 
         - https://superuser.com/questions/444733/linux-ntpd-and-ntpdate-service
+        - https://wiki.archlinux.org/title/System_time
 
 * adobe-source-han-sans-otc-fonts adobe-source-han-serif-otc-fonts - displaying Asian characters
     - https://duckduckgo.com/?q=asian+font+arch+linux+chrome+firefox&ia=web
