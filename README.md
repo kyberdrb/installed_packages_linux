@@ -35,16 +35,18 @@
         sudo cp ~/git/kyberdrb/installed_packages_linux/configs/ntp.conf /etc/ntp.conf
         
         sudo systemctl status ntpd.service
-        sudo systemctl status ntpdate.service
-        ntpq -p
-        timedatectl
-        
         sudo systemctl enable --now ntpd.service
-        sudo systemctl enable --now ntpdate.service
-        
         sudo systemctl status ntpd.service
-        sudo systemctl status ntpdate.service
-        ntpq -p
+        
+        ntpd --user=ntp:ntp
+        ntpd --quit
+        
+    To enable `System clock synchronized` in `timedatectl`
+        
+        sudo hwclock --systohc
+        
+    Verify the settings
+        
         timedatectl
         
     Output of `timedatectl` before setting NTP time
