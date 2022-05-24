@@ -167,7 +167,7 @@
             
         for example
         
-            git filter-branch --index-filter 'git rm -rf --cached --ignore-unmatch Ernaehrung/' HEADRe
+            git filter-branch --index-filter 'git rm -rf --cached --ignore-unmatch Ernaehrung/' HEAD
     
         - Sources
             - https://duckduckgo.com/?q=remove+file+from+entire+github+history&ia=web
@@ -176,6 +176,19 @@
             - https://myopswork.com/how-remove-files-completely-from-git-repository-history-47ed3e0c4c35
             - https://duckduckgo.com/?q=remove+git+file+from+all_history+github+gist+pourmand1376&ia=web
             - https://gist.github.com/pourmand1376/aaa519389734215cd8518c94d6b39ba3
+    - Show upstream `origin` URL of a git repository
+
+            git remote get-url origin
+            
+        or
+        
+            cat .git/config | grep url | tr -d '\t' | tr -d ' ' | cut -d'=' -f2 | xclip -se c
+
+        Change `origin` URL of a git repository
+
+            git remote set-url origin <new_git_upstream_url>
+
+        Source: https://duckduckgo.com/?q=git+set+remote+origin+url&ia=web
 
 * clonezilla - backup utility/environment
     - [automatize the creation of UEFI bootable USB for Clonezilla](https://github.com/kyberdrb/clonezilla_bootable_uefi_usb_creator)
