@@ -206,6 +206,41 @@
             - https://stackoverflow.com/questions/60175925/how-to-make-git-diff-show-everything-without-having-to-press-enter-to-scroll-dow
 
 
+    - Show all tags in a repository
+
+            git tag
+
+    - Show all tags in a repository with tag messages, if present, i. e. the tag is an annotated one with a message
+
+            git tag | xargs git show --pretty=short --no-patch
+            
+        or without pager
+        
+            git tag | xargs git --no-pager show --pretty=short --no-patch
+            
+        or with custom pager
+        
+            git tag | xargs git --no-pager show --pretty=short --no-patch | less
+            
+        - Sources:
+            - https://duckduckgo.com/?q=git+show+tags+message&ia=web
+            - https://duckduckgo.com/?q=git+show+annotated+tags&ia=web
+            - https://www.freecodecamp.org/news/git-tag-explained-how-to-add-remove/
+            - https://hackernoon.com/annotated-and-lightweight-git-tags-hz6r3ywf
+            - https://www.shellhacks.com/git-list-tags/
+            
+    - Show entire commit history with tags and extended commit messages
+
+            git --paginate log --tags --decorate=full
+            
+        without pagination
+        
+            git log --tags --decorate=full
+        
+        with custom pagination
+        
+            git log --tags --decorate=full | less
+
     - Show upstream `origin` URL of a git repository
 
             git remote get-url origin
