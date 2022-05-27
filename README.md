@@ -255,6 +255,36 @@
 
         Source: https://duckduckgo.com/?q=git+set+remote+origin+url&ia=web
         
+    - Delete tags
+    
+        - Delete a local tag
+        
+            ```
+            git tag --delete TAG_NAME
+            ```
+
+            or
+
+            ```
+            git tag -d TAG_NAME
+            ```
+            
+        - Delete a remote tag
+
+            ```
+            git push --delete origin TAG_NAME
+            ```
+            
+            or
+            
+            ```
+            git push -d origin TAG_NAME
+            ```
+            
+        - Sources:
+            - https://devconnected.com/how-to-delete-local-and-remote-tags-on-git/
+            - https://duckduckgo.com/?q=git+tag+message&t=ffab&ia=web
+        
     - Fix for `.gitignore` file **not** ignoring files
 
         ```
