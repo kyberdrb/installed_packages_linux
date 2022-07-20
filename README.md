@@ -310,6 +310,21 @@
             - https://myopswork.com/how-remove-files-completely-from-git-repository-history-47ed3e0c4c35
             - https://duckduckgo.com/?q=remove+git+file+from+all_history+github+gist+pourmand1376&ia=web
             - https://gist.github.com/pourmand1376/aaa519389734215cd8518c94d6b39ba3
+    - Merge two or more commits into one
+        
+        1. Select the commit in the history ´, e. g. the forelast
+        
+                git rebase -i HEAD~2
+                
+        1. `pick` the first one, `squash` other ones; `:wq`
+        1. Edit commit message
+        1. Push changes to the remote
+        
+                git push --force
+        
+        - Sources
+            - https://duckduckgo.com/?t=ffab&q=git+merge+two+local+commits&ia=web&iax=qa
+            - https://stackoverflow.com/questions/12522565/how-can-i-combine-two-commits-into-one-commit#12523432
 
 * clonezilla - backup utility/environment
     - [automatize the creation of UEFI bootable USB for Clonezilla](https://github.com/kyberdrb/clonezilla_bootable_uefi_usb_creator)
