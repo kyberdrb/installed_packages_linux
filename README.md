@@ -1344,12 +1344,17 @@
         
                                 -Wno-unused-variable,-Wno-infinite-recursion,-Werror=implicit-function-declaration,-Wshadow,-Wno-shadow-field-in-constructor-modified,-Wno-shadow-ivar,-Wuninitialized,-Wunused-label,-Wunused-lambda-capture, -Wbugprone-use-after-move, -Wperformance-move-const-arg
     
+                            maybe add `-fsized-deallocation` but it didn't make any difference in my case as for fixing the "problem" with  `clangd`: "In template: call to '__builtin_operator_delete' selects non-usual deallocation function"
+    
                             - Sources
                                 - https://duckduckgo.com/?t=ffab&q=c%2B%2B+std+move+on+const+variable+has+no+effect&ia=web
                                 - https://stackoverflow.com/questions/60372691/is-there-a-compile-warning-about-this-use-of-stdmove
                                 - https://clang.llvm.org/extra/clang-tidy/checks/bugprone-use-after-move.html
                                 - https://clang.llvm.org/extra/clang-tidy/checks/performance-move-const-arg.html
-    
+                                - https://duckduckgo.com/?t=ffab&q=In+template%3A+call+to+%27__builtin_operator_delete%27+selects+non-usual+deallocation+function&ia=web
+                                - https://stackoverflow.com/questions/72278287/clion-2022-1-in-template-call-to-builtin-operator-delete-selects-non-usual
+                                - https://youtrack.jetbrains.com/issue/CPP-29091/In-template-call-to-builtinoperatordelete-selects-non-usual-deallocation-function-gcc-12#focus=Comments-27-6067190.0-0
+                                - https://intellij-support.jetbrains.com/hc/en-us/community/posts/6060282493202-in-template-call-to-builtin-operator-delete-selects-non-usual-deallocation-function
         - `Advanced Settings`
             - `Terminal` section
                 - change `Terminal scrollback buffer size:` to `10000`
