@@ -204,7 +204,10 @@
             - https://stackoverflow.com/questions/2183900/how-do-i-prevent-git-diff-from-using-a-pager/2183920#2183920
             - https://stackoverflow.com/questions/2183900/how-do-i-prevent-git-diff-from-using-a-pager/2183920#comment8461627_2183920
             - https://stackoverflow.com/questions/60175925/how-to-make-git-diff-show-everything-without-having-to-press-enter-to-scroll-dow
+    
+    - Show all different files recursively
 
+            git status --untracked-files
 
     - Show all tags in a repository
 
