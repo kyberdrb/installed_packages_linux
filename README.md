@@ -1453,7 +1453,6 @@
     
 ---
 
-* parallel - parallelize shell commands
 * thunar - favorite file manager
 * transmission-gtk / transmission-qt -> torrent klient
 * gparted exfatprogs dosfstools - disk and partition manager
@@ -1696,6 +1695,10 @@ wget -> terminal downloader utility
 
 ---
 
+- masterpdfeditor-free - PDF editor; A complete solution for creation and editing PDF files - Free version without watermark  
+- codelite - A multi purpose IDE specialized in C/C++/Rust/Python/PHP and Node.js. Written in C++
+    - https://github.com/eranif/codelite
+    
 - atom - text editor
     - Installed packages - Edit → Preferences → Install:
         - asciidoc-preview
@@ -1766,7 +1769,7 @@ arch-install-scripts -> base LXC support
 debootstrap -> support for Debian based LXC containers in Arch Linux
 
 docker -> base Docker support
-Aďo Šišila
+
 ---
 
 dtrx -> command line extraction utility
