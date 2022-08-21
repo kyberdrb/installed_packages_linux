@@ -1150,6 +1150,12 @@
           - https://www.cyberciti.biz/faq/how-do-i-find-out-screen-resolution-of-my-linux-desktop/
           - https://www.linuxquestions.org/questions/linux-desktop-74/wmctrl-moving-current-window-up-down-left-right-4175455312/#post4918676
           - https://unix.stackexchange.com/questions/102008/how-do-i-trim-leading-and-trailing-whitespace-from-each-line-of-some-output/102021#102021
+      - **Close window of program or tab in a browser gracefully by name from terminal**  
+          When the program becomes unresponsive to controls - namely the 'X' button - in the window decoration or next to tab name
+      
+            wmctrl -c "tab title"
+      
+        - Source: https://stackoverflow.com/questions/20441793/how-to-close-a-chrome-browser-tab-via-terminal#42961199
 
 * sane-airscan ipp-usb - scanner support
     - Enable and start the scanner service
