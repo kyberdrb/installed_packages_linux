@@ -1056,9 +1056,11 @@
 * imagemagick imagemagick-doc - An image viewing/manipulation program; with docs referenced from man pages
     - Crop an image
 
+            # Explanation of arguments after for '-crop' option
+            #    -crop WIDTH x HEIGHT + LEFT_TOP_X + LEFT_TOP_Y
             convert "image-input.png" -crop 2330x140+20+164 "image-cropped.png"
 
-        - automation script here
+        - automation script: [`crop_image_by_coordinates.sh`](https://github.com/kyberdrb/Linux_utils_and_gists/blob/master/crop_image_by_coordinates.sh)
     - Rotate image by 90 degrees clockwise
     
             convert "image-input.png" -rotate 90 "image-rotated.png"
