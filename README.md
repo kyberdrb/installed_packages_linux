@@ -1052,6 +1052,28 @@
             - https://bbs.archlinux.org/viewtopic.php?pid=1418697#p1418697
         - Hide/Show menu bar: Ctrl + M
             - https://forums.opensuse.org/showthread.php/403839-Menu-bar-and-Tool-bar-lost-in-Okular-KDE4
+
+* imagemagick imagemagick-doc - An image viewing/manipulation program; with docs referenced from man pages
+    - Crop an image
+
+            convert "image-input.png" -crop 2330x140+20+164 "image-cropped.png"
+
+        - automation script here
+    - Rotate image by 90 degrees clockwise
+    
+            convert "image-input.png" -rotate 90 "image-rotated.png"
+    
+    - Show DPI of image
+    
+            identify -format '%x\n' "/path/to/image"
+            identify -format '%y\n' "/path/to/image"
+            identify -format '%x,%y\n' "/path/to/image"
+            
+    - Sources:
+        - `man convert`
+        - `man identify`
+        - https://www.imagemagick.org/script/identify.php
+        - https://unix.stackexchange.com/questions/406454/how-to-get-the-dpi-of-an-image-file-png#406632
             
 * ocrmypdf tesseract-data-eng tesseract-data-slk tesseract-data-dan tesseract-data-ces tesseract-data-deu - utility to make a PDF document searchable with trained datasets for the `tesseract` utility; 
     - trained datasets for various languages are stored in directory `/usr/share/tessdata/`
