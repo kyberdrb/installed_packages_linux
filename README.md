@@ -641,7 +641,7 @@
     - https://aur.archlinux.org/packages/ungoogled-chromium/
     - https://github.com/Eloston/ungoogled-chromium#enhancing-features
     - Extensions
-        - if standard installation fails, install them via extracting the `crx` and drag-and-dropping to folder to the `chrome://extensions/` (https://github.com/NeverDecaf/chromium-web-store#if-drag-and-dropping-does-not-work-try-this-workaround)[[1]]
+        - if standard installation of an extension fails, install them via extracting the `crx` and drag-and-dropping to folder to the `chrome://extensions/` (https://github.com/NeverDecaf/chromium-web-store#if-drag-and-dropping-does-not-work-try-this-workaround)[[1]]
         - (https://github.com/NeverDecaf/chromium-web-store)[chromium-web-store] - Enabling Chrome Store in order to install extensions comfortably
         - (https://chrome.google.com/webstore/detail/google-analytics-opt-out/fllaojicojecljbmefodhfapmkghcbnh?hl=en)[Google Analytics Opt-out Add-on (by Google)]
 
@@ -664,8 +664,32 @@
         - IG Downloader
             - Download photos, videos and stories from Instagram
             - https://chrome.google.com/webstore/detail/ig-downloader/cpgaheeihidjmolbakklolchdplenjai
+        - Audio Only Youtube
+        - Auto Clicker - AutoFill
+            - instructions for `kompaszliav.sk` - automatic expansion of all products in special offer in the list on a page
+                1. Go to any special offer page with list of products, e.g. https://kompaszliav.sk/zelenina
+                2. Right click on the button with arrow pointing downwards that shows more products
+                3. From the context menu click on `Inspect`. The developer console opens with the element highlighted
+                4. Right click on the parent hyperlink tag `<a class...`
+                5. From the context menu click on `Copy -> Copy full XPath`
+                6. Open AutoFill configuration page: https://stable.getautoclicker.com/
+                7. Add a new configuration for the page as follows
+                    - URL: `https://kompaszliav.sk/*`
+                    - Name: `kompaszliav - automaticke rozbalovanie produktov`
+                    - Action `->` Add Action
+                        - Init Wait [in seconds]: 4
+                        - Element Finder [paste the copied full XPath]: `/html/body/div[3]/div[16]/a`
+                        - Value: `MouseEvents::click`
+                        - Repeat: `100`
+                        - R-Interval [delay between repetitions in seconds]: `0`
+
+                    The action is saved automatically. The Auto Clicker will start the script immediately after loading any `kompaszliav.sk` page.
+            - Session Buddy
+                - back up sessions to prevent unpleasant situations when after opening Chromium the browser is empty.  
+                    Session Buddy backs up and restores sessions without relying on the default mechanism in Chromium
     
-    - ...
+    - Hide password prompt each time when opening Chromium
+        - already automatized with [`chromium_disable_gnome-keyring_password_prompt.sh`](https://github.com/kyberdrb/update_arch/blob/master/utils/chromium_disable_gnome-keyring_password_prompt.sh)
         - Add '--password-store=basic' to remove prompt for 'gnome-keyring' password. 'gnome-keyring' has been installed to fix the error in `journalctl` from ´xfce4-screensaver`
         
                 xfce4-screensaver-dialog[1225]: PAM unable to dlopen(/usr/lib/security/pam_gnome_keyring.so): /usr/lib/security/pam_gnome_keyring.so: cannot open sh>
@@ -1060,7 +1084,8 @@
             #    -crop WIDTH x HEIGHT + LEFT_TOP_X + LEFT_TOP_Y
             convert "image-input.png" -crop 2330x140+20+164 "image-cropped.png"
 
-        - automation script: [`crop_image_by_coordinates.sh`](https://github.com/kyberdrb/Linux_utils_and_gists/blob/master/crop_image_by_coordinates.sh)
+        - simplified automation script: [`crop_image_by_coordinates.sh`](https://github.com/kyberdrb/Linux_utils_and_gists/blob/master/crop_image_by_coordinates.sh)
+        
     - Rotate image by 90 degrees clockwise
     
             convert "image-input.png" -rotate 90 "image-rotated.png"
@@ -1085,6 +1110,10 @@
     
             ocrmypdf --verbose --language eng --sidecar -O 0 --png-quality 100 --force-ocr document_in_english-nonsearchable.pdf document_in_english-searchable.pdf
             ocrmypdf --verbose --language eng -O 1 --png-quality 100 document_in_english-nonsearchable.pdf document_in_english-searchable.pdf
+        
+        or to convert image to searchable PDF
+        
+            ocrmypdf --verbose --language eng --sidecar --optimize=0 --force-ocr --image-dpi 72 "/path/to/image.png" "/path/to/image-searchable.pdf"
             
         - The `--language` option explicitely specifies the dataset that will be used for OCR (Optical Character Recognition); e.g. for `eng` it will use the  `tesseract-data-eng` dataset, i.e. the dataset for English language.
         - The `-O` option optimizes the final document. With value `1` the utility performs lossless optimizations which affect the size of the final document.
@@ -1220,6 +1249,8 @@
             # crop rotated image by template 'WIDTHxHEIGHT+LEFT+TOP'
             #   explanation: cropped_image_width x cropped_image_height + beginning_x_coordinate_in_input_image + beginning_y_coordinate_in_input_image
             convert "original.png" -crop 2565x3094+4573+0 "cropped.png"
+            
+        or use my simplified version in [`crop_image_by_coordinates.sh`](https://github.com/kyberdrb/Linux_utils_and_gists/blob/master/crop_image_by_coordinates.sh)
             
         - Sources
             - https://duckduckgo.com/?q=crop+imagemagic+terminal+linux&ia=web&iax=qa
