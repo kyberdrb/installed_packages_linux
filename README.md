@@ -331,10 +331,16 @@
 
 * clonezilla - backup utility/environment
     - [automatize the creation of UEFI bootable USB for Clonezilla](https://github.com/kyberdrb/clonezilla_bootable_uefi_usb_creator)
+    - **clone larger disk to smaller one**
+        - condition: the occupied space on the source drive needs to be less than the overall size of the target disk
+            1. device-device
+            1. Expert
+            1. clone disk to local disk
+            1. check 'skip checking the size of destination disk'
+            1. check '-k1' - 'resize partition table proportionally'
+            1. the cloning procedure now proceeds instead of terminating on error about the smaller size of the destination disk
 
 * memtest86+ syslinux - utility/environment for stability and accuracy testing for operational memory (RAM)
-    - `memtest86+` - DO NOT DOWNLOAD OR INSTALL!!!
-    - `syslinux` - DOWNLOAD ONLY!!! with pacman with `--downloadonly`
     - [automatize the creation of bootable USB for Memtest86+](https://github.com/kyberdrb/memtest86plus_bootable_usb_creator)
 
 * ext4magic foremost testdisk scalpel-git ddrescue ddrescue-gui - data recovery tools
