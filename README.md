@@ -1264,8 +1264,18 @@
             - https://duckduckgo.com/?q=crop+image+terminal+linux+convert&ia=web
             - https://askubuntu.com/questions/631689/cropping-images-using-command-line-tools-only#631695
 
-* cups cups-pdf - printing support
-  - `sudo systemctl enable --now cups.service`
+* cups cups-pdf samsung-unified-driver  - printing support
+    - `samsung-unified-driver` - support for Samsung printers
+        - `c2esp splix foomatic-db` - ALTERNATIVE DRIVERS FOR SAMSUNG PRINTERS. USE ONLY ONE OF THE PACKAGES AND TEST THEM ONE BY ONE UNTIL YOU ARE ABLE TO PRINT A TEST PAGE FROM CUPS SERVER FROM THE SAMSUNG PRINTER TO AVOID PACKAGE CONFLICTS AND DRIVER FILE OVERWRITING.
+    1. `sudo systemctl enable --now cups.service`
+    1. http://localhost:631/admin
+    1. `Administration > Printers > Add Printer`
+    1. Choose the printer; `Samsung M2070 Series` in my case
+    1. Continue.
+    1. In my case, in the next step the driver for the printer - `Samsung M2070 Series (grayscale)` - was loaded automatically.
+    1. Finalize the setup by clicking on `Add Printer` button
+    1. Print a test page to test the printer by going to `Printers` in the top menu banner and clicking on the first drop down menu - by default with `Mainenance` displayed - and selecting `Print Test Page`
+    1. Tweak the settings if you wish at `Printers`, select the printer, open the second drop down menu - by default with `Administration` displayed - and select `Set Default Options`
 
 * make cmake gdb clang lld lldb libc++ gtest perf valgrind ninja - C/C++ toolchain; `libc++`is a C++ standard library for LLVM
 * clion=2021.2.2-1 clion-cmake=2021.2.2-1 clion-gdb=2021.2.2-1 clion-jre=2021.2.2-1 clion-lldb=2021.2.2-1
