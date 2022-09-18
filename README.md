@@ -1268,14 +1268,107 @@
     - `samsung-unified-driver` - support for Samsung printers
         - `c2esp splix foomatic-db` - ALTERNATIVE DRIVERS FOR SAMSUNG PRINTERS. USE ONLY ONE OF THE PACKAGES AND TEST THEM ONE BY ONE UNTIL YOU ARE ABLE TO PRINT A TEST PAGE FROM CUPS SERVER FROM THE SAMSUNG PRINTER TO AVOID PACKAGE CONFLICTS AND DRIVER FILE OVERWRITING.
     1. `sudo systemctl enable --now cups.service`
-    1. http://localhost:631/admin
+    1. Go to the CUPS Web Administration page: http://localhost:631/admin
     1. `Administration > Printers > Add Printer`
     1. Choose the printer; `Samsung M2070 Series` in my case
     1. Continue.
     1. In my case, in the next step the driver for the printer - `Samsung M2070 Series (grayscale)` - was loaded automatically.
     1. Finalize the setup by clicking on `Add Printer` button
-    1. Print a test page to test the printer by going to `Printers` in the top menu banner and clicking on the first drop down menu - by default with `Mainenance` displayed - and selecting `Print Test Page`
-    1. Tweak the settings if you wish at `Printers`, select the printer, open the second drop down menu - by default with `Administration` displayed - and select `Set Default Options`
+    1. Check printer status by selecting `Maintenance` from the first drop down menu and `Administration` from the second drop down menu. May be selected already.
+
+        ```
+        Description:  Samsung_M2070_Series
+        Location: 
+        Driver:       Samsung M2070 Series (grayscale) **ALSO WORKS WITH DRIVER 'Generic PCL Laser Printer (grayscale)'**
+        Connection:   usb://Samsung/M2070%20Series?serial=ZF44B8KDCE01V0T&interface=1
+        Defaults:     job-sheets=none, none media=iso_a4_210x297mm sides=one-sided
+        ```
+    
+    3. Print a test page to test the printer by going to `Printers` in the top menu banner and clicking on the first drop down menu - by default with `Mainenance` displayed - and selecting `Print Test Page`
+    4. Tweak the settings if you wish at `Printers`, select the printer, open the second drop down menu - by default with `Administration` displayed - and select `Set Default Options`. Below I provide an example of my preferences:
+        - General
+
+            ```
+            Quality:          Standard
+            Brightness Level: 50
+            Contrast Level:   50
+            Paper Source:     Auto Selection
+            Toner Save:       On
+            Page Size:        A4
+            ```
+
+        - JCL
+
+            ```
+            Paper Type:       Printer Default
+            Skip Blank Pages: Off
+            Edge Enhancement: Normal
+            ```
+
+        - Banners
+
+            ```
+            Starting Banner: none
+            Ending Banner:   none
+            ```
+
+        - Policies
+
+            ```
+            Error Policy:     stop-printer
+            Operation Policy: default
+            ```
+
+    - SOURCES
+        - **CUPS - Printer Web Management: http://localhost:631/admin**
+
+        ---
+
+        - https://support.hp.com/us-en/product/samsung-xpress-sl-m2070-laser-multifunction-printer-series/16450377/manuals
+        - http://h10032.www1.hp.com/ctg/Manual/c05790142.pdf
+        - User's Guide - Samsung Multifunction Xpress M207x series: http://h10032.www1.hp.com/ctg/Manual/c05790142.pdf
+        - Samsung Printer Quick Installation Guide: http://h10032.www1.hp.com/ctg/Manual/c05566387.pdf
+        - search: jam or empty door open close
+        - Understanding display messages, Paper jam-related messages – Samsung SL-M2070W-XAA User Manual: https://www.manualsdir.com/manuals/420764/samsung-sl-m2070w-xaa-sl-m2070fw-xaa.html?page=98
+        - Clearing paper jams – Samsung SL-M2070W-XAA User Manual: https://www.manualsdir.com/manuals/420764/samsung-sl-m2070w-xaa-sl-m2070fw-xaa.html?page=91
+        - Media and tray – Samsung SL-M2070W-XAA User Manual: https://www.manualsdir.com/manuals/420764/samsung-sl-m2070w-xaa-sl-m2070fw-xaa.html?page=39
+        - How to Clear Paper Jams on Samsung Printers - printerbase.co.uk: https://www.youtube.com/watch?v=kviBXiZVxiU
+        - Samsung M2070 разборка. Ремонт печки - Дмитрий Щетнев: https://www.youtube.com/watch?v=ZF4QJD0vpkI
+        - NEW! Samsung Xpress Printers: M2070, M2070F, M2070FW firmware reset - Printers IDO: https://www.youtube.com/watch?v=UmMEFkcbvl8
+        - https://www.mall.sk/tlaciarne/samsung-sl-m2070
+        - https://wiki.archlinux.org/title/CUPS
+        - https://wiki.archlinux.org/title/CUPS/Printer-specific_problems#Samsung
+        - https://archlinux.org/packages/community/x86_64/splix/
+        - https://aur.archlinux.org/packages/c2esp
+        - https://archlinux.org/packages/extra/any/foomatic-db/
+        - https://archlinux.org/packages/extra/any/foomatic-db-ppds/
+        - https://www.maketecheasier.com/set-up-a-printer-in-linux/
+        - https://duckduckgo.com/?q=samsung+ml+2070+ppd&ia=web
+        - https://www.reddit.com/r/chromeos/comments/e2mqka/where_to_find_ppd_printer_drivers/
+        - https://www.reddit.com/r/chromeos/comments/e2mqka/comment/f8wi749/?utm_source=reddit&utm_medium=web2x&context=3
+        - https://duckduckgo.com/?q=04e8%3A3469+ppd&ia=web
+        - https://duckduckgo.com/?q=cups+delete+printer&ia=web
+        - https://www.linuxquestions.org/questions/linux-server-73/cups-how-to-delete-a-printer-817700/#post4022337
+        - https://duckduckgo.com/?q=cups+filter+failed&ia=web
+        - https://duckduckgo.com/?q=samsung+xpress+m2070&ia=web
+        - https://duckduckgo.com/?q=samsung+m2070+ppd&ia=web
+        - https://askubuntu.com/questions/602740/how-to-get-working-samsung-sl-m2070w-printer-on-ubuntu-14-04
+        - https://www.openprinting.org/driver/Postscript-Samsung/
+        - https://eu.community.samsung.com/t5/computers-it/samsung-printer-m2070-series-not-working-under-windows-11/td-p/4405664
+        - https://bbs.archlinux.org/viewtopic.php?id=239076
+        - https://bbs.archlinux.org/viewtopic.php?pid=1799185#p1799185
+        - https://duckduckgo.com/?q=rastertospl&ia=web
+        - https://raspberrypi.stackexchange.com/questions/22541/samsung-printer-in-cups-rastertospl-failed
+        - https://duckduckgo.com/?q=rastertospl+aur&ia=web
+        - **https://aur.archlinux.org/packages/samsung-unified-driver**
+        - https://bbs.archlinux.org/viewtopic.php?id=25498
+        - https://www.linuxliteos.com/forums/printing-and-scanning/cups-samsung-m2070/
+
+        ---
+
+        - https://markdown.land/markdown-code-block
+        - https://duckduckgo.com/?q=vscode+print&ia=web
+
 
 * make cmake gdb clang lld lldb libc++ gtest perf valgrind ninja - C/C++ toolchain; `libc++`is a C++ standard library for LLVM
 * clion=2021.2.2-1 clion-cmake=2021.2.2-1 clion-gdb=2021.2.2-1 clion-jre=2021.2.2-1 clion-lldb=2021.2.2-1
