@@ -1546,6 +1546,10 @@
           - _Editor -- Selection background_ -- check option _Background_: `C8C8C8`
           - _Errors and Warnings_ -- for _Typo_, _Warning_ and _Weak Warning_ check _Effects_ and change it from the original line type to `Underscored`
           - Editor -- Color Scheme -- Language Defaults -- `Function call` + `Function declaration`: changed `Foreground color` from `61AFEF` to `B9DFFF` - brighter color for clearer visibility on a dark background
+    
+    - cmake
+        - https://wiki.documentfoundation.org/ReleaseNotes/7.3#Performance_3
+        - https://en.wikipedia.org/wiki/Interprocedural_optimization
 
 * qtcreator - IDE for Qt Framework
 * doxygen - documentation generator for software projects; UML and text docs
