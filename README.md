@@ -183,6 +183,18 @@
             [pull]
                 ff = yes
                 
+    - link local directory to a remote git repository
+
+            git init
+            git config --global init.defaultBranch master
+            git add --all 
+            git commit --message="Test bootability of USB - passed"
+            git branch --move --force master
+            git remote add origin git@github.com:kyberdrb/arch_linux_bootable_uefi_usb_creator.git
+            git push --set-upstream origin master
+
+        Use `git branch` and `git status` to check intermediary status.
+                
     - immediately display diff without scrolling down manually, by creating an alias for `git` as `git --no-pager`
     
             $ vim ~/.bashrc
