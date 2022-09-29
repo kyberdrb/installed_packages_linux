@@ -38,6 +38,10 @@
         sudo systemctl enable --now ntpd.service
         sudo systemctl status ntpd.service
         
+        sudo systemctl status ntpdate.service
+        sudo systemctl enable --now ntpdate.service
+        sudo systemctl status ntpdate.service
+        
         ntpd --user=ntp:ntp
         ntpd --quit
         
@@ -49,7 +53,7 @@
         
         timedatectl
         
-    Output of `timedatectl` before setting NTP time
+    Output of `timedatectl` after setting hardware clock synchronization
 
     ```
                    Local time: Tue 2022-05-24 13:29:25 CEST
@@ -61,24 +65,31 @@
               RTC in local TZ: no
     ```
         
-    Enable NTP time synchronization for `timedatectl`
-        
-        timedatectl set-ntp 1
-        
-    Enter `sudo`/`root` password when needed
-    
-    Verify that the `timedatectl` uses synchronized time from NTP
-        
-        timedatectl
-        
+    Verify NTP function
+   
     ```
-                   Local time: Tue 2022-05-24 13:31:56 CEST
-               Universal time: Tue 2022-05-24 11:31:56 UTC
-                     RTC time: Tue 2022-05-24 11:31:56
-                    Time zone: Europe/Bratislava (CEST, +0200)
-    System clock synchronized: yes
-                  NTP service: active
-              RTC in local TZ: no
+    ntpq -p
+
+         remote           refid      st t when poll reach   delay   offset  jitter
+    ==============================================================================
+    *cloud.zazezi.ne .DCFa.           1 u    7   64  377   16.012   -3.829   1.990
+    -ntp26.kashra-se 192.168.100.15   2 u    6   64  367   64.796  -12.575  19.430
+    +2a02:25b0:aaaa: 78.108.96.197    2 u    8   64  377   29.207   -1.048   0.715
+    +ip98.mikrocom.s 195.113.144.201  2 u    2   64  377   18.962   -3.844   0.584    
+    ```
+
+    ``` 
+    ntptime
+
+    ntp_gettime() returns code 0 (OK)
+      time e6dfeddc.0aafee70  Thu, Sep 29 2022 12:11:40.041, (.041747568),
+      maximum error 279917 us, estimated error 1164 us, TAI offset 0
+    ntp_adjtime() returns code 0 (OK)
+      modes 0x0 (),
+      offset -395.732 us, frequency 26.997 ppm, interval 1 s,
+      maximum error 279917 us, estimated error 1164 us,
+      status 0x2001 (PLL,NANO),
+      time constant 6, precision 0.001 us, tolerance 500 ppm,
     ```
         
     - Sources
@@ -88,6 +99,9 @@
         - https://wiki.archlinux.org/title/Network_Time_Protocol_daemon#Start_ntpd_on_network_connectiongit - 
         - https://superuser.com/questions/444733/linux-ntpd-and-ntpdate-service
         - https://wiki.archlinux.org/title/System_time
+        - https://duckduckgo.com/?q=kernel+reports+TIME_ERROR%3A+0x2041%3A+Clock+Unsynchronized&ia=web
+        - https://www.linuxquestions.org/questions/slackware-14/ntpd-kernel-reports-time_error-0x2041-clock-unsynchronized-4175636606/#post5892954
+        - https://forums.freebsd.org/threads/ntpd-kernel-reports-time_error-0x2041-clock-unsynchronized.80575/
 
 * adobe-source-han-sans-otc-fonts adobe-source-han-serif-otc-fonts - displaying Asian characters
     - https://duckduckgo.com/?q=asian+font+arch+linux+chrome+firefox&ia=web
