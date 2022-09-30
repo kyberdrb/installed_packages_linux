@@ -201,11 +201,16 @@
 
             git init
             git config --global init.defaultBranch master
+            git status
             git add --all 
+            git status
             git commit --message="Test bootability of USB - passed"
+            git status
             git branch --move --force master
             git remote add origin git@github.com:kyberdrb/arch_linux_bootable_uefi_usb_creator.git
+            git remote get-url origin
             git push --set-upstream origin master
+            git status
 
         Use `git branch` and `git status` to check intermediary status.
                 
