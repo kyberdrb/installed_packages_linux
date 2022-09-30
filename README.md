@@ -199,18 +199,20 @@
                 
     - link local directory to a remote git repository
 
+            ls -Al
             git init
-            git config --global init.defaultBranch master
-            git status
-            git add --all 
-            git status
-            git commit --message="Test bootability of USB - passed"
-            git status
+            ls -Al
+            git config --global init.defaultBranch master # only for first run
+            git status --untracked-files
+            git add --all
+            git status --untracked-files
+            git commit --message="Test bootability of USB - PASS!"
+            git status --untracked-files
             git branch --move --force master
-            git remote add origin git@github.com:kyberdrb/arch_linux_bootable_uefi_usb_creator.git
+            git remote add origin git@github.com:kyberdrb/"$(basename "$(pwd)")".git
             git remote get-url origin
             git push --set-upstream origin master
-            git status
+            git status --untracked-files
 
         Use `git branch` and `git status` to check intermediary status.
                 
