@@ -1681,9 +1681,9 @@
 
     When you click at the Blueman applet, turn on the Bluetooth, and then click on the applet immediately after, then the Blueman applet doesn't respond to clicking. Restarting the panel with `xfce4-panel --restart` makes the applet clickable again. [Source](https://askubuntu.com/questions/891208/restart-xfce-panel-in-xubuntu/891209#891209)
 
-* qemu qemu-arch-extra virt-manager iptables-nft dnsmasq bridge-utils edk2-ovmf cockpit cockpit-machines virt-viewer - operating system virtualization. Why another hypervisor? Because with some kernels, namely `linux-lqx`, I was getting an error message when compiling VirtualBox module into the kernel
+* qemu qemu-arch-extra virt-manager iptables-nft dnsmasq bridge-utils edk2-ovmf cockpit cockpit-machines virt-viewer - operating system virtualization. Why another hypervisor? Because with some kernels, namely `linux-lqx`, I was getting an error message when compiling VirtualBox module into the kernel which resulted into non-launchable VBox VM instances.
 
-        output of '/var/log/pacman.log'
+        output of `/var/log/pacman.log`:
 
         ...
         [2021-04-07T20:59:02+0200] [ALPM-SCRIPTLET] ==> dkms install --no-depmod -m vboxhost -v 6.1.18_OSE -k 5.11.12-lqx1-1-lqx
@@ -1839,6 +1839,20 @@
         - Samba [[1]](https://www.iodocs.com/use-virt-manager-share-files-linux-host-windows-guest/), [[2]](https://web.archive.org/web/20160102195151/http://www.linux-kvm.com/content/tip-how-you-can-share-files-your-linux-host-windows-guest-using-samba)
             - I couldn't install Samba/CIFS feature support into my Windows VM. The installation ended up with error.
         - Virtio-FS [gave up on this one - too complicated and hardware intensive] [[1]](https://unix.stackexchange.com/questions/86071/use-virt-manager-to-share-files-between-linux-host-and-windows-guest), [[2]](https://libvirt.org/kbase/virtiofs.html), [[3]](https://libvirt.org/kbase/virtiofs.html#fromHistory), [[4]](https://www.tauceti.blog/post/qemu-kvm-share-host-directory-with-vm-with-virtio/#fromHistory), [[5]](https://www.tauceti.blog/post/qemu-kvm-share-host-directory-with-vm-with-virtio/#fromHistory)
+    - **Export XML for QEMU VM**
+
+            virsh --connect qemu:///system dumpxml Windows_10_Pro_2004.546_x64_LITE > Windows_10_Pro_2004.546_x64_LITE.xml
+
+    - **Import XML for QEMU VM**
+
+            virsh --connect qemu:///system define Windows_10_Pro_2004.546_x64_LITE.xml
+
+        The contents of the included directories `qemu/nvram` and `images/` need to be copied to the directory `/var/lib/libvirt/`
+
+        - https://duckduckgo.com/?q=export+xml+from+qemu+vm&ia=web
+        - https://unixlikeresearch.blogspot.com/2012/08/how-to-export-virtual-machine.html
+
+---
 
 fwupd - updates BIOS and UEFI and other device's firmware from Linux, if the device is supported
 
