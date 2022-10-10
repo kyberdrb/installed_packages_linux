@@ -245,6 +245,14 @@
     - Show all tags in a repository
 
             git tag
+            
+    - Add annotated tag
+
+            git tag --annotate 3.2.0 --message="Relief"
+            
+    - Push with tags
+
+            git push --tags
 
     - Show all tags in a repository with tag messages, if present, i. e. the tag is an annotated one with a message
 
