@@ -1548,6 +1548,12 @@
         - `Build, Execution, Deployment`
             - `Toolchains`
                 - TODO
+            - `Dynamic Analysis Tools`
+                - `Valgrind`
+                    - `Valgrind Memcheck` section
+                        - `Analysis options` text field
+                        
+                                --leak-check=full --leak-resolution=high --track-origins=yes --vgdb=no
         - `Languages & Frameworks`
             - `C/C++`
                 - `Clangd`
