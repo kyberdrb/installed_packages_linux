@@ -152,9 +152,7 @@
 
                 rm -r .local/share/keyrings/
 
-* canta-gtk-theme-git numix-circle-icon-theme-git - XFCE theme and icon pack
-    - Style: Canta-light-compact
-    - Icon: Numix Circle Light
+* lxde-icon-theme - XFCE icon pack
 
 * linux-firmware-iwlwifi-git - linux firmware with the support of Intel wireless devices, such as bluetooth and Wi-Fi. Replaces the default `linux-firmware` package.
     - In my case it provided newer firmware for my 
