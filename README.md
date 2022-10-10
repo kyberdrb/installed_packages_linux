@@ -1554,6 +1554,9 @@
                         - `Analysis options` text field
                         
                                 --leak-check=full --leak-resolution=high --track-origins=yes --vgdb=no
+    
+                            https://wiki.archlinux.org/title/Debugging#Valgrind
+    
         - `Languages & Frameworks`
             - `C/C++`
                 - `Clangd`
