@@ -1201,6 +1201,8 @@
     
 * libreoffice-still ttf-ms-win11 - office suite
     - `ttf-ms-win11` adds support for fonts in Windows
+        - https://wiki.archlinux.org/title/Fonts
+        - https://wiki.archlinux.org/title/Microsoft_fonts
 * ntfs-3g -> NTFS support
 * gvfs -> enables Trash icon/functionality (trash virtual file system) and automatic mounting of system drives
 * **gvfs-mtp** gvfs-gphoto2
