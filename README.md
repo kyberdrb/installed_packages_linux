@@ -1199,7 +1199,8 @@
     - Source
         - https://askubuntu.com/questions/837408/convert-speech-mp3-audio-files-to-text/1030253#1030253
     
-* libreoffice-still - office suite
+* libreoffice-still ttf-ms-win11 - office suite
+    - `ttf-ms-win11` adds support for fonts in Windows
 * ntfs-3g -> NTFS support
 * gvfs -> enables Trash icon/functionality (trash virtual file system) and automatic mounting of system drives
 * **gvfs-mtp** gvfs-gphoto2
