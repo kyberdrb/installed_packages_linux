@@ -1458,6 +1458,31 @@
             DeviceURI ipp://raspberrypi:631/printers/EPSON_M2140_Series
 
         Then test page will then print.
+        
+        - https://duckduckgo.com/?q=share+printer+cups&ia=web
+        - https://wiki.archlinux.org/title/CUPS/Printer_sharing#DNS-SD_advertisement
+        - https://duckduckgo.com/?q=%5B707%5D%3A+error%3A+Failed+to+create+%2Fvar%2Fspool%2Fcups%2Ftmp%2F.hplip&ia=web
+        - https://9to5answer.com/error-failed-to-create-var-spool-cups-tmp-hplip
+        - https://duckduckgo.com/?q=epson+linux+support&ia=web
+        - https://epson.com/Support/wa00821
+        - https://duckduckgo.com/?q=cant+connect+to+cups+server+web+remotely&ia=web
+        - **https://askubuntu.com/questions/23936/how-do-you-administer-cups-remotely-using-the-web-interface#532123** - then restart `cups` service
+        - https://duckduckgo.com/?q=unable+to+locate+printer+cups&ia=web
+        - https://bbs.archlinux.org/viewtopic.php?id=207218
+        - https://unix.stackexchange.com/questions/706008/cups-troubleshootingunable-to-locate-printer-brotherprinter
+        - https://askubuntu.com/questions/1187966/cups-cant-add-printer-unable-to-locate-printer-web-interface/1311541#1311541
+        - https://duckduckgo.com/?q=cups+edit+connection+url&ia=web
+        - https://askubuntu.com/questions/913480/how-do-i-modify-a-printers-ip-address-in-cups
+        - https://www.cups.org/doc/sharing.html
+        - https://duckduckgo.com/?q=raspberry+pi+cups&ia=web
+        - https://medium.com/swlh/setup-a-print-server-using-raspberry-pi-cups-part-1-c8f3d48af047
+        - **https://medium.com/@anirudhgupta281998/setup-a-print-server-using-raspberry-pi-cups-part-2-2d6d48ccdc32**
+        - **https://medium.com/@anirudhgupta281998/setup-a-print-server-using-raspberry-pi-cups-part-3-aaced48e9b89**
+        - https://duckduckgo.com/?q=arch+linux+getting+printer+information+failed&ia=web
+        - **https://kb.adamsdesk.com/operating_system/arch_linux_install_network_printer/**
+        - https://askubuntu.com/questions/1074565/network-printer-stuck-at-getting-printer-information-from-system-gtk-print-dia
+        - CUPS and Firefox 3.5 "Getting printer information failed" - https://bbs.archlinux.org/viewtopic.php?id=86710
+        - 
 
 * make cmake gdb clang lld lldb libc++ gtest perf valgrind ninja - C/C++ toolchain; `libc++`is a C++ standard library for LLVM
 * clion=2021.2.2-1 clion-cmake=2021.2.2-1 clion-gdb=2021.2.2-1 clion-jre=2021.2.2-1 clion-lldb=2021.2.2-1
