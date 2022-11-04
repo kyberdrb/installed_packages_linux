@@ -1410,7 +1410,54 @@
 
         - https://markdown.land/markdown-code-block
         - https://duckduckgo.com/?q=vscode+print&ia=web
+    - Print server - share a local printer
 
+        Server: Raspberry Pi
+
+            sudo aptitude install cups cups-pdf avahi
+
+            # Fix error: Failed to create /var/spool/cups/tmp/.hplip
+
+            sudo apt remove hplip
+            sudo apt install hplip
+
+            # Use cups with priviledges without authentication
+            sudo usermod -a -G lpadmin ${USER}
+
+            cupsctl --remote-admin --remote-any --share-printers
+
+            sudo systemctl enable --now cups
+
+            # Connect the printer to the print server
+
+            # On the server go to
+            #
+            #   https://192.168.31.204:631/admin
+            #
+            # Click on "Add printer"
+            #
+            # Select the printer from the "Local printers" section
+            #
+            # Fill textboxes, click continue, then select the driver e.g. by selecting the manufacturer and printer model.
+            # Check "Share printer" to enable printer sharing
+            #
+            # Click on "Add printer"
+
+        Client: Windows
+
+        Start -> Settings -> Bluetooth and devices -> Add device -> click on the network shared printer -> click on Add and wait for it to install
+
+        Client: Arch Linux
+
+        install cups, open web interface, add the network shared printer, try to print a test page, and when it fails, edit the file `/etc/cups/printers.conf` as sudo and remove the ".local" suffix from the "DeviceURI" line, e.g. from the default
+
+            DeviceURI ipp://raspberrypi.local:631/printers/EPSON_M2140_Series
+
+        to the
+
+            DeviceURI ipp://raspberrypi:631/printers/EPSON_M2140_Series
+
+        Then test page will then print.
 
 * make cmake gdb clang lld lldb libc++ gtest perf valgrind ninja - C/C++ toolchain; `libc++`is a C++ standard library for LLVM
 * clion=2021.2.2-1 clion-cmake=2021.2.2-1 clion-gdb=2021.2.2-1 clion-jre=2021.2.2-1 clion-lldb=2021.2.2-1
