@@ -1486,53 +1486,112 @@
 * usbip - share USB devices via network
     - limitations: only one user at a time can use an already exported/bound and connected/attached device.
     1. **Server** - Installation
-        - Arch Linux
-        
-                sudo pacman --sync --refresh usbip
-        
-        - Ubuntu/Raspberry Pi OS
-        
-                sudo aptitude install usbip
+        - **Linux**
+            - **Arch Linux**
+
+                    sudo pacman --sync --refresh usbip
+
+            - **Ubuntu/Raspberry Pi OS**
+
+                    sudo aptitude install usbip
                 
-        - Windows
+        - **Windows**
         
-                TODO
+                TODO - not necessary yet
 
     1. **Server** - First configuration
     
-        1. sudo modprobe usbip_host
-        1. sudo echo 'usbip_host' >> /etc/modules
+            sudo modprobe usbip_host
+
+            sudo echo 'usbip_host' >> /etc/modules
     
     1. **Server** - Connecting the USB device to the USBIP server and exporting/binding the USB device for sharing
-        1. **Server - Linux**
-            1. connect the USB device to the USBIP server, e.g. to the Raspberry Pi.
-            1. lsusb
-            1. usbip list --local
-            1. sudo usbip bind --busid=1-1.5
-            1. sudo usbipd
+        1. **Linux**
+            1. Connect the USB device to the USBIP server, e.g. to the Raspberry Pi.
+            1. Execute commands to list, select, export an USB device and start the USBIP server process:
+
+                    lsusb
+
+                    usbip list --local
+
+                    sudo usbip bind --busid=1-1.5
+
+                    sudo usbipd
     
     1. **Client** - Installation
         - **Linux**
-            1. sudo modprobe vhci-hcd
-            1. sudo echo 'vhci-hcd' >> /etc/modules
+            - **Arch Linux**
+
+                    sudo pacman --sync --refresh usbip
+
+            - **Ubuntu/Raspberry Pi OS**
+
+                    sudo aptitude install linux-tools-generic
+
         - **Windows**
-            1. TODO
+            1. Download the latest usbip package archive. At the time of writing, the latest version is `0.3.6`
+                - https://github.com/cezanne/usbip-win/releases/download/v0.3.6-dev/usbip-win-0.3.6-dev.zip
+            1. Extract the downloaded archive.
+            1. Move the extracted directory to `C:\Programme\`
+            1. Double click on `usbip_test.pfx`, which will open the guide to install the certificate.
+                - Password: `usbip`
+
+            1. [**OPTIONAL - SKIP!**] Open PowerShell as Administrator. Enter command:
+
+                    PS C:\Windows\system32> bcdedit.exe /set TESTSIGNING ON
+                    The operation completed successfully.
+
+                Reboot the PC to apply changes
+            
+            1. Install USBIP client. Open PowerShell as Administrator:
+
+                    cd C:\Programme\usbip-win-0.3.6-dev
+                    
+                    usbip.exe install
     
     1. **Client** - First configuration
         - **Linux**
-            1. sudo modprobe vhci-hcd
-            1. sudo echo 'vhci-hcd' >> /etc/modules
+
+                sudo modprobe vhci-hcd
+
+                sudo echo 'vhci-hcd' >> /etc/modules
         - **Windows**
-            1. TODO
+            1. Add the directory with the USBIP binaries to the `PATH` system variable so that we can use the `usbip.exe` binary directly from the Terminal, without going to the directory that contains the USBIP binaries.
+                1. Start menu `->` Settings `->` System `->` Information tab `->` Advanced system settings
+                1. Click on `Environment variables`. A dialog window will open.
+                1. In the section `System variables` in the column `Variable` find entry `Path`. Double click on the line. Another dialog window will open.
+                1. Click on `New`
+                1. Enter the value `C:\Programme\usbip-win-0.3.6-dev`
+                1. Confirm changes by clicking on the `OK` button in all dialog windows.
+                1. Sign out and back in, or reboot the computer alltogether, to reload changes.
 
     1. **Client** - Attaching the shared USB device exported from the USBIP server. The device will be remotely connected to the computer, and act as if it was connected locally.
         - **Linux**
-            1. usbip list --remote=SERVER_IP_ADDRESS
-            1. sudo usbip attach --remote=SERVER_IP_ADDRESS --busid=1-1.5
+
+                usbip list --remote=SERVER_IP_ADDRESS
+
+                sudo usbip attach --remote=SERVER_IP_ADDRESS --busid=1-1.5
+
         - **Windows**
+            1. List all exported devices on the remote server:
+            
+                    PS> usbip.exe list --remote=192.168.31.204
+                    Exportable USB devices
+                    ======================
+                     - 192.168.31.204
+                          1-1.5: Kingston Technology : DataTraveler 100 G3/G4/SE9 G2/50 (0951:1666)
+                               : /sys/devices/platform/soc/3f980000.usb/usb1/1-1/1-1.5
+                               : (Defined at Interface level) (00/00/00)
+                               :  0 - Mass Storage / SCSI / Bulk-Only (08/06/50)
+            1. Attach selected USB device by its Bus ID:
+
+                    PS> usbip.exe attach --remote=192.168.31.204 --busid=1-1.5
+                    succesfully attached to port 0
 
     1. **Client** - Detaching the USB device to make the USB device available to other clients/computers/users
-        1. sudo usbip port
+        1. Find out which port the USBIP driver inserted the device into:
+        
+                sudo usbip port
 
                 Imported USB devices
                 ====================
@@ -1544,6 +1603,15 @@
         1. Detach attached shared USB device from the port
         
                 sudo usbip detach --port=00
+                
+            or
+            
+                sudo usbip detach --port=0
+
+        - **Windows**
+
+                usbip.exe detach --port=0
+                port 0 is succesfully detached
     
     1. **Server** - Disconnecting the USB device from the USBIP server and reserving/unbinding the USB device
         - [Optional] Stop the USBIP server.
@@ -1556,7 +1624,9 @@
             
                 killall usbipd
         
-        - sudo usbip unbind --busid=1-1.5
+        - Disable sharing for a particular USB device
+        
+                sudo usbip unbind --busid=1-1.5
 
 * make cmake gdb clang lld lldb libc++ gtest perf valgrind ninja - C/C++ toolchain; `libc++`is a C++ standard library for LLVM
 * clion=2021.2.2-1 clion-cmake=2021.2.2-1 clion-gdb=2021.2.2-1 clion-jre=2021.2.2-1 clion-lldb=2021.2.2-1
