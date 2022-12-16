@@ -1502,6 +1502,8 @@
     1. **Server** - First configuration
     
             sudo modprobe usbip_host
+            
+            lsmod | grep usbip
 
             sudo echo 'usbip_host' >> /etc/modules
     
