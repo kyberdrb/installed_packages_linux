@@ -1482,7 +1482,81 @@
         - **https://kb.adamsdesk.com/operating_system/arch_linux_install_network_printer/**
         - https://askubuntu.com/questions/1074565/network-printer-stuck-at-getting-printer-information-from-system-gtk-print-dia
         - CUPS and Firefox 3.5 "Getting printer information failed" - https://bbs.archlinux.org/viewtopic.php?id=86710
-        - 
+
+* usbip - share USB devices via network
+    - limitations: only one user at a time can use an already exported/bound and connected/attached device.
+    1. **Server** - Installation
+        - Arch Linux
+        
+                sudo pacman --sync --refresh usbip
+        
+        - Ubuntu/Raspberry Pi OS
+        
+                sudo aptitude install usbip
+                
+        - Windows
+        
+                TODO
+
+    1. **Server** - First configuration
+    
+        1. sudo modprobe usbip_host
+        1. sudo echo 'usbip_host' >> /etc/modules
+    
+    1. **Server** - Connecting the USB device to the USBIP server and exporting/binding the USB device for sharing
+        1. **Server - Linux**
+            1. connect the USB device to the USBIP server, e.g. to the Raspberry Pi.
+            1. lsusb
+            1. usbip list --local
+            1. sudo usbip bind --busid=1-1.5
+            1. sudo usbipd
+    
+    1. **Client** - Installation
+        - **Linux**
+            1. sudo modprobe vhci-hcd
+            1. sudo echo 'vhci-hcd' >> /etc/modules
+        - **Windows**
+            1. TODO
+    
+    1. **Client** - First configuration
+        - **Linux**
+            1. sudo modprobe vhci-hcd
+            1. sudo echo 'vhci-hcd' >> /etc/modules
+        - **Windows**
+            1. TODO
+
+    1. **Client** - Attaching the shared USB device exported from the USBIP server. The device will be remotely connected to the computer, and act as if it was connected locally.
+        - **Linux**
+            1. usbip list --remote=SERVER_IP_ADDRESS
+            1. sudo usbip attach --remote=SERVER_IP_ADDRESS --busid=1-1.5
+        - **Windows**
+
+    1. **Client** - Detaching the USB device to make the USB device available to other clients/computers/users
+        1. sudo usbip port
+
+                Imported USB devices
+                ====================
+                Port 00: <Port in Use> at High Speed(480Mbps)
+                    Seiko Epson Corp. : unknown product (04b8:114a)
+                    3-1 -> usbip://192.168.31.204:3240/1-1.5
+                        -> remote bus/dev 001/004
+
+        1. Detach attached shared USB device from the port
+        
+                sudo usbip detach --port=00
+    
+    1. **Server** - Disconnecting the USB device from the USBIP server and reserving/unbinding the USB device
+        - [Optional] Stop the USBIP server.
+
+            For the USBIP sever started with command `sudo usbipd`
+        
+                Ctrl + C
+                
+            or
+            
+                killall usbipd
+        
+        - sudo usbip unbind --busid=1-1.5
 
 * make cmake gdb clang lld lldb libc++ gtest perf valgrind ninja - C/C++ toolchain; `libc++`is a C++ standard library for LLVM
 * clion=2021.2.2-1 clion-cmake=2021.2.2-1 clion-gdb=2021.2.2-1 clion-jre=2021.2.2-1 clion-lldb=2021.2.2-1
