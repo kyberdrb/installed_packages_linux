@@ -1500,26 +1500,65 @@
                 TODO - not necessary yet
 
     1. **Server** - First configuration
-    
-            sudo modprobe usbip_host
+        1. Load the USBIP kernel module
             
-            lsmod | grep usbip
+                sudo modprobe usbip_host
+        
+        1. Verify that the module is loaded
 
-            sudo echo 'usbip_host' >> /etc/modules
+                lsmod | grep usbip
+
+        1. Load the module at system startup
+
+                sudo echo 'usbip_host' >> /etc/modules
     
     1. **Server** - Connecting the USB device to the USBIP server and exporting/binding the USB device for sharing
         1. **Linux**
             1. Connect the USB device to the USBIP server, e.g. to the Raspberry Pi.
-            1. Execute commands to list, select, export an USB device and start the USBIP server process:
+            1. Execute commands to list, select, export an USB device and start the USBIP server process: **TODO - automate: make a script/systemd service that will be executed at system startup**
+            1. List all connected USB devices
 
                     lsusb
+                    
+                    Bus 001 Device 008: ID 0951:1666 Kingston Technology DataTraveler 100 G3/G4/SE9 G2/50
+                    Bus 001 Device 011: ID 04b8:114a Seiko Epson Corp. M2140 Series
+                    Bus 001 Device 003: ID 0424:ec00 Microchip Technology, Inc. (formerly SMSC) SMSC9512/9514 Fast Ethernet Adapter
+                    Bus 001 Device 002: ID 0424:9514 Microchip Technology, Inc. (formerly SMSC) SMC9514 Hub
+                    Bus 001 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub
+
+            1. List all USB devices available for the USBIP server
 
                     usbip list --local
+                    
+                     - busid 1-1.1 (0424:ec00)
+                       Microchip Technology, Inc. (formerly SMSC) : SMSC9512/9514 Fast Ethernet Adapter (0424:ec00)
 
+                     - busid 1-1.3 (04b8:114a)
+                       Seiko Epson Corp. : unknown product (04b8:114a)
+
+                     - busid 1-1.5 (0951:1666)
+                       Kingston Technology : DataTraveler 100 G3/G4/SE9 G2/50 (0951:1666)
+
+            1. Bind the desired USB device to enable sharing it via network
+                    
                     sudo usbip bind --busid=1-1.5
-
+                    
+                    usbip: info: bind device on busid 1-1.3: complete
+                    
+            1. Start the USBIP server
+                - in blocking mode for debugging
+                    
                     sudo usbipd
-    
+                - or in daemonized mode with
+
+                        sudo usbipd &
+                    
+                    for output to the terminal, or with
+                    
+                        sudo usbipd --daemon
+                        
+                    for output to the `journalctl`
+
     1. **Client** - Installation
         - **Linux**
             - **Arch Linux**
