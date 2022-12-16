@@ -1500,7 +1500,7 @@
                 TODO - not necessary yet
 
     1. **Server** - First configuration
-        1. Load the USBIP kernel module
+        1. Load the kernel module for the USBIP server
             
                 sudo modprobe usbip_host
         
@@ -1510,7 +1510,13 @@
 
         1. Load the module at system startup
 
-                sudo echo 'usbip_host' >> /etc/modules
+            **Ubuntu/Raspberry Pi OS**
+                
+                echo 'usbip_host' | sudo tee --append /etc/modules
+                
+            **Arch Linux**
+            
+                echo 'usbip_host' | sudo tee --append /etc/modules-load.d/usbip.conf
     
     1. **Server** - Connecting the USB device to the USBIP server and exporting/binding the USB device for sharing
         1. **Linux**
@@ -1556,7 +1562,7 @@
                     usbipd: info: listening on 0.0.0.0:3240
                     usbipd: info: listening on :::3240
 
-                - or in daemonized mode with
+                - or in non-blocking/daemonized mode with
 
                         sudo usbipd &
                     
@@ -1608,10 +1614,23 @@
     
     1. **Client** - First configuration
         - **Linux**
+            1. Load kernel module for USBIP client
+                
+                    sudo modprobe vhci-hcd
+                
+            1. Verify loading of the module
+            
+                    lsmod | grep vhci
+                    
+            1. Make the module load on startup
 
-                sudo modprobe vhci-hcd
+                **Ubuntu/Raspberry Pi OS**
 
-                sudo echo 'vhci-hcd' >> /etc/modules
+                    echo 'vhci-hcd' | sudo tee --append /etc/modules
+
+                **Arch Linux**
+
+                    echo 'vhci-hcd' | sudo tee --append /etc/modules-load.d/usbip.conf
 
         - **Windows**
             1. Add the directory with the USBIP binaries to the `PATH` system variable so that we can use the `usbip.exe` binary directly from the Terminal, without going to the directory that contains the USBIP binaries.
