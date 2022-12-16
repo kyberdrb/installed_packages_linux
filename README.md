@@ -1543,12 +1543,19 @@
                     
                     sudo usbip bind --busid=1-1.5
                     
-                    usbip: info: bind device on busid 1-1.3: complete
+                    usbip: info: bind device on busid 1-1.5: complete
+                    
+                To bind multiple devices when the server is running, you need to stop the USBIP server process, bind another device and start the USBIP server process again.
                     
             1. Start the USBIP server
                 - in blocking mode for debugging
                     
                     sudo usbipd
+                    
+                    usbipd: info: starting usbipd (usbip-utils 2.0)
+                    usbipd: info: listening on 0.0.0.0:3240
+                    usbipd: info: listening on :::3240
+
                 - or in daemonized mode with
 
                         sudo usbipd &
@@ -1572,10 +1579,19 @@
         - **Windows**
             1. Download the latest usbip package archive. At the time of writing, the latest version is `0.3.6`
                 - https://github.com/cezanne/usbip-win/releases/download/v0.3.6-dev/usbip-win-0.3.6-dev.zip
+
+                Check the latest release at https://github.com/cezanne/usbip-win/releases
             1. Extract the downloaded archive.
             1. Move the extracted directory to `C:\Programme\`
             1. Double click on `usbip_test.pfx`, which will open the guide to install the certificate.
-                - Password: `usbip`
+                1. Store location: `Local Machine`. Next.
+                1. If prompted with UAC, click Yes to continue.
+                1. File to import: leave as it is. Next.
+                1. Password: `usbip`  
+                    Import options: only check `Include all extended properties`  
+                    Next.
+                1. Certificate store: Automatically select... Next.
+                1. Finish. A dialog window with text `The import was successful` will be displayed. Press `OK` to close it.
 
             1. [**OPTIONAL - SKIP!**] Open PowerShell as Administrator. Enter command:
 
@@ -1584,11 +1600,11 @@
 
                 Reboot the PC to apply changes
             
-            1. Install USBIP client. Open PowerShell as Administrator:
+            1. Install USBIP driver. Open PowerShell as Administrator:
 
                     cd C:\Programme\usbip-win-0.3.6-dev
                     
-                    usbip.exe install
+                    .\usbip.exe install
     
     1. **Client** - First configuration
         - **Linux**
@@ -1596,13 +1612,18 @@
                 sudo modprobe vhci-hcd
 
                 sudo echo 'vhci-hcd' >> /etc/modules
+
         - **Windows**
             1. Add the directory with the USBIP binaries to the `PATH` system variable so that we can use the `usbip.exe` binary directly from the Terminal, without going to the directory that contains the USBIP binaries.
-                1. Start menu `->` Settings `->` System `->` Information tab `->` Advanced system settings
-                1. Click on `Environment variables`. A dialog window will open.
-                1. In the section `System variables` in the column `Variable` find entry `Path`. Double click on the line. Another dialog window will open.
+                1. Start menu `->` Settings `->` System `->` `Information` tab (Win 10) / `About` (Win 11) `->` Advanced system settings
+                1. On tab `Advanced`/`Spresnenie` click on `Environment Variables...`. A dialog window will open.
+                1. In the section `System variables` in the column `Variable` find an entry called `Path`. Double click on the line. Another dialog window will open.
                 1. Click on `New`
                 1. Enter the value `C:\Programme\usbip-win-0.3.6-dev`
+
+                    and press `Enter`
+                
+                    The entered path needs to be **without** the last backslash, otherwise the binaries will not be autocompleted.
                 1. Confirm changes by clicking on the `OK` button in all dialog windows.
                 1. Sign out and back in, or reboot the computer alltogether, to reload changes.
 
@@ -1624,35 +1645,68 @@
                                : /sys/devices/platform/soc/3f980000.usb/usb1/1-1/1-1.5
                                : (Defined at Interface level) (00/00/00)
                                :  0 - Mass Storage / SCSI / Bulk-Only (08/06/50)
-            1. Attach selected USB device by its Bus ID:
+                               
+                After executing the command on the client, the server then outputs following messages:
+                
+                    usbipd: info: connection from 192.168.31.216:50672
+                    usbipd: info: received request: 0x8005(5)
+                    usbipd: info: exportable devices: 2
+                    usbipd: info: request 0x8005(5): complete
+
+            1. Attach selected USB device to the client by the device's bus ID:
 
                     PS> usbip.exe attach --remote=192.168.31.204 --busid=1-1.5
+                    
                     succesfully attached to port 0
-
-    1. **Client** - Detaching the USB device to make the USB device available to other clients/computers/users
-        1. Find out which port the USBIP driver inserted the device into:
-        
-                sudo usbip port
-
-                Imported USB devices
-                ====================
-                Port 00: <Port in Use> at High Speed(480Mbps)
-                    Seiko Epson Corp. : unknown product (04b8:114a)
-                    3-1 -> usbip://192.168.31.204:3240/1-1.5
-                        -> remote bus/dev 001/004
-
-        1. Detach attached shared USB device from the port
-        
-                sudo usbip detach --port=00
+                    
+                After executing the command on the client, the server then outputs following messages:
                 
-            or
-            
-                sudo usbip detach --port=0
+                    usbipd: info: connection from 192.168.31.216:50710
+                    usbipd: info: received request: 0x8003(5)
+                    usbipd: info: found requested device: 1-1.5
+                    usbip: info: connect: 1-1.5
+                    usbipd: info: request 0x8003(5): complete
+
+    1. **Client** - Detaching the USB device to make the USB device available to other clients/computers/users. This command doesn't produce any messages on the server.
+        - **Linux**
+            1. Find out which port the USBIP driver inserted the device into:
+
+                    sudo usbip port
+
+                    Imported USB devices
+                    ====================
+                    Port 00: <Port in Use> at High Speed(480Mbps)
+                        Seiko Epson Corp. : unknown product (04b8:114a)
+                        3-1 -> usbip://192.168.31.204:3240/1-1.5
+                            -> remote bus/dev 001/004
+
+            1. Detach attached shared USB device from the port
+
+                    sudo usbip detach --port=00
+
+                or
+
+                    sudo usbip detach --port=0
 
         - **Windows**
+            1. Open PowerShell as Administrator to find out which port the USBIP driver inserted the device into:
 
-                usbip.exe detach --port=0
-                port 0 is succesfully detached
+                    sudo usbip port
+
+                    Imported USB devices
+                    ====================
+                    Port 00: <Port in Use> at High Speed(480Mbps)
+                        Seiko Epson Corp. : unknown product (04b8:114a)
+                        3-1 -> usbip://192.168.31.204:3240/1-1.5
+                            -> remote bus/dev 001/004
+
+            1. Detach attached shared USB device from the port
+
+                    usbip.exe detach --port=00
+
+                or
+
+                    usbip.exe detach --port=0
     
     1. **Server** - Disconnecting the USB device from the USBIP server and reserving/unbinding the USB device
         - [Optional] Stop the USBIP server.
