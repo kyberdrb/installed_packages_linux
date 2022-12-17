@@ -1517,6 +1517,20 @@
             **Arch Linux**
             
                 echo 'usbip_host' | sudo tee --append /etc/modules-load.d/usbip.conf
+                
+            Verify whether the module loads at boot by restarting the system
+            
+                sudo reboot
+                
+        1. TODO Make the USBIP server process start on boot (together with binding a particular device if desired)
+            - TODO document and test:
+                - the 2 systemd services:
+                    1. `/etc/systemd/system/usbipd.service` and
+                        - sudo systemctl enable --now `/etc/systemd/system/usbipd.service`
+                    1. `/etc/systemd/system/usbipd-printer.service`
+                        - sudo systemctl enable --now `/etc/systemd/system/usbipd-printer.service`
+                    1. `sudo reboot` to test the changes, whether the USBIP server process starts by itself at startup and automatically binds the printer for sharing, which the USBIP client can attach immediately without connecting to the server
+                - and the one script for unbinding a device at `/home/rpi/unbind_printer_from_usbip.sh` - for emergency purposes
     
     1. **Server** - Connecting the USB device to the USBIP server and exporting/binding the USB device for sharing
         1. **Linux**
