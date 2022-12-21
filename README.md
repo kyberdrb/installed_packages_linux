@@ -1527,17 +1527,68 @@
             
                 sudo reboot
                 
-        1. TODO Make the USBIP server process start on boot (together with binding a particular device if desired)
-            - TODO document and test:
-                - the 2 systemd services:
-                    1. `/etc/systemd/system/usbipd.service` and
-                        - sudo systemctl enable --now `/etc/systemd/system/usbipd.service`
-                    1. `/etc/systemd/system/usbipd-printer.service`
-                        - sudo systemctl enable --now `/etc/systemd/system/usbipd-printer.service`
-                    1. `sudo reboot` to test the changes, whether the USBIP server process starts by itself at startup and automatically binds the printer for sharing, which the USBIP client can attach immediately without connecting to the server
-                - and the one script for unbinding a device at `/home/rpi/unbind_printer_from_usbip.sh` - for emergency purposes
+        1. Make the USBIP server process start on boot (together with binding a particular device if desired) to reduce the accessing to the server each time we want to share and attach device to minimum - the server does the binding automatically at startup for us
+            1. Create the base `usbipd.service` for starting and stopping USB/IP server
+
+                    $ sudo vim /etc/systemd/system/usbipd.service
+
+                    [Unit]
+                    Description=Start/Stop sharing bound USB devices via USB/IP server
+                    After=network.target
+
+                    [Service]
+                    Type=oneshot
+                    ExecStart=/usr/sbin/usbipd --daemon
+                    RemainAfterExit=yes
+                    ExecStop=killall usbipd
+                    ExecReload=/bin/sh -c "killall usbipd; /usr/sbin/usbipd --daemon"
+                    Restart=on-failure
+
+                    [Install]
+                    WantedBy=multi-user.target
+                    
+                The option `RemainAfterExit=yes` assures, that the `systemd` executes only the `ExecStart` command (and `ExecStartPre` and `ExecStartPost` options). When we ommit the `RemainAfterExit` option or set it to `RemainAfterExit=no` then the systemd would execute the `ExecStart` commands and then jump immediatly to execution of `ExecStop` commands.
+
+            1. Create the service for enabling and disabling device sharing, e.g. printer, via USB/IP server (the shared device is physically connected to the printer via USB port)
+
+                    $ sudo vim /etc/systemd/system/usbip-printer.service
+
+                    [Unit]
+                    Description=Share printer and scanner via USB/IP by binding them to server
+                    After=network.target usbipd.service
+                    Requires=usbipd.service
+
+                    [Service]
+                    Type=oneshot
+                    ExecStartPre=-/usr/sbin/usbip unbind --busid=1-1.3
+                    ExecStart=/usr/sbin/usbip bind --busid=1-1.3
+                    RemainAfterExit=yes
+                    ExecStop=/usr/sbin/usbip unbind --busid=1-1.3
+                    Restart=on-failure
+                    ExecReload=/bin/sh -c "/usr/sbin/usbip unbind --busid=1-1.3; /usr/sbin/usbip bind --busid=1-1.3"
+
+                    [Install]
+                    WantedBy=multi-user.target
+
+                and then test the service (enable USB device sharing) with
+
+                    sudo systemctl start usbip-printer.service
+
+                then test reloading the service (disable and enable USB device sharing) with
+
+                    sudo systemctl reload usbip-printer.service
+
+                then test stopping the service (disable USB device sharing) with
+
+                    sudo systemctl stop usbip-printer.service
+
+                When everything went well, enable the service at startup and start it right away with
+
+                    sudo systemctl enable --now usbip-printer.service
+
+                Reboot the system. After reboot, the service `usbip-printer.service` starts the `usbipd.service` too and before starting the `usbip-printer.service`, because `usbip-printer.service` requires `usbipd.service`. The `systemd` takes care of starting all dependent/required services.
     
-    1. **Server** - Connecting the USB device to the USBIP server and exporting/binding the USB device for sharing
+    1. **Server** - Connecting the USB device to the USB/IP server and exporting/binding the USB device for sharing
         1. **Linux**
             1. Connect the USB device to the USBIP server, e.g. to the Raspberry Pi.
             1. Execute commands to list, select, export an USB device and start the USBIP server process: **TODO - automate: make a script/systemd service that will be executed at system startup**
