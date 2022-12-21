@@ -1704,6 +1704,21 @@
                     usbipd: info: found requested device: 1-1.5
                     usbip: info: connect: 1-1.5
                     usbipd: info: request 0x8003(5): complete
+                    
+                - **Example: Connecting and setting up the printer `Epson M2140` - Attaching to a Windows client**
+                    - Epson M2140 support page: https://www.epson.sk/sk_SK/support/sc/epson-ecotank-m2140/s/s1672?selected-tab=&selected-os=Windows+10+64-bit
+                    - To make the printer fully working, download the driver `2.60.01` for `Epson M2140`
+                        - https://download.epson-europe.com/pub/download/6317/epson631786eu.exe
+                    - To make the scanner fully working, download and install the `EPSON Scan (v6.490)` utility for `Epson M2140` which contains the useful scanner driver, _but not so usefull utility to use the scanner_
+                        - https://download.epson-europe.com/pub/download/6309/epson630937eu.exe
+                    - To actually scan a document
+                        - use the `EPSON Scan 2 (v6.2.3.0)` utility together with the `EPSON Scan Updater (v1.0)` (bugfix), which can be found on the support page for printer `Epson L382` which makes a sharper and more detailed scan than the `Epson ScanSmart`. Don't use the `Epson Scan` utility from the support page for `Epson M2140` because it has inconsistent results (doesn't find the scanner or the app doesn't start at all)
+                            - EPSON Scan 2 (v6.2.3.0): https://download.epson-europe.com/pub/download/6361/epson636150eu.exe
+                            - EPSON Scan Updater (v1.0): https://download.epson-europe.com/pub/download/6306/epson630619eu.exe
+                        - or use `Epson ScanSmart` from https://www.epson.sk/sk_SK/scansmart-document-scanning-software
+                            - https://download.epson-europe.com/pub/download/6390/epson639084eu.exe
+                    - For updating, you need the `Epson Software updater (v4.6.5.0)` for `Epson M2140`
+                        - https://download.epson-europe.com/pub/download/6489/epson648951eu.exe
 
     1. **Client** - Detaching the USB device to make the USB device available to other clients/computers/users. This command doesn't produce any messages on the server.
         - **Linux**
