@@ -1716,14 +1716,19 @@
                 1. Confirm changes by clicking on the `OK` button in all dialog windows.
                 1. Sign out and back in, or reboot the computer alltogether, to reload changes.
 
-    1. **Client** - Attaching the shared USB device exported from the USBIP server. The device will be remotely connected to the computer, and act as if it was connected locally.
+    1. **Client** - Attaching the shared USB device exported from the USBIP server. The device will be remotely connected to the computer, and act as if it was connected locally. **After attaching the device, it will be reserved exclusively for the computer that attached it, thus hidden for all other USB/IP clients.**
         - **Linux**
+
+            **TODO automate attaching the device**
 
                 usbip list --remote=SERVER_IP_ADDRESS
 
                 sudo usbip attach --remote=SERVER_IP_ADDRESS --busid=1-1.5
 
         - **Windows**
+
+            **TODO automate attaching the device**
+
             1. List all exported devices on the remote server:
             
                     PS> usbip.exe list --remote=192.168.31.204
@@ -1771,8 +1776,11 @@
                     - For updating, you need the `Epson Software updater (v4.6.5.0)` for `Epson M2140`
                         - https://download.epson-europe.com/pub/download/6489/epson648951eu.exe
 
-    1. **Client** - Detaching the USB device to make the USB device available to other clients/computers/users. This command doesn't produce any messages on the server.
+    1. **Client** - Detaching the USB device to make the USB device available to other clients/computers/users. This command doesn't produce any messages on the server. **After detaching the device, it will be available for all USB/IP clients which will see it in the list of exportable devices.**
         - **Linux**
+
+            **TODO automate detaching the device**
+
             1. Find out which port the USBIP driver inserted the device into:
 
                     sudo usbip port
@@ -1793,6 +1801,9 @@
                     sudo usbip detach --port=0
 
         - **Windows**
+
+            **TODO automate detaching the device**
+
             1. Open PowerShell as Administrator to find out which port the USBIP driver inserted the device into:
 
                     sudo usbip port
