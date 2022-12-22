@@ -1756,7 +1756,6 @@
                     sudo usbip attach --remote=SERVER_IP_ADDRESS --busid=1-1.5
 
         - **Windows**
-
             - attaching printer with script
             
                 1. Create new file `attach_printer.ps1` with following contents
@@ -1766,9 +1765,20 @@
                         
                 1. Create a scheduled task: right click on Windows start menu -> Computer Management -> In the left pane click on `Task Scheduler` -> `Task Scheduler Library`
                 1. Click on `Create Task...`
-                1. TODO define the parameter of the task
+                    - tab `General`
+                        - name `start Open Hardware Monitor - without UAC prompt`
+                        - check **Run with highest priviledges** - checking this option will bypass/skip the UAC prompt and executes the commands in `Action` tab as Administrator directly
+                    - tab `Actions`
 
-                1. TODO create a shortcut on Desktop for scheduled task
+                        Program: `powershell.exe`
+                        Arguments: `-NoProfile -NoLogo -NonInteractive -ExecutionPolicy Bypass -File C:\Programy\attach_printer.ps1`
+
+                    - tab `Conditions` - uncheck all
+
+                1. Create a shortcut, e.g. on the `Desktop` with name `Attach printer` this `Target`
+
+                        schtasks /run /tn "Attach printer - skip UAC prompt"
+                        
                 1. Double click the shortcut to attach the device
                         
             - with commands
