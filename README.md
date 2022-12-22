@@ -1766,7 +1766,7 @@
                 1. Create a scheduled task: right click on Windows start menu -> Computer Management -> In the left pane click on `Task Scheduler` -> `Task Scheduler Library`
                 1. Click on `Create Task...`
                     - tab `General`
-                        - name `start Open Hardware Monitor - without UAC prompt`
+                        - Name: `Attach printer - skip UAC prompt`
                         - check **Run with highest priviledges** - checking this option will bypass/skip the UAC prompt and executes the commands in `Action` tab as Administrator directly
                     - tab `Actions`
 
