@@ -1719,47 +1719,91 @@
     1. **Client** - Attaching the shared USB device exported from the USBIP server. The device will be remotely connected to the computer, and act as if it was connected locally. **After attaching the device, it will be reserved exclusively for the computer that attached it, thus hidden for all other USB/IP clients.**
         - **Linux**
 
-            **TODO automate attaching the device**
+            - with script: `attach_printer.sh`
 
-                usbip list --remote=SERVER_IP_ADDRESS
+                    #!/bin/sh
 
-                sudo usbip attach --remote=SERVER_IP_ADDRESS --busid=1-1.5
+                    set -x
+
+                    # attach printer gracefully
+                    sudo usbip list --remote=192.168.31.204
+                    echo ""
+                    sudo usbip attach --remote=192.168.31.204 --busid=1-1.3
+
+                    # attach printer violently
+                    # TODO when the attaching of the printer fails, try to force-attach it
+                    #echo The password is ...? :)
+                    #ssh rpi@192.168.31.204 'sudo systemctl reload usbip-printer.service'
+                    #sudo usbip list --remote=192.168.31.204
+                    #sudo usbip attach --remote=192.168.31.204 --busid=1-1.3
+
+                    # TODO when even the force-attaching failed, print to terminal 
+                    #  that the device is physically disconnected from the USB/IP server 
+                    #  or connected to different port
+
+                Post-process the script:
+                
+                    chmod +x attach_printer.sh
+
+                Run the script:
+
+                    ./attach_printer.sh
+
+            - with commands
+
+                    usbip list --remote=SERVER_IP_ADDRESS
+
+                    sudo usbip attach --remote=SERVER_IP_ADDRESS --busid=1-1.5
 
         - **Windows**
 
-            **TODO automate attaching the device**
-
-            1. List all exported devices on the remote server:
+            - attaching printer with script
             
-                    PS> usbip.exe list --remote=192.168.31.204
-                    Exportable USB devices
-                    ======================
-                     - 192.168.31.204
-                          1-1.5: Kingston Technology : DataTraveler 100 G3/G4/SE9 G2/50 (0951:1666)
-                               : /sys/devices/platform/soc/3f980000.usb/usb1/1-1/1-1.5
-                               : (Defined at Interface level) (00/00/00)
-                               :  0 - Mass Storage / SCSI / Bulk-Only (08/06/50)
-                               
-                After executing the command on the client, the server then outputs following messages:
-                
-                    usbipd: info: connection from 192.168.31.216:50672
-                    usbipd: info: received request: 0x8005(5)
-                    usbipd: info: exportable devices: 2
-                    usbipd: info: request 0x8005(5): complete
+                1. Create new file `attach_printer.ps1` with following contents
+            
+                        usbip.exe list --remote=192.168.31.204
+                        usbip.exe attach --remote=192.168.31.204 --busid=1-1.3
+                        
+                1. Create a scheduled task: right click on Windows start menu -> Computer Management -> In the left pane click on `Task Scheduler` -> `Task Scheduler Library`
+                1. Click on `Create Task...`
+                1. TODO define the parameter of the task
 
-            1. Attach selected USB device to the client by the device's bus ID:
+                1. TODO create a shortcut on Desktop for scheduled task
+                1. Double click the shortcut to attach the device
+                        
+            - with commands
 
-                    PS> usbip.exe attach --remote=192.168.31.204 --busid=1-1.5
-                    
-                    succesfully attached to port 0
-                    
-                After executing the command on the client, the server then outputs following messages:
-                
-                    usbipd: info: connection from 192.168.31.216:50710
-                    usbipd: info: received request: 0x8003(5)
-                    usbipd: info: found requested device: 1-1.5
-                    usbip: info: connect: 1-1.5
-                    usbipd: info: request 0x8003(5): complete
+                1. List all exported devices on the remote server:
+
+                        PS> usbip.exe list --remote=192.168.31.204
+                        Exportable USB devices
+                        ======================
+                         - 192.168.31.204
+                              1-1.5: Kingston Technology : DataTraveler 100 G3/G4/SE9 G2/50 (0951:1666)
+                                   : /sys/devices/platform/soc/3f980000.usb/usb1/1-1/1-1.5
+                                   : (Defined at Interface level) (00/00/00)
+                                   :  0 - Mass Storage / SCSI / Bulk-Only (08/06/50)
+
+                    After executing the command on the client, the server then outputs following messages:
+
+                        usbipd: info: connection from 192.168.31.216:50672
+                        usbipd: info: received request: 0x8005(5)
+                        usbipd: info: exportable devices: 2
+                        usbipd: info: request 0x8005(5): complete
+
+                1. Attach selected USB device to the client by the device's bus ID:
+
+                        PS> usbip.exe attach --remote=192.168.31.204 --busid=1-1.5
+
+                        succesfully attached to port 0
+
+                    After executing the command on the client, the server then outputs following messages:
+
+                        usbipd: info: connection from 192.168.31.216:50710
+                        usbipd: info: received request: 0x8003(5)
+                        usbipd: info: found requested device: 1-1.5
+                        usbip: info: connect: 1-1.5
+                        usbipd: info: request 0x8003(5): complete
                     
                 - **Example: Connecting and setting up the printer `Epson M2140` - Attaching to a Windows client**
                     - Epson M2140 support page: https://www.epson.sk/sk_SK/support/sc/epson-ecotank-m2140/s/s1672?selected-tab=&selected-os=Windows+10+64-bit
@@ -1778,27 +1822,36 @@
 
     1. **Client** - Detaching the USB device to make the USB device available to other clients/computers/users. This command doesn't produce any messages on the server. **After detaching the device, it will be available for all USB/IP clients which will see it in the list of exportable devices.**
         - **Linux**
+        
+            - Detaching with script:
 
-            **TODO automate detaching the device**
+                    #!/bin/sh
 
-            1. Find out which port the USBIP driver inserted the device into:
+                    sudo usbip port 2>&1
 
-                    sudo usbip port
+                    PORT=$(sudo usbip port | grep '1-1.3' -B2 | head --lines=1 | tr --delete ':' | cut --delimiter=' ' --fields=2)
+                    sudo usbip detach --port="${PORT}"
 
-                    Imported USB devices
-                    ====================
-                    Port 00: <Port in Use> at High Speed(480Mbps)
-                        Seiko Epson Corp. : unknown product (04b8:114a)
-                        3-1 -> usbip://192.168.31.204:3240/1-1.5
-                            -> remote bus/dev 001/004
+            - Detaching manually
 
-            1. Detach attached shared USB device from the port
+                1. Find out which port the USBIP driver inserted the device into:
 
-                    sudo usbip detach --port=00
+                        sudo usbip port
 
-                or
+                        Imported USB devices
+                        ====================
+                        Port 00: <Port in Use> at High Speed(480Mbps)
+                            Seiko Epson Corp. : unknown product (04b8:114a)
+                            3-1 -> usbip://192.168.31.204:3240/1-1.5
+                                -> remote bus/dev 001/004
 
-                    sudo usbip detach --port=0
+                1. Detach attached shared USB device from the port
+
+                        sudo usbip detach --port=00
+
+                    or
+
+                        sudo usbip detach --port=0
 
         - **Windows**
 
