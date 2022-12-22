@@ -1770,8 +1770,8 @@
                         - check **Run with highest priviledges** - checking this option will bypass/skip the UAC prompt and executes the commands in `Action` tab as Administrator directly
                     - tab `Actions`
 
-                        Program: `powershell.exe`
-                        Arguments: `-NoProfile -NoLogo -NonInteractive -ExecutionPolicy Bypass -File C:\Programy\attach_printer.ps1`
+                            Program: `powershell.exe`
+                            Arguments: `-NoProfile -NoLogo -NonInteractive -ExecutionPolicy Bypass -File C:\Programy\attach_printer.ps1`
 
                     - tab `Conditions` - uncheck all
 
