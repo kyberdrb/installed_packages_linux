@@ -1049,7 +1049,12 @@
             - one way to fix: delete the existing file before downloading
         - https://duckduckgo.com/?q=axel+no+state+file+cannot+resume&ia=web&iax=qa
         - https://stackoverflow.com/questions/13217700/dont-download-an-existing-file-with-axel
-        
+
+* peek - GIF animation recorder
+    - https://duckduckgo.com/?q=gif+recorder+open+source+linux&ia=web
+    - https://itsfoss.com/best-gif-recorder-linux/
+    - https://archlinux.org/packages/community/x86_64/peek/
+
 * redshift python-xdg safeeyes xprintidle python-croniter - utilities to preventing eye strain, to increase melatonin levels, to relieve from dry eye syndrome symptoms
     - redshift-minimal - color temperature changer usually warmer tint (spares eyes) -> run on background in tray with "redshift&"
     - python-xdg - dependency for redshift-gtk (tray icon) to launch and run correctly
