@@ -329,13 +329,35 @@
         
     - Fix for `.gitignore` file **not** ignoring files
 
+        Remove the not ignored file(s)
+        - one file (one to few files)
+
+            ```
+            git rm -r --cached --dry-run /path/to/nonignored_file/in/repo
+            git rm -r --cached /path/to/nonignored_file/in/repo
+            ```
+
+        - multiple files (large amount of files, files scattered across the codebase)
+
+            ```
+            git rm -r --cached --dry-run /path/to/repo
+            git rm -r --cached /path/to/repo
+            ```
+        
+        Then continue with:
+        
         ```
-        git rm -r --cached /path/to/repo
         git add --all,
-        git commit --message="fixed untracked files"
+        git commit --message="Fix untracked files"
+        git push
         ```
         
-        - Source: https://stackoverflow.com/questions/11451535/gitignore-is-not-working/11451731#11451731
+        - Sources:
+            - https://stackoverflow.com/questions/11451535/gitignore-is-not-working/11451731#11451731
+            - https://stackoverflow.com/questions/2965060/gitignore-doesnt-ignore-files
+            - https://stackoverflow.com/questions/2965060/gitignore-doesnt-ignore-files/11120151#11120151
+                - to keep the file on upstream but ignore any local changes, one option is to use `git update-index --assume-unchanged .htaccess`
+            - `man git-rm` -> search for `--cached`
 
     - Remove file or directory from entire history of a git repository
     
