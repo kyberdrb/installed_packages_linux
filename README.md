@@ -1614,11 +1614,13 @@
                     sudo systemctl enable --now usbip-printer.service
 
                 Reboot the system. After reboot, the service `usbip-printer.service` starts the `usbipd.service` too and before starting the `usbip-printer.service`, because `usbip-printer.service` requires `usbipd.service`. The `systemd` takes care of starting all dependent/required services.
+
+                **TODO urobit cronjob, ktory bude restartovat a reloadovat `usbip-printer.service` kazdych 5 min, aby sa tlaciaren znova spristupnila na zdielanie, keby niekto ju zabudol detachnut.**
     
     1. **Server** - Connecting the USB device to the USB/IP server and exporting/binding the USB device for sharing
         1. **Linux**
             1. Connect the USB device to the USBIP server, e.g. to the Raspberry Pi.
-            1. Execute commands to list, select, export an USB device and start the USBIP server process: **TODO - automate: make a script/systemd service that will be executed at system startup**
+            1. Execute commands to list, select, export an USB device and start the USBIP server process **TODO - bind the device to USB/IP automatically at connecting the device to system?**
             1. List all connected USB devices
 
                     lsusb
@@ -1768,7 +1770,7 @@
                     #  that the device is physically disconnected from the USB/IP server 
                     #  or connected to different port
 
-                Post-process the script:
+                Post-process the script to make it executable:
                 
                     chmod +x attach_printer.sh
 
@@ -1800,6 +1802,12 @@
                             Program: `powershell.exe`
                             Arguments: `-NoProfile -NoLogo -NonInteractive -ExecutionPolicy Bypass -File C:\Programy\attach_printer.ps1`
 
+                        Note: A test script that runs apps with Administrator priviledges without UAC prompt is available [in the resources](usbip_resources/test.ps1)
+
+                        To start another task, click on `New...` button on the `Actions` tab **or** use command `Start-Process` within the PowerShell script.
+
+                        ![](usbip_resources/run_external_executable_for_scheduled_task_either_with_Start-Process_in_script_or_by_defining_a_new_action.png)
+
                     - tab `Conditions` - uncheck all
 
                 1. Create a shortcut, e.g. on the `Desktop` with name `Attach printer` this `Target`
@@ -1807,7 +1815,10 @@
                         schtasks /run /tn "Attach printer - skip UAC prompt"
                         
                 1. Double click the shortcut to attach the device
-                        
+
+                - Source:
+                    - https://github.com/kyberdrb/Windows_tutorials/blob/master/start_program_with_elevated_priviledges_without_UAC_prompt.md
+
             - with commands
 
                 1. List all exported devices on the remote server:
