@@ -1748,49 +1748,72 @@
     1. **Client** - Attaching the shared USB device exported from the USBIP server. The device will be remotely connected to the computer, and act as if it was connected locally. **After attaching the device, it will be reserved exclusively for the computer that attached it, thus hidden for all other USB/IP clients.**
         - **Linux**
 
-            - with script: `attach_printer.sh`
+            - Attaching with script: `attach_printer.sh`
 
-                    #!/bin/sh
+                ```
+                #!/bin/sh
 
-                    set -x
+                set -x
 
-                    # attach printer gracefully
-                    sudo usbip list --remote=192.168.31.204
-                    echo ""
-                    sudo usbip attach --remote=192.168.31.204 --busid=1-1.3
+                SCRIPT_DIR="$(dirname "$(readlink --canonicalize "$0")")"
 
-                    # attach printer violently
-                    # TODO when the attaching of the printer fails, try to force-attach it
-                    #echo The password is ...? :)
-                    #ssh rpi@192.168.31.204 'sudo systemctl reload usbip-printer.service'
-                    #sudo usbip list --remote=192.168.31.204
-                    #sudo usbip attach --remote=192.168.31.204 --busid=1-1.3
+                # detach printer gracefully to prevent duplicate attachment of the same device to another port which makes the device unresponsive
 
-                    # TODO when even the force-attaching failed, print to terminal 
-                    #  that the device is physically disconnected from the USB/IP server 
-                    #  or connected to different port
+                "${SCRIPT_DIR}/detach_printer.sh"
+
+                # attach printer gracefully
+                usbip list --remote=192.168.31.204
+                usbip port
+                echo ""
+                usbip attach --remote=192.168.31.204 --busid=1-1.3
+
+                sleep 1
+                usbip list --remote=192.168.31.204
+                usbip port
+
+                # attach printer violently
+                # TODO when the attaching of the printer fails, try to force-attach it
+                #echo The password is ...? :)
+                #ssh rpi@192.168.31.204 'systemctl reload usbip-printer.service'
+                #usbip list --remote=192.168.31.204
+                #usbip attach --remote=192.168.31.204 --busid=1-1.3
+
+                # TODO when even the force-attaching failed, print to terminal 
+                #  that the device is physically disconnected from the USB/IP server 
+                #  or connected to different port
+                ```
 
                 Post-process the script to make it executable:
                 
                     chmod +x attach_printer.sh
 
-                Run the script:
+                Run the script as root/sudo:
 
-                    ./attach_printer.sh
+                    sudo ./attach_printer.sh
 
-            - with commands
+            - Attaching with commands:
 
-                    usbip list --remote=SERVER_IP_ADDRESS
+                    sudo usbip list --remote=SERVER_IP_ADDRESS
 
                     sudo usbip attach --remote=SERVER_IP_ADDRESS --busid=1-1.5
 
         - **Windows**
-            - attaching printer with script
+            - Attaching with script:
+                
+                Assuming, that the script resides in directory `C:\Programy`
             
-                1. Create new file `attach_printer.ps1` with following contents
-            
-                        usbip.exe list --remote=192.168.31.204
-                        usbip.exe attach --remote=192.168.31.204 --busid=1-1.3
+                1. Reuse linux script for attaching device. Run it manually from within `Git Bash` launched as Administrator with commands
+                    
+                    ```
+                    cd /c/Programy/
+                    ./attach_printer.sh
+                    ```
+                    
+                    or with a one-line-command:
+                    
+                    ```
+                    /c/Programy//attach_printer.sh
+                    ```
                         
                 1. Create a scheduled task: right click on Windows start menu -> Computer Management -> In the left pane click on `Task Scheduler` -> `Task Scheduler Library`
                 1. Click on `Create Task...`
@@ -1799,14 +1822,16 @@
                         - check **Run with highest priviledges** - checking this option will bypass/skip the UAC prompt and executes the commands in `Action` tab as Administrator directly
                     - tab `Actions`
 
-                            Program: `powershell.exe`
-                            Arguments: `-NoProfile -NoLogo -NonInteractive -ExecutionPolicy Bypass -File C:\Programy\attach_printer.ps1`
+                            Program: `bash.exe`
+                            Arguments: `-c --noprofile --posix C:\Programy\attach_printer.sh`
 
-                        Note: A test script that runs apps with Administrator priviledges without UAC prompt is available [in the resources](usbip_resources/test.ps1)
+                        Note: A test script that runs apps with Administrator priviledges without UAC prompt is available [in the resources](usbip_resources/test.sh)
 
-                        To start another task, click on `New...` button on the `Actions` tab **or** use command `Start-Process` within the PowerShell script.
+                        To start another task, click on `New...` button on the `Actions` tab  
+                        **or**  
+                        enter the path to the program in quotes as a background task, i.e. with an ampersand `&` at the end of the path, in the Shell script.
 
-                        ![](usbip_resources/run_external_executable_for_scheduled_task_either_with_Start-Process_in_script_or_by_defining_a_new_action.png)
+                        ![](usbip_resources/run_external_executable_for_scheduled_task_either_by_new_action_or_from_within_shell_script.png)
 
                     - tab `Conditions` - uncheck all
 
@@ -1818,8 +1843,9 @@
 
                 - Source:
                     - https://github.com/kyberdrb/Windows_tutorials/blob/master/start_program_with_elevated_priviledges_without_UAC_prompt.md
+                    - https://www.gnu.org/software/bash/manual/bash.html#Invoking-Bash
 
-            - with commands
+            - Attaching with commands:
 
                 1. List all exported devices on the remote server:
 
@@ -1873,14 +1899,30 @@
         
             - Detaching with script:
 
-                    #!/bin/sh
+                ```
+                #!/bin/sh
 
-                    sudo usbip port 2>&1
+                set -x
 
-                    PORT=$(sudo usbip port | grep '1-1.3' -B2 | head --lines=1 | tr --delete ':' | cut --delimiter=' ' --fields=2)
-                    sudo usbip detach --port="${PORT}"
+                # detach printer gracefully to prevent duplicate attachment of the same device to another port which makes the device unresponsive
+                usbip port
 
-            - Detaching manually
+                usbip list --remote=192.168.31.204
+
+                PORT=$( usbip port | grep  '1-1.3' -B2 | head --lines=1 | tr --delete ':' | cut --delimiter=' ' --fields=2)
+
+                if [ -d "/c/Windows" ]
+                then
+                   PORT="$(usbip port | grep  '04b8:114a' -B1 | head --lines=1 | tr --delete ':' | cut --delimiter=' ' --fields=2)"
+                fi
+
+                usbip detach --port="${PORT}"
+
+                sleep 1
+                usbip port
+                ```
+
+            - Detaching with commands:
 
                 1. Find out which port the USBIP driver inserted the device into:
 
