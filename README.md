@@ -1825,7 +1825,7 @@
                             Program: `bash.exe`
                             Arguments: `-c --noprofile --posix C:\Programy\attach_printer.sh`
 
-                        Note: A test script that runs apps with Administrator priviledges without UAC prompt is available [in the resources](usbip_resources/test.sh)
+                        Note: A test script that runs apps with Administrator priviledges without UAC prompt is available [in the resources](usbip_resources/test.sh) - TODO add `test.sh` from laptop
 
                         To start another task, click on `New...` button on the `Actions` tab  
                         **or**  
