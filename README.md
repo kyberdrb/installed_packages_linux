@@ -1333,11 +1333,11 @@
             - https://duckduckgo.com/?q=crop+image+terminal+linux+convert&ia=web
             - https://askubuntu.com/questions/631689/cropping-images-using-command-line-tools-only#631695
 
-* cups cups-pdf samsung-unified-driver printer-driver-escpr - printing support
+* cups cups-pdf samsung-unified-driver epson-inkjet-printer-escpr2 - printing support
     - `samsung-unified-driver` - support for Samsung printers
         - `c2esp splix foomatic-db` - ALTERNATIVE DRIVERS FOR SAMSUNG PRINTERS. USE ONLY ONE OF THE PACKAGES AND TEST THEM ONE BY ONE UNTIL YOU ARE ABLE TO PRINT A TEST PAGE FROM CUPS SERVER FROM THE SAMSUNG PRINTER TO AVOID PACKAGE CONFLICTS AND DRIVER FILE OVERWRITING.
-    - `printer-driver-escpr` - support for Epson printers
-        - in Ubuntu/Raspberry Pi OS install an equivalent package `epson-inkjet-printer-escpr2`
+    - `epson-inkjet-printer-escpr2` - support for Epson printers
+        - in Ubuntu/Raspberry Pi OS install an equivalent package `printer-driver-escpr` - but installation of this package doesn't add the support Epson M2140
         - https://duckduckgo.com/?q=cups+no+models+for+epson&ia=web
         - My printer model not listed in CUPS: https://forums.raspberrypi.com/viewtopic.php?t=223097
 
