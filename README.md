@@ -1766,7 +1766,7 @@
 
         - **Windows**
 
-            - In order to run Shell scripts `*.sh` on Windows a Linux Terminal is needed. This guide has been designed for `Git Bash` which is a part of `git` package available for download at https://git-scm.com/
+            - In order to run Shell scripts `*.sh` on Windows a Linux Terminal is needed. This guide has been designed for `Git Bash` which is a part of `git` package available for download at https://git-scm.com/. Make sure to add directories `cmd`, `bin` from the git installation directory and the git installation directory itself to the `Path` system environment variable.
 
             - Attaching with script:
                 
