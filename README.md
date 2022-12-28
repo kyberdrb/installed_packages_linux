@@ -1799,7 +1799,7 @@
                         - check **Run with highest priviledges** - checking this option will bypass/skip the UAC prompt and executes the commands in `Action` tab as Administrator directly
                     - tab `Actions`
 
-                        _Program:_ `bash.exe`  
+                        _Program:_ `git-bash.exe`  
                         _Arguments:_ `-c "/c/Programy/attach_printer.sh"`
 
                     - tab `Conditions` - uncheck all
@@ -1904,7 +1904,7 @@
 
         - **Windows**
 
-            - In order to run Shell scripts `*.sh` on Windows a Linux Terminal is needed. This guide has been designed for `Git Bash` which is a part of `git` package available for download at https://git-scm.com/
+            - In order to run Shell scripts `*.sh` on Windows a Linux Terminal is needed. This guide has been designed for `Git Bash` which is a part of `git` package available for download at https://git-scm.com/. Make sure to add directories `cmd`, `bin` from the git installation directory and the git installation directory itself to the `Path` system environment variable.
 
             - Detaching with script:
                 
@@ -1937,7 +1937,7 @@
                         - check **Run with highest priviledges** - checking this option will bypass/skip the UAC prompt and executes the commands in `Action` tab as Administrator directly
                     - tab `Actions`
 
-                        _Program:_ `bash.exe`  
+                        _Program:_ `git-bash.exe`  
                         _Arguments:_ `-c "/c/Programy/detach_printer.sh"`
 
                     - tab `Conditions` - uncheck all
