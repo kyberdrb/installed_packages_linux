@@ -1799,8 +1799,8 @@
                         - check **Run with highest priviledges** - checking this option will bypass/skip the UAC prompt and executes the commands in `Action` tab as Administrator directly
                     - tab `Actions`
 
-                            Program: `bash.exe`
-                            Arguments: `-c C:\Programy\attach_printer.sh`
+                        _Program:_ `bash.exe`
+                        _Arguments:_ `-c "/c/Programy/attach_printer.sh"`
 
                     - tab `Conditions` - uncheck all
 
@@ -1937,8 +1937,8 @@
                         - check **Run with highest priviledges** - checking this option will bypass/skip the UAC prompt and executes the commands in `Action` tab as Administrator directly
                     - tab `Actions`
 
-                            Program: `bash.exe`
-                            Arguments: `-c C:\Programy\detach_printer.sh`
+                        _Program:_ `bash.exe`
+                        _Arguments:_ `-c "/c/Programy/detach_printer.sh"`
 
                     - tab `Conditions` - uncheck all
 
