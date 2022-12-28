@@ -1745,7 +1745,7 @@
                 1. Confirm changes by clicking on the `OK` button in all dialog windows.
                 1. Sign out and back in, or reboot the computer alltogether, to reload changes.
 
-    1. **Client** - Attaching the shared USB device exported from the USBIP server. The device will be remotely connected to the computer, and act as if it was connected locally. **After attaching the device, it will be reserved exclusively for the computer that attached it, thus hidden for all other USB/IP clients.**
+    1. **Client** - Attaching the shared USB device exported from the USB/IP server. The device will be remotely connected to the computer, and act as if it was connected locally. **After attaching the device, it will be reserved exclusively for the computer that attached it, thus hidden for all other USB/IP clients.**
         - **Linux**
 
             - Attaching with script: [`attach_printer.sh`](usbip_resources/attach_printer.sh)
@@ -1765,11 +1765,14 @@
                     sudo usbip attach --remote=SERVER_IP_ADDRESS --busid=1-1.5
 
         - **Windows**
+
+            - In order to run Shell scripts `*.sh` on Windows a Linux Terminal is needed. This guide has been designed for `Git Bash` which is a part of `git` package available for download at https://git-scm.com/
+
             - Attaching with script:
                 
                 Assuming, that the script resides in directory `C:\Programy`
             
-                1. Reuse linux script for attaching device:
+                1. Reuse the Linux script for attaching device:
                 
                     To attach the printer, it's sufficient to start `Git Bash` as Administrator and run the attaching script mentioned in the **Linux** section above as follows:
                     
@@ -1805,9 +1808,9 @@
 
                         schtasks /run /tn "Attach printer - skip UAC prompt"
 
-                1. Double click the shortcut to attach the device
+                1. Double click the shortcut to attach the printer.
 
-                - Source:
+                - Sources:
                     - https://github.com/kyberdrb/Windows_tutorials/blob/master/start_program_with_as_admin_i_e_with_elevated_priviledges_without_UAC_prompt/start_program_with_elevated_priviledges_without_UAC_prompt-OpenHardwareMonitor_example.md
                     - https://www.gnu.org/software/bash/manual/bash.html#Invoking-Bash
 
@@ -1861,36 +1864,92 @@
                         - https://download.epson-europe.com/pub/download/6489/epson648951eu.exe
 
     1. **Client** - Detaching the USB device to make the USB device available to other clients/computers/users. This command doesn't produce any messages on the server. **After detaching the device, it will be available for all USB/IP clients which will see it in the list of exportable devices.**
+
         - **Linux**
-        
-            - Detaching with script:
 
-                ```
-                #!/bin/sh
+            - Detaching with script: [`detach_printer.sh`](usbip_resources/detach_printer.sh)
 
-                set -x
+                Post-process the script to make it executable:
+                
+                    chmod +x detach_printer.sh
 
-                # detach printer gracefully to prevent duplicate attachment of the same device to another port which makes the device unresponsive
-                usbip port
+                Run the script as root/sudo:
 
-                usbip list --remote=192.168.31.204
-
-                PORT=$( usbip port | grep  '1-1.3' -B2 | head --lines=1 | tr --delete ':' | cut --delimiter=' ' --fields=2)
-
-                if [ -d "/c/Windows" ]
-                then
-                   PORT="$(usbip port | grep  '04b8:114a' -B1 | head --lines=1 | tr --delete ':' | cut --delimiter=' ' --fields=2)"
-                fi
-
-                usbip detach --port="${PORT}"
-
-                sleep 1
-                usbip port
-                ```
+                    sudo ./detach_printer.sh
 
             - Detaching with commands:
 
-                1. Find out which port the USBIP driver inserted the device into:
+                1. Make sure the USB device is missing from the listing of the command
+
+                        sudo usbip list --remote=192.168.31.204
+
+                1. Find out which port the USB/IP driver inserted the device into:
+
+                        sudo usbip port
+
+                        Imported USB devices
+                        ====================
+                        Port 00: <Port in Use> at High Speed(480Mbps)
+                            Seiko Epson Corp. : unknown product (04b8:114a)
+                            3-1 -> usbip://192.168.31.204:3240/1-1.5
+                                -> remote bus/dev 001/004
+
+                1. Detach attached shared USB device from the port:
+
+                        sudo usbip detach --port=00
+
+                    or
+
+                        sudo usbip detach --port=0
+
+        - **Windows**
+
+            - In order to run Shell scripts `*.sh` on Windows a Linux Terminal is needed. This guide has been designed for `Git Bash` which is a part of `git` package available for download at https://git-scm.com/
+
+            - Detaching with script:
+                
+                Assuming, that the script resides in directory `C:\Programy`
+            
+                1. Reuse the Linux script for detaching device:
+                
+                    To detach the printer, it's sufficient to start `Git Bash` as Administrator and run the detaching script mentioned in the **Linux** section above as follows:
+                    
+                    ```
+                    cd /c/Programy/
+                    ./detach_printer.sh
+                    ```
+                    
+                    or with a one-line-command:
+                    
+                    ```
+                    /c/Programy/detach_printer.sh
+                    ```
+                    
+                    ---
+                        
+                1. For more convenient launching, continue along with following steps to create a shortcut that launches the detaching script without the UAC script, which is invoked by any program lauched as Administrator, i.e. with elevated priviledges.
+
+                    Create a scheduled task: right click on Windows start menu -> Computer Management -> In the left pane click on `Task Scheduler` -> `Task Scheduler Library`
+
+                1. Click on `Create Task...`
+                    - tab `General`
+                        - Name: `Detach printer - skip UAC prompt`
+                        - check **Run with highest priviledges** - checking this option will bypass/skip the UAC prompt and executes the commands in `Action` tab as Administrator directly
+                    - tab `Actions`
+
+                            Program: `bash.exe`
+                            Arguments: `-c C:\Programy\detach_printer.sh`
+
+                    - tab `Conditions` - uncheck all
+
+                1. Create a shortcut, e.g. on the `Desktop` with name `Detach printer` this `Target`
+
+                        schtasks /run /tn "Detach printer - skip UAC prompt"
+
+                1. Double click the shortcut to detach the printer.
+
+            - Detaching with commands:
+                1. Open PowerShell as Administrator to find out which port the USB/IP driver inserted the device into:
 
                         sudo usbip port
 
@@ -1903,34 +1962,11 @@
 
                 1. Detach attached shared USB device from the port
 
-                        sudo usbip detach --port=00
+                        usbip.exe detach --port=00
 
                     or
 
-                        sudo usbip detach --port=0
-
-        - **Windows**
-
-            **TODO automate detaching the device**
-
-            1. Open PowerShell as Administrator to find out which port the USBIP driver inserted the device into:
-
-                    sudo usbip port
-
-                    Imported USB devices
-                    ====================
-                    Port 00: <Port in Use> at High Speed(480Mbps)
-                        Seiko Epson Corp. : unknown product (04b8:114a)
-                        3-1 -> usbip://192.168.31.204:3240/1-1.5
-                            -> remote bus/dev 001/004
-
-            1. Detach attached shared USB device from the port
-
-                    usbip.exe detach --port=00
-
-                or
-
-                    usbip.exe detach --port=0
+                        usbip.exe detach --port=0
     
     1. **Server** - Disconnecting the USB device from the USBIP server and reserving/unbinding the USB device
         - [Optional] Stop the USBIP server.
