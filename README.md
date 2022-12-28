@@ -1802,7 +1802,9 @@
                 
                 Assuming, that the script resides in directory `C:\Programy`
             
-                1. Reuse linux script for attaching device. Run it manually from within `Git Bash` launched as Administrator with commands
+                1. Reuse linux script for attaching device.
+                
+                    To attach the printer, it's sufficient to start `Git Bash` as Administrator and run the attaching script mentioned in the **Linux** section above as follows:
                     
                     ```
                     cd /c/Programy/
@@ -1812,7 +1814,7 @@
                     or with a one-line-command:
                     
                     ```
-                    /c/Programy//attach_printer.sh
+                    /c/Programy/attach_printer.sh
                     ```
                         
                 1. Create a scheduled task: right click on Windows start menu -> Computer Management -> In the left pane click on `Task Scheduler` -> `Task Scheduler Library`
@@ -1823,15 +1825,7 @@
                     - tab `Actions`
 
                             Program: `bash.exe`
-                            Arguments: `-c --noprofile --posix C:\Programy\attach_printer.sh`
-
-                        Note: A test script that runs apps with Administrator priviledges without UAC prompt is available [in the resources](usbip_resources/test.sh) - TODO add `test.sh` from laptop
-
-                        To start another task, click on `New...` button on the `Actions` tab  
-                        **or**  
-                        enter the path to the program in quotes as a background task, i.e. with an ampersand `&` at the end of the path, in the Shell script.
-
-                        ![](usbip_resources/run_external_executable_for_scheduled_task_either_by_new_action_or_from_within_shell_script.png)
+                            Arguments: `-c C:\Programy\attach_printer.sh`
 
                     - tab `Conditions` - uncheck all
 
@@ -1842,7 +1836,7 @@
                 1. Double click the shortcut to attach the device
 
                 - Source:
-                    - https://github.com/kyberdrb/Windows_tutorials/blob/master/start_program_with_elevated_priviledges_without_UAC_prompt.md
+                    - https://github.com/kyberdrb/Windows_tutorials/blob/master/start_program_with_as_admin_i_e_with_elevated_priviledges_without_UAC_prompt/start_program_with_elevated_priviledges_without_UAC_prompt-OpenHardwareMonitor_example.md
                     - https://www.gnu.org/software/bash/manual/bash.html#Invoking-Bash
 
             - Attaching with commands:
