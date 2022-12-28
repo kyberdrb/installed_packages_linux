@@ -1748,40 +1748,7 @@
     1. **Client** - Attaching the shared USB device exported from the USBIP server. The device will be remotely connected to the computer, and act as if it was connected locally. **After attaching the device, it will be reserved exclusively for the computer that attached it, thus hidden for all other USB/IP clients.**
         - **Linux**
 
-            - Attaching with script: `attach_printer.sh`
-
-                ```
-                #!/bin/sh
-
-                set -x
-
-                SCRIPT_DIR="$(dirname "$(readlink --canonicalize "$0")")"
-
-                # detach printer gracefully to prevent duplicate attachment of the same device to another port which makes the device unresponsive
-
-                "${SCRIPT_DIR}/detach_printer.sh"
-
-                # attach printer gracefully
-                usbip list --remote=192.168.31.204
-                usbip port
-                echo ""
-                usbip attach --remote=192.168.31.204 --busid=1-1.3
-
-                sleep 1
-                usbip list --remote=192.168.31.204
-                usbip port
-
-                # attach printer violently
-                # TODO when the attaching of the printer fails, try to force-attach it
-                #echo The password is ...? :)
-                #ssh rpi@192.168.31.204 'systemctl reload usbip-printer.service'
-                #usbip list --remote=192.168.31.204
-                #usbip attach --remote=192.168.31.204 --busid=1-1.3
-
-                # TODO when even the force-attaching failed, print to terminal 
-                #  that the device is physically disconnected from the USB/IP server 
-                #  or connected to different port
-                ```
+            - Attaching with script: [`attach_printer.sh`](usbip_resources/attach_printer.sh)
 
                 Post-process the script to make it executable:
                 
@@ -1802,7 +1769,7 @@
                 
                 Assuming, that the script resides in directory `C:\Programy`
             
-                1. Reuse linux script for attaching device.
+                1. Reuse linux script for attaching device:
                 
                     To attach the printer, it's sufficient to start `Git Bash` as Administrator and run the attaching script mentioned in the **Linux** section above as follows:
                     
@@ -1816,8 +1783,13 @@
                     ```
                     /c/Programy/attach_printer.sh
                     ```
+                    
+                    ---
                         
-                1. Create a scheduled task: right click on Windows start menu -> Computer Management -> In the left pane click on `Task Scheduler` -> `Task Scheduler Library`
+                1. For more convenient launching, continue along with following steps to create a shortcut that launches the attaching script without the UAC script, which is invoked by any program lauched as Administrator, i.e. with elevated priviledges.
+
+                    Create a scheduled task: right click on Windows start menu -> Computer Management -> In the left pane click on `Task Scheduler` -> `Task Scheduler Library`
+
                 1. Click on `Create Task...`
                     - tab `General`
                         - Name: `Attach printer - skip UAC prompt`
@@ -1832,7 +1804,7 @@
                 1. Create a shortcut, e.g. on the `Desktop` with name `Attach printer` this `Target`
 
                         schtasks /run /tn "Attach printer - skip UAC prompt"
-                        
+
                 1. Double click the shortcut to attach the device
 
                 - Source:
