@@ -1517,6 +1517,8 @@
 
 * usbip - share USB devices via network
     - Sources:
+        - https://duckduckgo.com/?q=share+scanner+over+network&ia=web
+        - https://duckduckgo.com/?q=usb+over+network&ia=web
         - How To Share USB Devices Over Network with Raspberry Pi [Novaspirit Tech]: https://www.youtube.com/watch?v=gBCNLs_5pwM
         - https://derushadigital.com/other%20projects/2019/02/19/RPi-USBIP-ZWave.html
         - https://duckduckgo.com/?q=usbip&ia=web
@@ -1526,6 +1528,7 @@
             - reference for more readable keyword options
         - https://man.archlinux.org/man/usbipd.8
             - reference for more readable keyword options
+        - https://archlinux.org/packages/community/x86_64/usbip/
     
     - Limitations
         - the device needs to be connected to the same USB port on the server all the time
@@ -1569,6 +1572,12 @@
             Verify whether the module loads at boot by restarting the system
             
                 sudo reboot
+                
+            - Sources:
+                - https://wiki.archlinux.org/title/Kernel_module
+                - https://wiki.archlinux.org/title/Kernel_module#Manual_module_handling
+                - https://wiki.archlinux.org/title/Kernel_module#Obtaining_information
+                - https://wiki.archlinux.org/title/Kernel_module#systemd
                 
         1. Make the USBIP server process start on boot (together with binding a particular device if desired) to reduce the accessing to the server each time we want to share and attach device to minimum - the server does the binding automatically at startup for us
             1. Create the base `usbipd.service` for starting and stopping USB/IP server
@@ -1773,6 +1782,12 @@
                     cd C:\Programme\usbip-win-0.3.6-dev
                     
                     .\usbip.exe install
+                    
+            - Sources:
+                - https://duckduckgo.com/?q=usbip+windows+client&ia=web
+                - How To Connect USB Devices Wirelessly To Your PC Over IP using Raspberry Pi | USBIP Raspberry Pi [Sid's E Classroom] - https://www.youtube.com/watch?v=lsMsl8LEZvs
+                - https://github.com/cezanne/usbip-win
+                - https://github.com/cezanne/usbip-win/tags
     
     1. **Client** - First configuration
         - **Linux**
@@ -1910,21 +1925,26 @@
                         usbipd: info: found requested device: 1-1.5
                         usbip: info: connect: 1-1.5
                         usbipd: info: request 0x8003(5): complete
+                        
+            - Sources:
+                - client scripts for Windows were inspired by https://github.com/barbalion/usbip-win-client
+                - https://github.com/kyberdrb/Windows_tutorials
+                - https://github.com/kyberdrb/Windows_tutorials/blob/master/start_program_with_as_admin_i_e_with_elevated_priviledges_without_UAC_prompt/start_program_with_elevated_priviledges_without_UAC_prompt-OpenHardwareMonitor_example.md
                     
-                - **Example: Connecting and setting up the printer `Epson M2140` - Attaching to a Windows client**
-                    - Epson M2140 support page: https://www.epson.sk/sk_SK/support/sc/epson-ecotank-m2140/s/s1672?selected-tab=&selected-os=Windows+10+64-bit
-                    - To make the printer fully working, download the driver `2.60.01` for `Epson M2140`
-                        - https://download.epson-europe.com/pub/download/6317/epson631786eu.exe
-                    - To make the scanner fully working, download and install the `EPSON Scan (v6.490)` utility for `Epson M2140` which contains the useful scanner driver, _but not so usefull utility to use the scanner_
-                        - https://download.epson-europe.com/pub/download/6309/epson630937eu.exe
-                    - To actually scan a document
-                        - use the `EPSON Scan 2 (v6.2.3.0)` utility together with the `EPSON Scan Updater (v1.0)` (bugfix), which can be found on the support page for printer `Epson L382` which makes a sharper and more detailed scan than the `Epson ScanSmart`. Don't use the `Epson Scan` utility from the support page for `Epson M2140` because it has inconsistent results (doesn't find the scanner or the app doesn't start at all)
-                            - EPSON Scan 2 (v6.2.3.0): https://download.epson-europe.com/pub/download/6361/epson636150eu.exe
-                            - EPSON Scan Updater (v1.0): https://download.epson-europe.com/pub/download/6306/epson630619eu.exe
-                        - or use `Epson ScanSmart` from https://www.epson.sk/sk_SK/scansmart-document-scanning-software
-                            - https://download.epson-europe.com/pub/download/6390/epson639084eu.exe
-                    - For updating, you need the `Epson Software updater (v4.6.5.0)` for `Epson M2140`
-                        - https://download.epson-europe.com/pub/download/6489/epson648951eu.exe
+            - **Example: Connecting and setting up the printer `Epson M2140` - Attaching to a Windows client and using the printer and the scanner**
+                - Epson M2140 support page: https://www.epson.sk/sk_SK/support/sc/epson-ecotank-m2140/s/s1672?selected-tab=&selected-os=Windows+10+64-bit
+                - To make the printer fully working, download the driver `2.60.01` for `Epson M2140`
+                    - https://download.epson-europe.com/pub/download/6317/epson631786eu.exe
+                - To make the scanner fully working, download and install the `EPSON Scan (v6.490)` utility for `Epson M2140` which contains the useful scanner driver, _but not so usefull utility to use the scanner_
+                    - https://download.epson-europe.com/pub/download/6309/epson630937eu.exe
+                - To actually scan a document
+                    - use the `EPSON Scan 2 (v6.2.3.0)` utility together with the `EPSON Scan Updater (v1.0)` (bugfix), which can be found on the support page for printer `Epson L382` which makes a sharper and more detailed scan than the `Epson ScanSmart`. Don't use the `Epson Scan` utility from the support page for `Epson M2140` because it has inconsistent results (doesn't find the scanner or the app doesn't start at all)
+                        - EPSON Scan 2 (v6.2.3.0): https://download.epson-europe.com/pub/download/6361/epson636150eu.exe
+                        - EPSON Scan Updater (v1.0): https://download.epson-europe.com/pub/download/6306/epson630619eu.exe
+                    - or use `Epson ScanSmart` from https://www.epson.sk/sk_SK/scansmart-document-scanning-software
+                        - https://download.epson-europe.com/pub/download/6390/epson639084eu.exe
+                - For updating, you need the `Epson Software updater (v4.6.5.0)` for `Epson M2140`
+                    - https://download.epson-europe.com/pub/download/6489/epson648951eu.exe
 
     1. **Client** - Detaching the USB device to make the USB device available to other clients/computers/users. This command doesn't produce any messages on the server. **After detaching the device, it will be available for all USB/IP clients which will see it in the list of exportable devices.**
 
