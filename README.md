@@ -1336,10 +1336,34 @@
 * cups cups-pdf samsung-unified-driver epson-inkjet-printer-escpr2 - printing support
     - `samsung-unified-driver` - support for Samsung printers
         - `c2esp splix foomatic-db` - ALTERNATIVE DRIVERS FOR SAMSUNG PRINTERS. USE ONLY ONE OF THE PACKAGES AND TEST THEM ONE BY ONE UNTIL YOU ARE ABLE TO PRINT A TEST PAGE FROM CUPS SERVER FROM THE SAMSUNG PRINTER TO AVOID PACKAGE CONFLICTS AND DRIVER FILE OVERWRITING.
-    - `epson-inkjet-printer-escpr2` - support for Epson printers
-        - in Ubuntu/Raspberry Pi OS install an equivalent package `printer-driver-escpr` - but installation of this package doesn't add the support Epson M2140
-        - https://duckduckgo.com/?q=cups+no+models+for+epson&ia=web
-        - My printer model not listed in CUPS: https://forums.raspberrypi.com/viewtopic.php?t=223097
+    - support for Epson printers
+        - `epson-inkjet-printer-escpr2` - **Currently preferred and in use**
+        - `epson-inkjet-printer-escpr`
+        - Sources - Arch Linux specific:
+            - https://duckduckgo.com/?q=arch+linux+epson+printer+driver&ia=web
+            - https://www.ordinatechnic.com/distribution-specific-guides/Arch/installing-an-epson-multifunction-printer-on-arch-linux-and-derivatives
+            - https://aur.archlinux.org/packages/epson-inkjet-printer-escpr
+            - https://archlinux.org/packages/?sort=&q=epson&maintainer=&flagged=
+            - https://archlinux.org/packages/community/x86_64/imagescan/
+                - the `imagescan` package which provides the scanning utility for Epson scanners - maybe the generic `scanimage` utility will also work out of the box > **TODO test `scanimage` with Epson scanner**
+            - https://aur.archlinux.org/packages?O=0&SeB=nd&K=epson&outdated=&SB=p&SO=d&PP=250&submit=Go
+            - Epson printer driver - https://bbs.archlinux.org/viewtopic.php?id=265822
+                - reference to `epson-inkjet-printer-escpr` - https://bbs.archlinux.org/viewtopic.php?pid=1969652#p1969652
+
+        - **in Ubuntu/Raspberry Pi OS** install an equivalent packages `printer-driver-escpr` and `epson-inkjet-printer-escpr`
+            - the installation of `printer-driver-escpr` package doesn't add the support Epson M2140
+            - **TODO test the installation of `epson-inkjet-printer-escpr` whether it add the support for Epson M2140 series printers**
+            - Sources- Debian/Ubuntu specific
+                - https://duckduckgo.com/?q=cups+no+models+for+epson&ia=web
+                - My printer model not listed in CUPS: https://forums.raspberrypi.com/viewtopic.php?t=223097
+                - https://duckduckgo.com/?q=epson-inkjet-printer-escpr+debian+raspberry&ia=web
+                - https://tracker.debian.org/pkg/epson-inkjet-printer-escpr
+                - https://duckduckgo.com/?q=epson-inkjet-printer-escpr2+debian+raspberry&ia=web
+
+        - Sources - general:
+            - http://download.ebz.epson.net/dsc/search/01/search/searchModule
+            - Download Printer Driver  ESC/P-R Driver 2 (generic driver) for ARM(AArch32) - http://download.ebz.epson.net/dsc/du/02/DriverDownloadInfo.do?LG2=EN&CN2=&DSCMI=141706&DSCCHK=adf5e2deb596319a78bcbb7bbfd184544374dbf6
+            - Download Printer Driver  ESC/P-R Driver 2 (generic driver) - http://download.ebz.epson.net/dsc/du/02/DriverDownloadInfo.do?LG2=EN&CN2=&DSCMI=141707&DSCCHK=552cd5e4cc125a70ef3825f5ac5f821970eba544
 
     1. `sudo systemctl enable --now cups.service`
     1. Go to the CUPS Web Administration page: http://localhost:631/admin
@@ -1442,6 +1466,7 @@
 
         - https://markdown.land/markdown-code-block
         - https://duckduckgo.com/?q=vscode+print&ia=web
+    
     - Print server - share a local printer
 
         Server: Raspberry Pi
@@ -1450,8 +1475,8 @@
 
             # Fix error: Failed to create /var/spool/cups/tmp/.hplip
 
-            sudo apt remove hplip
-            sudo apt install hplip
+            sudo aptitude remove hplip
+            sudo aptitude install hplip
 
             # Use cups with priviledges without authentication
             sudo usermod -a -G lpadmin ${USER}
@@ -1491,6 +1516,7 @@
 
         Then test page will then print.
         
+        - http://localhost:631/admin
         - https://duckduckgo.com/?q=share+printer+cups&ia=web
         - https://wiki.archlinux.org/title/CUPS/Printer_sharing#DNS-SD_advertisement
         - https://duckduckgo.com/?q=%5B707%5D%3A+error%3A+Failed+to+create+%2Fvar%2Fspool%2Fcups%2Ftmp%2F.hplip&ia=web
@@ -1514,6 +1540,8 @@
         - **https://kb.adamsdesk.com/operating_system/arch_linux_install_network_printer/**
         - https://askubuntu.com/questions/1074565/network-printer-stuck-at-getting-printer-information-from-system-gtk-print-dia
         - CUPS and Firefox 3.5 "Getting printer information failed" - https://bbs.archlinux.org/viewtopic.php?id=86710
+        - https://medium.com/@anirudhgupta281998/setup-a-print-server-using-raspberry-pi-cups-part-2-2d6d48ccdc32
+        - https://medium.com/@anirudhgupta281998/setup-a-print-server-using-raspberry-pi-cups-part-3-aaced48e9b89
 
 * usbip - share USB devices via network
     - Sources:
