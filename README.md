@@ -1341,7 +1341,7 @@
         - `epson-inkjet-printer-escpr`
         - Sources - Arch Linux specific:
             - https://duckduckgo.com/?q=arch+linux+epson+printer+driver&ia=web
-            - https://www.ordinatechnic.com/distribution-specific-guides/Arch/installing-an-epson-multifunction-printer-on-arch-linux-and-derivatives
+            - **https://www.ordinatechnic.com/distribution-specific-guides/Arch/installing-an-epson-multifunction-printer-on-arch-linux-and-derivatives**
             - https://aur.archlinux.org/packages/epson-inkjet-printer-escpr
             - https://archlinux.org/packages/?sort=&q=epson&maintainer=&flagged=
             - https://archlinux.org/packages/community/x86_64/imagescan/
