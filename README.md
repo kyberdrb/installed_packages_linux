@@ -1826,7 +1826,7 @@
     1. **Client** - Attaching the shared USB device exported from the USB/IP server. The device will be remotely connected to the computer, and act as if it was connected locally. **After attaching the device, it will be reserved exclusively for the computer that attached it, thus hidden for all other USB/IP clients.**
         - **Linux**
 
-            - Attaching with script: [`attach_printer.sh`](client/usbip_resources/attach_printer.sh)
+            - Attaching with script: [`attach_printer.sh`](usbip_resources/client/attach_printer.sh)
 
                 Post-process the script to make it executable:
                 
@@ -1950,7 +1950,7 @@
 
         - **Linux**
 
-            - Detaching with script: [`detach_printer.sh`](client/usbip_resources/detach_printer.sh)
+            - Detaching with script: [`detach_printer.sh`](usbip_resources/client/detach_printer.sh)
 
                 Post-process the script to make it executable:
                 
