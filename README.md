@@ -1516,7 +1516,23 @@
         - CUPS and Firefox 3.5 "Getting printer information failed" - https://bbs.archlinux.org/viewtopic.php?id=86710
 
 * usbip - share USB devices via network
-    - limitations: only one user at a time can use an already exported/bound and connected/attached device.
+    - Sources:
+        - How To Share USB Devices Over Network with Raspberry Pi [Novaspirit Tech]: https://www.youtube.com/watch?v=gBCNLs_5pwM
+        - https://derushadigital.com/other%20projects/2019/02/19/RPi-USBIP-ZWave.html
+        - https://duckduckgo.com/?q=usbip&ia=web
+        - https://wiki.archlinux.org/title/USB/IP
+            - parametrized systemd service for binding/unbinding the device from the server: https://wiki.archlinux.org/title/USB/IP#Binding_with_systemd_service
+        - https://man.archlinux.org/man/usbip.8
+            - reference for more readable keyword options
+        - https://man.archlinux.org/man/usbipd.8
+            - reference for more readable keyword options
+    
+    - Limitations
+        - the device needs to be connected to the same USB port on the server all the time
+            - when using a different port, this solution needs to be modified entirely
+        - when physically disconnecting the device from the USB/IP server, the server/systemd service needs to be restarted
+        - only one user at a time can use an already exported/bound and connected/attached device.
+        
     1. **Server** - Installation
         - **Linux**
             - **Arch Linux**
@@ -1612,64 +1628,111 @@
                 When everything went well, enable the service at startup and start it right away with
 
                     sudo systemctl enable --now usbip-printer.service
+                    
+                - Sources
+                    - https://duckduckgo.com/?q=raspberry+pi+start+script+on+startup&ia=web
+                    - https://www.wikihow.com/Execute-a-Script-at-Startup-on-the-Raspberry-Pi
+                    - https://www.makeuseof.com/how-to-run-a-raspberry-pi-program-script-at-startup/
 
                 Reboot the system. After reboot, the service `usbip-printer.service` starts the `usbipd.service` too and before starting the `usbip-printer.service`, because `usbip-printer.service` requires `usbipd.service`. The `systemd` takes care of starting all dependent/required services.
 
-                **TODO urobit cronjob, ktory bude restartovat a reloadovat `usbip-printer.service` kazdych 5 min, aby sa tlaciaren znova spristupnila na zdielanie, keby niekto ju zabudol detachnut.**
+                **TODO pridat navod na cronjob, ktory bude restartuje `usbip-printer.service` kazdych 5 min, aby sa tlaciaren znova spristupnila na zdielanie, keby niekto ju zabudol detachnut.**
+                
+        - Sources:
+            - https://duckduckgo.com/?q=execstop+executes+every+time&ia=web
+            - https://superuser.com/questions/1223957/systemd-execstop-run-immediately-after-execstart/1287864#1287864
+                - use `oneshot` with `[Service]` option `RemainAfterExit=yes`
+            - https://duckduckgo.com/?q=systemd+service+bsd+man+doc&ia=web
+            - https://www.freedesktop.org/software/systemd/man/systemd.service.html
+            - https://duckduckgo.com/?q=systemd+service+oneshot+vs+simple&ia=web
+            - https://trstringer.com/simple-vs-oneshot-systemd-service/
+            - https://duckduckgo.com/?q=systemd+service+example+start+stop&iax=images&ia=images&iai=https%3A%2F%2Forigin-sysadmin.redhat.com%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fembed_large%2Fpublic%2F2020-02%2FImage%25202.png%3Fitok%3DuxMy3BfH
+            - https://duckduckgo.com/?q=multiple+commands+execstart&ia=web
+            - stackoverflow.com/questions/72665986/how-to-execute-multiple-command-in-execstart
+            - https://stackoverflow.com/questions/72665986/how-to-execute-multiple-command-in-execstart
+            - https://stackoverflow.com/questions/72665986/how-to-execute-multiple-command-in-execstart/72666379#72666379
+            - https://duckduckgo.com/?q=execrestart&ia=web
+            - https://serverfault.com/questions/1097312/unknown-key-name-execrestart-in-section-service
     
-    1. **Server** - Connecting the USB device to the USB/IP server and exporting/binding the USB device for sharing
+    1. **Server** - Connecting the USB device to the USB/IP server and exporting/binding/marking the USB device for sharing
         1. **Linux**
-            1. Connect the USB device to the USBIP server, e.g. to the Raspberry Pi.
-            1. Execute commands to list, select, export an USB device and start the USBIP server process **TODO - bind the device to USB/IP automatically at connecting the device to system?**
-            1. List all connected USB devices
+        
+            - Binding device for sharing with systemd service:
 
-                    lsusb
-                    
-                    Bus 001 Device 008: ID 0951:1666 Kingston Technology DataTraveler 100 G3/G4/SE9 G2/50
-                    Bus 001 Device 011: ID 04b8:114a Seiko Epson Corp. M2140 Series
-                    Bus 001 Device 003: ID 0424:ec00 Microchip Technology, Inc. (formerly SMSC) SMSC9512/9514 Fast Ethernet Adapter
-                    Bus 001 Device 002: ID 0424:9514 Microchip Technology, Inc. (formerly SMSC) SMC9514 Hub
-                    Bus 001 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub
+                Mark the device for sharing by restarting the related systemd service:
 
-            1. List all USB devices available for the USBIP server
+                    sudo systemctl restart usbip-printer.service
+                    
+                Check the status of the service on the server
+                    
+                    sudo systemctl status usbip-printer.service
+                    
+                As long as the client computers have the USB/IP driver installed, they will see the shared device in the output of the command
+                
+                    # usbip list --remote=SERVER_IP_ADDRESS
+                    
+                either as sudo/root for Linux environments  
+                or  
+                in any terminal started with Administrator priviledges.
+                
+                - Sources:
+                    - https://wiki.archlinux.org/title/USB/IP#Binding_by_vendor/device_ID
 
-                    usbip list --local
-                    
-                     - busid 1-1.1 (0424:ec00)
-                       Microchip Technology, Inc. (formerly SMSC) : SMSC9512/9514 Fast Ethernet Adapter (0424:ec00)
+            - Binding device for sharing with commands:
+                1. Connect the USB device to the USBIP server, e.g. to the Raspberry Pi.
+                1. Execute commands to list, select, export an USB device and start the USBIP server process **TODO - bind the device to USB/IP automatically at connecting the device to system?**
+                1. List all connected USB devices
 
-                     - busid 1-1.3 (04b8:114a)
-                       Seiko Epson Corp. : unknown product (04b8:114a)
+                        lsusb
 
-                     - busid 1-1.5 (0951:1666)
-                       Kingston Technology : DataTraveler 100 G3/G4/SE9 G2/50 (0951:1666)
+                        Bus 001 Device 008: ID 0951:1666 Kingston Technology DataTraveler 100 G3/G4/SE9 G2/50
+                        Bus 001 Device 011: ID 04b8:114a Seiko Epson Corp. M2140 Series
+                        Bus 001 Device 003: ID 0424:ec00 Microchip Technology, Inc. (formerly SMSC) SMSC9512/9514 Fast Ethernet Adapter
+                        Bus 001 Device 002: ID 0424:9514 Microchip Technology, Inc. (formerly SMSC) SMC9514 Hub
+                        Bus 001 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub
 
-            1. Bind the desired USB device to enable sharing it via network
-                    
-                    sudo usbip bind --busid=1-1.5
-                    
-                    usbip: info: bind device on busid 1-1.5: complete
-                    
-                To bind multiple devices when the server is running, you need to stop the USBIP server process, bind another device and start the USBIP server process again.
-                    
-            1. Start the USBIP server
-                - in blocking mode for debugging
-                    
-                    sudo usbipd
-                    
-                    usbipd: info: starting usbipd (usbip-utils 2.0)
-                    usbipd: info: listening on 0.0.0.0:3240
-                    usbipd: info: listening on :::3240
+                1. List all USB devices available for the USBIP server
 
-                - or in non-blocking/daemonized mode with
+                        usbip list --local
 
-                        sudo usbipd &
+                         - busid 1-1.1 (0424:ec00)
+                           Microchip Technology, Inc. (formerly SMSC) : SMSC9512/9514 Fast Ethernet Adapter (0424:ec00)
+
+                         - busid 1-1.3 (04b8:114a)
+                           Seiko Epson Corp. : unknown product (04b8:114a)
+
+                         - busid 1-1.5 (0951:1666)
+                           Kingston Technology : DataTraveler 100 G3/G4/SE9 G2/50 (0951:1666)
+
+                1. Bind the desired USB device to enable sharing it via network
+
+                        sudo usbip bind --busid=1-1.5
+
+                        usbip: info: bind device on busid 1-1.5: complete
+
+                    To bind multiple devices when the server is running, you need to stop the USBIP server process, bind another device and start the USBIP server process again.
+
+                1. Start the USBIP server
+                    - in blocking mode for debugging
+
+                        sudo usbipd
+
+                        usbipd: info: starting usbipd (usbip-utils 2.0)
+                        usbipd: info: listening on 0.0.0.0:3240
+                        usbipd: info: listening on :::3240
+
+                    - or in non-blocking/daemonized mode with
+
+                            sudo usbipd &
+
+                        for output to the terminal, or with
+
+                            sudo usbipd --daemon
+
+                        for output to the `journalctl`
                     
-                    for output to the terminal, or with
-                    
-                        sudo usbipd --daemon
-                        
-                    for output to the `journalctl`
+        - **Windows**
+            - TODO - not tested yet
 
     1. **Client** - Installation
         - **Linux**
@@ -1748,7 +1811,7 @@
     1. **Client** - Attaching the shared USB device exported from the USB/IP server. The device will be remotely connected to the computer, and act as if it was connected locally. **After attaching the device, it will be reserved exclusively for the computer that attached it, thus hidden for all other USB/IP clients.**
         - **Linux**
 
-            - Attaching with script: [`attach_printer.sh`](usbip_resources/attach_printer.sh)
+            - Attaching with script: [`attach_printer.sh`](client/usbip_resources/attach_printer.sh)
 
                 Post-process the script to make it executable:
                 
@@ -1867,7 +1930,7 @@
 
         - **Linux**
 
-            - Detaching with script: [`detach_printer.sh`](usbip_resources/detach_printer.sh)
+            - Detaching with script: [`detach_printer.sh`](client/usbip_resources/detach_printer.sh)
 
                 Post-process the script to make it executable:
                 
