@@ -1,24 +1,24 @@
 * pacman - package manager in Arch Linux
     - Enable parallel downloads, colored output and verbose package list (with displayed current and upgraded versions) at upgrading
-    
+
             $ sudo /etc/pacman.conf
-            
+
             [options]
             ...
             ParallelDownloads = 20
             Color
             VerbosePkgLists
             ...
-            
+
         - https://ostechnix.com/enable-parallel-downloading-in-pacman-in-arch-linux/
         - https://bbs.archlinux.org/viewtopic.php?pid=1488827#p1488827
     - Find dependent packages of a package
-    
+
             pacman -Qi lame
             pacman --query --info lame
             pacman --query --info lame | grep "Depends On" | cut --delimiter=':' --fields=1 --complement | sed 's/^\s*//g'
             pacman --query --info <PACKAGE_NAME> | grep "Depends On" | cut --delimiter=':' --fields=1 --complement | sed 's/^\s*//g'
-    
+
         - https://bbs.archlinux.org/viewtopic.php?id=92287
     - Find out, what package holds a file
 
@@ -29,30 +29,30 @@
         - https://bbs.archlinux.org/viewtopic.php?id=90635
 
 * ntp - keep the time up to date
-    
+
         pikaur -Sy ntp networkmanager-dispatcher-ntpd
         sudo cp /etc/ntp.conf /etc/ntp.conf.original
         sudo cp ~/git/kyberdrb/installed_packages_linux/configs/ntp.conf /etc/ntp.conf
-        
+
         sudo systemctl status ntpd.service
         sudo systemctl enable --now ntpd.service
         sudo systemctl status ntpd.service
-        
+
         sudo systemctl status ntpdate.service
         sudo systemctl enable --now ntpdate.service
         sudo systemctl status ntpdate.service
-        
+
         ntpd --user=ntp:ntp
         ntpd --quit
-        
+
     To enable `System clock synchronized` in `timedatectl`
-        
+
         sudo hwclock --systohc
-        
+
     Verify the settings
-        
+
         timedatectl
-        
+
     Output of `timedatectl` after setting hardware clock synchronization
 
     ```
@@ -64,9 +64,9 @@
                   NTP service: inactive
               RTC in local TZ: no
     ```
-        
+
     Verify NTP function
-   
+
     ```
     ntpq -p
 
@@ -75,10 +75,10 @@
     *cloud.zazezi.ne .DCFa.           1 u    7   64  377   16.012   -3.829   1.990
     -ntp26.kashra-se 192.168.100.15   2 u    6   64  367   64.796  -12.575  19.430
     +2a02:25b0:aaaa: 78.108.96.197    2 u    8   64  377   29.207   -1.048   0.715
-    +ip98.mikrocom.s 195.113.144.201  2 u    2   64  377   18.962   -3.844   0.584    
+    +ip98.mikrocom.s 195.113.144.201  2 u    2   64  377   18.962   -3.844   0.584
     ```
 
-    ``` 
+    ```
     ntptime
 
     ntp_gettime() returns code 0 (OK)
@@ -91,12 +91,12 @@
       status 0x2001 (PLL,NANO),
       time constant 6, precision 0.001 us, tolerance 500 ppm,
     ```
-        
+
     - Sources
         - https://duckduckgo.com/?q=arch+linux+ntp&ia=web
         - https://wiki.archlinux.org/title/Network_Time_Protocol_daemon
         - https://wiki.archlinux.org/title/Network_Time_Protocol_daemon#Start_ntpd_at_boot
-        - https://wiki.archlinux.org/title/Network_Time_Protocol_daemon#Start_ntpd_on_network_connectiongit - 
+        - https://wiki.archlinux.org/title/Network_Time_Protocol_daemon#Start_ntpd_on_network_connectiongit -
         - https://superuser.com/questions/444733/linux-ntpd-and-ntpdate-service
         - https://wiki.archlinux.org/title/System_time
         - https://duckduckgo.com/?q=kernel+reports+TIME_ERROR%3A+0x2041%3A+Clock+Unsynchronized&ia=web
@@ -113,15 +113,15 @@
 * android-tools - Android platform tools; for `adb` utility etc.; make sure to have "USB Debugging" activated on Android device otherwise it will be hidden from `adb devices` command
     - When you can't edit files directly due to the lack of write access, use this "pull-push" method
         1. Pull desired file
-            
+
                 adb pull /storage/extSdCard/buffer.txt /tmp/buffer.txt
-    
+
         1. Edit it in the new location
-    
+
                 vscodium /tmp/buffer.txt
-    
+
         1. Push the file back to the phone
-    
+
                 adb push /tmp/buffer.txt /storage/extSdCard/buffer.txt
     - fixing unresponsive edges and navigation bar on my Android phone Sony Xperia XA1 (G3121 - Android 8.0.0); inspired by [[1]](https://techsable.com/change-screen-resolution-in-android-without-root/)
         1. Enable developer mode [[2]](https://wiki.archlinux.org/index.php/Android_Debug_Bridge)
@@ -136,17 +136,17 @@
             Numbers represent [LEFT,TOP,RIGHT,BOTTOM] edge of the screen
 
             This increases the height of the navigation bar - moves the navigation bar higher - and pads the sides and top of the software displaying area into the hardware area from the screen edges unresponsive to the touch towards the touch-responsive parts of the screen, for more fluent and comfortable usage of the phone. The keyboard is responsive to the corner and edge buttons 'q', 'p' and other control buttons. The cursor can be now dragged to the very edge of the screen, behind the first character on a line with ease. Context menus in the left and right top corner are now responsive to touch immediately. So much functionality for a little bit of discomfort, less usable screen space and a little bit uglier graphical interfaces of some applications. For zero money, zero waste. That's efficient :D Efficiency. Redefined.
-            
+
 * scrcpy - Mirror screen and interact with your Android device
     - requires `ADB` and `USB debugging` to be enabled
     - https://github.com/Genymobile/scrcpy
 
 * xscreenserver gnome-keyring - screensaver and lockscreen support
     - `gnome-keyring` serves as a prevention for `journalctl` error messages
-    
+
             xfce4-screensaver-dialog[1225]: PAM unable to dlopen(/usr/lib/security/pam_gnome_keyring.so): /usr/lib/security/pam_gnome_keyring.so: cannot open sh>
             xfce4-screensaver-dialog[1225]: PAM adding faulty module: /usr/lib/security/pam_gnome_keyring.so
-        
+
         - https://bbs.archlinux.org/viewtopic.php?pid=1940513#p1940513
         - To change the default keyring's password [delete the `keyrings` directory](https://wiki.archlinux.org/index.php/GNOME/Keyring#Resetting_the_keyring) with
 
@@ -155,16 +155,16 @@
 * lxde-icon-theme - XFCE icon pack
 
 * linux-firmware-iwlwifi-git - linux firmware with the support of Intel wireless devices, such as bluetooth and Wi-Fi. Replaces the default `linux-firmware` package.
-    - In my case it provided newer firmware for my 
+    - In my case it provided newer firmware for my
         - Intel bluetooth device
-    
+
                 Intel Wireless 8260 Bluetooth
                 [journalctl] Bluetooth: hci0: Found device firmware: intel/ibt-11-5.sfi)
-            
+
         - and Wi-Fi device
-        
+
                 Intel Corporation Wireless 8260 (rev 3a)
-                
+
                 [journalctl]
                 Intel(R) Dual Band Wireless AC 8260, REV=0x208
                 ...
@@ -177,15 +177,15 @@
 
 * git - version control system
     - `~/.gitconfig` [[1]](https://stackoverflow.com/questions/5519007/how-do-i-make-git-merges-default-be-no-ff-no-commit/9252042#9252042)
-    
+
         Commands:
-    
+
             git config --global merge.commit no
             git config --global merge.ff no
             git config --global pull.ff yes
-    
+
         ...produce this output with `cat ~/.gitconfig`
-    
+
             [user]
                 email = your@email.address
                 name = your_name
@@ -194,7 +194,7 @@
                 ff = no
             [pull]
                 ff = yes
-                
+
     - link local directory to a remote git repository
 
             ls -Al
@@ -213,29 +213,29 @@
             git status --untracked-files
 
         Use `git branch` and `git status` to check intermediary status.
-                
+
     - immediately display diff without scrolling down manually, by creating an alias for `git` as `git --no-pager`
-    
+
             $ vim ~/.bashrc
 
             ...
             alias git='git --no-pager'
             ...
-            
+
         To add the pager back use the option `--add-pager`
-        
+
             git --paginate diff
-            
+
         or prefix the `git` command with a backslash `\` which disables the alias (appliable for any aliased command)
-        
+
             \git diff
-        
+
         - Soures:
             - https://duckduckgo.com/?q=git+diff+without+scrolling&ia=web
             - https://stackoverflow.com/questions/2183900/how-do-i-prevent-git-diff-from-using-a-pager/2183920#2183920
             - https://stackoverflow.com/questions/2183900/how-do-i-prevent-git-diff-from-using-a-pager/2183920#comment8461627_2183920
             - https://stackoverflow.com/questions/60175925/how-to-make-git-diff-show-everything-without-having-to-press-enter-to-scroll-dow
-    
+
     - Show all different files recursively
 
             git status --untracked-files
@@ -243,11 +243,11 @@
     - Show all tags in a repository
 
             git tag
-            
+
     - Add annotated tag
 
             git tag --annotate 3.2.0 --message="Relief"
-            
+
     - Push with tags
 
             git push --tags
@@ -255,40 +255,40 @@
     - Show all tags in a repository with tag messages, if present, i. e. the tag is an annotated one with a message
 
             git tag | xargs git show --pretty=short --no-patch
-            
+
         or without pager
-        
+
             git tag | xargs git --no-pager show --pretty=short --no-patch
-            
+
         or with custom pager
-        
+
             git tag | xargs git --no-pager show --pretty=short --no-patch | less
-            
+
         - Sources:
             - https://duckduckgo.com/?q=git+show+tags+message&ia=web
             - https://duckduckgo.com/?q=git+show+annotated+tags&ia=web
             - https://www.freecodecamp.org/news/git-tag-explained-how-to-add-remove/
             - https://hackernoon.com/annotated-and-lightweight-git-tags-hz6r3ywf
             - https://www.shellhacks.com/git-list-tags/
-            
+
     - Show entire commit history with tags and extended commit messages
 
             git --paginate log --tags --decorate=full
-            
+
         without pagination
-        
+
             git log --tags --decorate=full
-        
+
         with custom pagination
-        
+
             git log --tags --decorate=full | less
 
     - Show upstream `origin` URL of a git repository
 
             git remote get-url origin
-            
+
         or
-        
+
             cat .git/config | grep url | tr -d '\t' | tr -d ' ' | cut -d'=' -f2 | xclip -se c
 
         Change `origin` URL of a git repository
@@ -296,11 +296,11 @@
             git remote set-url origin <new_git_upstream_url>
 
         Source: https://duckduckgo.com/?q=git+set+remote+origin+url&ia=web
-        
+
     - Delete tags
-    
+
         - Delete a local tag
-        
+
             ```
             git tag --delete TAG_NAME
             ```
@@ -310,23 +310,23 @@
             ```
             git tag -d TAG_NAME
             ```
-            
+
         - Delete a remote tag
 
             ```
             git push --delete origin TAG_NAME
             ```
-            
+
             or
-            
+
             ```
             git push -d origin TAG_NAME
             ```
-            
+
         - Sources:
             - https://devconnected.com/how-to-delete-local-and-remote-tags-on-git/
             - https://duckduckgo.com/?q=git+tag+message&t=ffab&ia=web
-        
+
     - Fix for `.gitignore` file **not** ignoring files
 
         Remove the not ignored file(s)
@@ -343,15 +343,15 @@
             git rm -r --cached --dry-run /path/to/repo
             git rm -r --cached /path/to/repo
             ```
-        
+
         Then continue with:
-        
+
         ```
         git add --all,
         git commit --message="Fix untracked files"
         git push
         ```
-        
+
         - Sources:
             - https://stackoverflow.com/questions/11451535/gitignore-is-not-working/11451731#11451731
             - https://stackoverflow.com/questions/2965060/gitignore-doesnt-ignore-files
@@ -360,13 +360,13 @@
             - `man git-rm` -> search for `--cached`
 
     - Remove file or directory from entire history of a git repository
-    
+
             git filter-branch --index-filter "git rm -rf --cached --ignore-unmatch path_to_file" HEAD
-            
+
         for example
-        
+
             git filter-branch --index-filter 'git rm -rf --cached --ignore-unmatch Ernaehrung/' HEAD
-    
+
         - Sources
             - https://duckduckgo.com/?q=remove+file+from+entire+github+history&ia=web
             - https://stackoverflow.com/questions/43762338/how-to-remove-file-from-git-history
@@ -375,17 +375,17 @@
             - https://duckduckgo.com/?q=remove+git+file+from+all_history+github+gist+pourmand1376&ia=web
             - https://gist.github.com/pourmand1376/aaa519389734215cd8518c94d6b39ba3
     - Merge two or more commits into one
-        
+
         1. Select the commit in the history ´, e. g. the forelast
-        
+
                 git rebase -i HEAD~2
-                
+
         1. `pick` the first one, `squash` other ones; `:wq`
         1. Edit commit message
         1. Push changes to the remote
-        
+
                 git push --force
-        
+
         - Sources
             - https://duckduckgo.com/?t=ffab&q=git+merge+two+local+commits&ia=web&iax=qa
             - https://stackoverflow.com/questions/12522565/how-can-i-combine-two-commits-into-one-commit#12523432
@@ -433,18 +433,18 @@
             - https://liquorix.net/
             - https://github.com/Frogging-Family/linux-tkg
             - [MuQSS CPU Scheduler Explained](https://lkml.org/lkml/2016/10/29/4)
-            
+
     - Benchmark the performance of different kernels to quantify the performance differences
-    - `virtualbox-host-dkms` broken in 5.10.17 for kernel `lqx` which renders the VirtualBox virtual machines unable to run. 
+    - `virtualbox-host-dkms` broken in 5.10.17 for kernel `lqx` which renders the VirtualBox virtual machines unable to run.
         - Solution: https://forum.endeavouros.com/t/anyone-else-getting-errors-with-virtualbox-host-dkms-and-linux-lqx/11835/9
         - Solution - origin: https://bbs.archlinux.org/viewtopic.php?id=263393
         - Ticket: https://www.virtualbox.org/ticket/20178
         - watch for errors during kernel upgrades when compiling dkms modules - maybe in the next updates they will fix this. For now I'll stick with the `pf` kernel.
-    
+
 * unixbench interbench - benchmarking kernel and system performance
 
     See documentation in https://github.com/kyberdrb/benchmarking-linux-kernels
-    
+
     - https://wiki.archlinux.org/index.php/Benchmarking
     - https://github.com/kdlucas/byte-unixbench
     - https://github.com/ckolivas/interbench
@@ -482,25 +482,25 @@
             set ignorecase
             set number
             let g:NERDTreeNodeDelimiter = "\u00a0"
-    
+
     - Running gvim with NERDtree with all tabs from previous session
         Run this command from **Application Finder** `Alt + F2` or from terminal
-    
+
             gvim -S ~/git/persoenliche_Angelegenheiten/vim_Sitzungen/Sitzung.vim -c "tabdo NERDTree" -c "tabdo wincmd l" -c "tabnext"
-            
+
         Description: Open a session in vim, for each tab add NERD Tree, for each tab move the focus from NERD Tree to editing area, and move the focus to the next (first) tab.
-            
+
     - Closing the session
         Copy the below line, press `:` [colon] to get in to command line and paste it there with keyboard shortcut `Ctrl + R` and then `*`
-    
+
             tabdo NERDTreeClose | tabnext | mks! ~/git/freiwillige_aufgaben/vim_Sitzungen/Sitzung.vim
-            
+
         or
-        
+
             tabdo wincmd h | tabnext
             tabdo q | tabnext
             mksession! /home/laptop/git/persoenliche_Angelegenheiten/vim_Sitzungen/Sitzung.vim
-            
+
         Description: For each tab close NERD Tree, move the focus to the next (first) tab, and save current session to a file overriding the previous one.
 
         - Sources
@@ -515,7 +515,7 @@
     - Navigating between panes/windows
         - `Ctrl + W` and then `h` (left) `j` (down) `k` (up) `l` (right)
         - Source: https://superuser.com/questions/280500/how-does-one-switch-between-windows-on-vim/280501#280501
-        
+
 * vscodium-bin-marketplace - debranded Visual Studio Code with Visual Studio Code's marketplace feature
     - Extensions:
         - AsciiDoc - `.adoc` files preview
@@ -532,18 +532,18 @@
             watch --interval 1 pactl list sinks short
 
         Then pause the audio and close the player/click on some tab without audio. Continue observing the terminal output
-    
+
         Disable the suspending and the `IDLE` state with command:
 
             sudo sed --in-place 's/^load-module module-suspend-on-idle/#load-module module-suspend-on-idle/g' "/etc/pulse/default.pa"
-            
+
         and then `reboot`. After reboot, verify if the audio starts playing immediately without delay with the command
-        
+
             watch --interval 1 pactl list sinks short
-            
+
         Watch the output of the command in the terminal continuously. Start some audio playback just as before reboot. The `State` will now oscilate between `IDLE` and `RUNNING` and not go to `SUSPENDED` state anymore, making the audio playback instantaneous.
         - Sources
-          - https://forums.linuxmint.com/viewtopic.php?p=1979366&sid=d7c83ac00beb15afae8889c2cc01bfd0#p1979366 
+          - https://forums.linuxmint.com/viewtopic.php?p=1979366&sid=d7c83ac00beb15afae8889c2cc01bfd0#p1979366
           - https://duckduckgo.com/?q=linux+hdmi+audio+delay+start&ia=web
           - https://duckduckgo.com/?q=radeon+hdmi+aduio+starts+delayed&ia=web
           - https://duckduckgo.com/?q=pulseaudio+do+not+suspend&ia=web
@@ -560,145 +560,145 @@
 * mpv libva youtube-dl - my favorite multimedia player for playing online streaming content e. g. YouTube videos with HW acceleration
     - `libva` package helps to enable accelerated video playback through GPU by for VAAPI enabled drivers and GPU.
     - `youtube-dl` enables playing online videos and streams.
-    
+
     - [MPV player - mouse and keyboard shortcuts](https://defkey.com/mpv-media-player-shortcuts)
-    
+
     **Configuration**
-    
-    MPV configuration file is designed specificly for at most 1080p videos encoded in H264/AVC codec with best audio available.  
+
+    MPV configuration file is designed specificly for at most 1080p videos encoded in H264/AVC codec with best audio available.
     Create the MPV configuration file...
-    
+
         vim ~/.config/mpv/mpv.conf
-        
+
     ... with this content [1](https://github.com/mpv-player/mpv/issues/2619#issuecomment-166200727), [2](https://hydrogenaud.io/index.php?topic=119836.msg989403#msg989403)
-    
+
         ytdl-format=bestvideo[vcodec*=avc][height<=1080]+bestaudio/best
-        
+
     For optimal performance and experience I recommend to also change the `1080` video height set according your display resolution, e. g. for 1440p / 2K displays it would be `[height<=1080]`
-        
+
     [OPTIONAL] For playing 1440p 60fps on Intel HD 520 or equivalent GPU, you may use [this config](https://github.com/mpv-player/mpv/issues/2885#issuecomment-447684543) to avoid stuttering (tested on `libva-intel-driver-hybrid` with `intel-hybrid-codec-driver`, `LIBVA_DRIVER_NAME=i965`, early modesetting Intel driver `i915` with Guc/HuC enabled):
-    
+
         ytdl-format=bestvideo[height<=1440]+bestaudio/best
         video-sync=display-resample
         interpolation=yes
         tscale=mitchell
 
     ... and then tested with a 60 fps video with this command:
-    
+
         streamlink --verbose-player --player-no-close --player="mpv --hwdec=auto" https://www.youtube.com/watch?v=LXb3EKWsInQ 1440p60
 
     because playing the video with only...
-    
+
         mpv --hwdec=auto https://www.youtube.com/watch?v=LXb3EKWsInQ
-    
+
     ... didn't enable HW acceleration through VAAPI and used SW decoding which was stuttery. [Vulkan GPU API](https://mpv.io/manual/master/#options-gpu-api) didn't solve this issue either.
-    
+
     Playing in `VLC` through `streamlink` was much smoother without additional configuration. VLC immediately used HW accelerated LIBVA driver. But unfortunately, VLC doesn't support seeking Youtube videos - as soon as I try to seek in Youtube videos in VLC, the player stops playing the video and it doesn't resume the playback even after pressing the 'Play' button.
-    
+
         streamlink --verbose-player --player-no-close --player="vlc" https://www.youtube.com/watch?v=LXb3EKWsInQ 1440p60
 
     Sources:
-        
+
     [Is it possible to set only a specific codec to play YouTube videos, for example, only H264?](https://hydrogenaud.io/index.php?topic=119836.msg989403#msg989403)
-    
+
     [ytdl options](https://github.com/mpv-player/mpv/issues/2619)
-    
+
     [mpv.conf - Argon-](https://github.com/Argon-/mpv-config/blob/master/mpv.conf)
-    
+
     [mpv.conf - Ahjolinna](https://github.com/ahjolinna/mpv-conf/blob/master/mpv/etc/mpv.conf)
-    
+
     ---
-    
+
     **Playing media**
-    
+
     I experimented with many options, e. g. rendering Vulkan, OpenGL, X11, different kinds of hardware acceleration and video output, fixing error messages in verbose output, but most benefitial of them was the option `--hwdec=auto`. With this option the media playback used the least CPU, was most stable and smooth, no tearing or stuttering. Therefore I run the MPV player with the command:
-    
+
         mpv --hwdec=auto <multimedia_file_or_stream_URL>
 
 * vlc - my preferred multimedia player for local files
     - Youtube network streaming fix
-        
+
             # Go to the VLC directory
             cd /usr/lib/vlc/lua/playlist/
-            
+
             # Backup the original script for youtube streaming
             sudo mv youtube.luac youtube.luac.bak
-            
+
             # Download the fixed Youtube streaming plugin from the master branch ...
             sudo curl https://raw.githubusercontent.com/videolan/vlc/master/share/lua/playlist/youtube.lua --output youtube.lua
             # ... or directly from the commit I tested it from
             sudo curl https://raw.githubusercontent.com/videolan/vlc/8bbb13419d4bc5505cb75416d5b8049142a27358/share/lua/playlist/youtube.lua --output youtube.lua
-            
+
         Sources:
         - [YouTube VLC Stream LUA Fix](https://www.youtube.com/watch?v=jg4Og5ra_F0)
         - [tested fixed script for youtube streaming](https://raw.githubusercontent.com/videolan/vlc/8bbb13419d4bc5505cb75416d5b8049142a27358/share/lua/playlist/youtube.lua)
         - [latest script for youtube streaming - master branch](https://raw.githubusercontent.com/videolan/vlc/master/share/lua/playlist/youtube.lua)
-        
+
     - Disable cover art for audio files in normal mode
-    
-        Disable cover art in the playback panel by editing the VLC configuration file.  
+
+        Disable cover art in the playback panel by editing the VLC configuration file.
         The VLC configuration file is located in:
         - Linux: `~/.config/vlc/vlcrc`
         - Windows: `%HOMEPATH\AppData\Roaming\vlc\vlcrc`
-        
+
                 $ sed -i 's/.*qt-bgcone=.*/qt-bgcone=0/' ~/.config/vlc/vlcrc
                 $ #Source: https://forum.videolan.org/viewtopic.php?t=129402#p433995
-    
+
     - Disable cover art for any file in playlist mode
-    
+
         1. Show playlist by pressing _Ctrl + L_ or in _View - Playlist_
         1. Find the cover art panel. In my case it was in the bottom left corner.
         1. Drag the upper border of the cover art panel all the way down. This will hide the panel with the cover art, and leave the left menu panel visible.
-    
+
     - Disable automatic window resizing and scaling
-    
+
         - Disable variable window size in the VLC configuration file
-    
+
                 $ sed -i 's/.*qt-video-autoresize=.*/qt-video-autoresize=0/' ~/.config/vlc/vlcrc
-            
+
             This will also uncheck the checkbox for _Tools - Preferences - Interface - Resize interface to video size_
-            
+
             When it won't work, continue with the other options. Otherwise continue with next steps.
-            
+
             Sources:
             - https://superuser.com/questions/368743/how-to-prevent-vlc-from-automatically-resizing-its-window-according-to-viewed-co/412290#412290
             - https://superuser.com/questions/368743/how-to-prevent-vlc-from-automatically-resizing-its-window-according-to-viewed-co/368759#368759
-            
+
         - Tools - Preferences - Show settings (in bottom left corner): All - Video
-        
+
             In _Window properties_ section uncheck _Video Auto Scaling_.
-            
+
             Source: https://superuser.com/questions/368743/how-to-prevent-vlc-from-automatically-resizing-its-window-according-to-viewed-co/687776#687776
-            
+
     - Specify default video resolution - useful for streams with multiple resolutions available
-    
+
         1. Tools - Preferences - Show settings (in bottom left corner): All - Input / Codecs
-        1. In _Track settings_ section find option _Preferred video resolution_. 
+        1. In _Track settings_ section find option _Preferred video resolution_.
         1. Click on the drop-down menu
         1. Choose the preferred video resolution. I selected option _Full HD (1080p)_ because it matches with the resolution of my display.
-        
+
         Sources:
         - https://www.quora.com/How-do-I-select-the-video-quality-in-VLC-while-playing-a-YouTube-stream
-        
+
 * streamlink - wrapper around other multimedia players - utility that forwards online streams of given quality to the chosen multimedia player
     - a way how to play online streams outsite the web browser
     - The main purpose of [Streamlink](https://streamlink.github.io/index.html#) is to avoid resource-heavy and unoptimized websites, while still allowing the user to enjoy various streamed content.
 
     Usage example:
-    
+
     1. List formats for video (example)
-        
+
             streamlink https://www.youtube.com/watch?v=LXb3EKWsInQ
-                
+
     1. Play video with an player in selected quality
-            
+
             streamlink --verbose-player --player-no-close --player="mpv --hwdec=auto" https://www.youtube.com/watch?v=LXb3EKWsInQ 1080p60
-            
+
     Sometimes the stream crashes during playback pass add to the Streamlink's arguments `--player-no-close`. This will prevent premature closing of the player wiht error
-    
+
             [mkv] EOF reached
             [cplayer] EOF code: 5
-            
+
 * minitube - my favorite player for playing videos in 1440p/2K/4K with lower GPU power consumption than hardware accelerated MPV `mpv --hwdec=auto`, but only at those higher video resolutions, i. e. 1440p+, and with hardware acceleration just like VNC.
     - it combines the advantages of MPV and VNC for smooth Youtube playback: seeking function from MPV and hardware acceleration from VNC
 
@@ -752,16 +752,16 @@
 
                     The action is saved automatically. The Auto Clicker will start the script immediately after loading any `kompaszliav.sk` page.
             - Session Buddy
-                - back up sessions to prevent unpleasant situations when after opening Chromium the browser is empty.  
+                - back up sessions to prevent unpleasant situations when after opening Chromium the browser is empty.
                     Session Buddy backs up and restores sessions without relying on the default mechanism in Chromium
-    
+
     - Hide password prompt each time when opening Chromium
         - already automatized with [`chromium_disable_gnome-keyring_password_prompt.sh`](https://github.com/kyberdrb/update_arch/blob/master/utils/chromium_disable_gnome-keyring_password_prompt.sh)
         - Add '--password-store=basic' to remove prompt for 'gnome-keyring' password. 'gnome-keyring' has been installed to fix the error in `journalctl` from ´xfce4-screensaver`
-        
+
                 xfce4-screensaver-dialog[1225]: PAM unable to dlopen(/usr/lib/security/pam_gnome_keyring.so): /usr/lib/security/pam_gnome_keyring.so: cannot open sh>
                 xfce4-screensaver-dialog[1225]: PAM adding faulty module: /usr/lib/security/pam_gnome_keyring.so
-                
+
         - To solve this, you can provide any, ideally strong, password for the gnome-keyring. To prevent the gnome-keyring password prompt at the Chromium run, edit the shortcut:
 
                 sudo vim /usr/share/applications/chromium.desktop
@@ -774,68 +774,68 @@
                 Exec=/usr/bin/chromium --password-store=basic
                 ...
                 Exec=/usr/bin/chromium --incognito --password-store=basic
-      
+
     Then open Chromium's Preferences and disable 'Offer to save passwords' because now they're stored in the browser in plain text. From now on, you will not be prompted by the gnome-keyring for a password, nor you'll be notified to save password in the browser.
 
       - https://wiki.archlinux.org/index.php/GNOME/Keyring#Resetting_the_keyring
       - https://askubuntu.com/questions/867/how-can-i-stop-being-prompted-to-unlock-the-default-keyring-on-boot
       - https://askubuntu.com/questions/495957/how-to-disable-the-unlock-your-keyring-popup/1034053#1034053
       - https://duckduckgo.com/?q=chromium+--password-store%3Dbasic+%2B+settings+--+uncheck+Offer+to+save+passwords&ia=web
-        
+
     - **Enabling Hardware Acceleration for Chromium** - offloading strain from CPU to GPU for video decoding. [How can I make sure what capabilities my Intel GPU has?](https://bbs.archlinux.org/viewtopic.php?id=257178), https://www.reddit.com/r/linux/comments/k5s4n5/google_chrome_v88_got_hardwareaccelerated/
         - The way that uses least CPU of the various ways I tried out is to forward video playback to external multimedia player. In a dedicated multimedia player the CPU usage is lower and GPU usage higher, which is what I wanted. Videos play smooth, without stutter or tearing with GPU hardware acceleration.
-        
+
             I tested VLC and MPV player. Both support GPU hardware acceleration for videos thourh VAAPI or VDPAU, according to what's enabled or preferred by the player.
-            
+
             I tested **VLC player** through 'Send to VLC' extension on RTVS streams and YouTube streams, which played videos smoothly, but didn't offer the 'seeking' functionality - jumping back and forth in the video, and also VLC didn't support subtitles. RTVS streams could be played, but only from the  from the browser right from the extension, which I find very convenient. VLC doesn't support format and video quality choosing, it only plays the video or stream. Allegedly, the `fmt` parameter for YouTube URLs should enable the choosing of video quality, but it didn't work for me anyway. [1](https://www.reddit.com/r/VLC/comments/3mk8p5/vlc_seems_to_stream_youtube_only_in_720p_how_can/), [2](https://www.reddit.com/r/youtube/comments/3ijei1/how_to_watch_youtube_above_720p_dash_streams_in/cvi4bnx/?utm_source=reddit&utm_medium=web2x&context=3), [3](https://www.reddit.com/r/VLC/comments/aorvvm/how_can_i_play_this_youtube_video_in_1080p_in_vlc/ek7izf2/), [Possible fix/patch for video quality selection for VLC](https://trac.videolan.org/vlc/ticket/10237#no1)
-            
+
             Then I tested **MPV player** with extension 'Watch with MPV', which played videos smoothly, and offers 'seeking' functionality - jumping back and forth in the video, and supports subtitles. MPV supports format and video quality choosing, but only statically through configuration file `~/.config/mpv.conf`
-            
+
             **Streamlink + MPV/VLC**: combination that combines GPU hardware acceleration of MPV/VLC with the ability to choose the video or stream quality. It provides an alternative way of playing web streams outside of (usually) poorly and less efficient multimedia player in browsers. [Streamlink - Arch Wiki](https://wiki.archlinux.org/index.php/Streamlink), [Streamlink - Homepage](https://streamlink.github.io/index.html) [List of multimedia plugins and utilities](https://github.com/ahjolinna/mpv-conf), [streamlink usage](https://github.com/ahjolinna/mpv-conf#basic-features), [another streamlink usage](https://stackoverflow.com/questions/13439442/command-line-youtube-in-vlc-player-quality-control/55110722#55110722), [Streamlink - Usage examples](https://streamlink.github.io/cli.html#tutorial)
-            
+
             For `streamlink` usage example, see the `streamlink` package description in this file.
-                    
+
             ---
-            
+
             To set up all of this, frst install extensions [Send to VLC (VideoLAN) media player](https://chrome.google.com/webstore/detail/send-to-vlc-videolan-medi/hfckgfbhdacemicpjljhfbjmkiggeche) and [Watch with MPV](https://chrome.google.com/webstore/detail/watch-with-mpv/gbgfakmgjoejbcffelendicfedkegllf) to Chromium browser.
-            
-            The extensions _Send to VLC (VideoLAN) media player_ and _Watch with MPV_ forward the requests from browser to the media player on the system through their native clients installed in the system. `watch-with-mpv` is a native client 
-            
+
+            The extensions _Send to VLC (VideoLAN) media player_ and _Watch with MPV_ forward the requests from browser to the media player on the system through their native clients installed in the system. `watch-with-mpv` is a native client
+
             **Forwarding videos from browser to MPV player**
-            
+
             Install the `mpv` package with all dependencies, if any.
-            
+
             ~~Install the native client for _Watch with MPV_ extension: `pikaur -Syy watch-with-mpv`~~ Not necessary but if the installation from repository doesn't work, installing and uninstalling it right away, or just installing it and leaving the package there this *before* installing from ther repository may make it work.
-                
+
             Download the [forked repository](https://github.com/kyberdrb/watch-with-mpv) which has MPV with hardware acceleration enabled and install it on top of the already installed native client. [Follow these steps](https://github.com/kyberdrb/watch-with-mpv/blob/master/README.md#installing-from-source) to compile the native client by yourself on Linux.
-            
+
             ~~This replaces the files installed by the package `watch-with-mpv` the native client for the extension.~~
-            
+
             Make sure that you configured the `mpv` player according to your system abilities. For more information about configuration, see the description of the `mpv` package in this file.
-            
+
             The video forwarding to the MPV player via native client is immediately functional and usable without reloading the site, restarting Chromium or restarting the computer.
-            
+
             Test it (example). Go to e.g. [this page with a 1080p 60fps video](https://www.youtube.com/watch?v=LXb3EKWsInQ) pause the video and click the MPV icon in the top right corner. If the icon is not visible, pin it from the extension menu. The video will start to play in the MPV player. As a consequence, this solution provides less CPU and more GPU utilization, smooth and tear-free video playback. Overall, it's more efficient. Maybo not battery wise, but certainly utilization wise.
-            
+
             To see how much the CPU is used use the `htop` utility. I've seen decreased CPU utilization from about 50 up to 80%. That way I know, that the hardware acceleration through GPU for videos works.
-            
+
             ---
-            
+
             **Forwarding videos on RTVS.sk from browser to a multimedia player (or Forwarding _anything copied_ from browser to _anything else_)** - best quality with hardware acceleration, one-mark or multiple-clicks-on-the-same-spot method , universal, (little annoying during testign)
-            
+
             [Use Clipman to launch a script to launch a multimedia player with hardware acceleration](https://www.maketecheasier.com/open-youtube-video-vlc-clipman-linux/)
-            
+
             Install Clipman
-            
-                sudo pacman -Syy xfce4-clipman-plugin 
-            
+
+                sudo pacman -Syy xfce4-clipman-plugin
+
             Create Bash script...
-            
+
                 cd
                 vim external_browser_player.sh
-                
+
             ... that will work with JSON data similar to this example...
-            
+
                 {
                    "request" : "Vmv8w47d",
                    "clip" : {
@@ -858,59 +858,59 @@
                       "length" : "00:27:08"
                    }
                 }
-                
+
             ...so according to this input data, I came up with [this script](https://github.com/kyberdrb/Linux_utils_and_gists/blob/master/external_browser_player.sh).
-            
+
             The script will extract only the video ID from the URL from the browser and open in a multimedia player with enabled hardware acceleration.
-            
+
             Setup Clipman: click on the status icon in the panel and select `Clipman settings...`. Go to `Actions` tab, turn on `Enable automatic actions`, select `Skip actions by holding Control`, i. e. actions will pop up when we **select** (not copy) text that matches the pattern, and click the `+` sign to create a new action. This action will handle the RTVS URLs.
-            
+
                 Action
                 Name: RTVS
                 Pattern: .*rtvs.*
-                
+
                 Commands
                 Name: RTVS Player
                 Command: /home/laptop/git/kyberdrb/Linux_utils_and_gists/external_browser_player.sh \0
-                
+
             Click OK to save the action. Close the settings window.
-            
+
             Test the functionality on any [RTVS video](https://www.rtvs.sk/televizia/archiv/16350/251046). Mark the URL in the address bar or repeatedly click on the URL until it's marked entirely. The pop up menu should appear. Choose the `RTVS Player`. The multimedia player opens with the video.
-            
+
             Clipman start automatically at startup by itself, so we have this comfort right after the installation.
-            
+
             ---
-            
+
             **Forwarding videos from browser to VLC player** - one-click option
-            
+
             Install the  `vlc` package and all its dependencies, if any.
-            
+
             Install the native client for _Send to VLC (VideoLAN) media player_ extension
-            
+
             Download the native client from:
-            
+
                 https://github.com/belaviyo/native-client/releases
-                
+
             example for Linux-based operating systems:
-            
+
                 mkdir ~/Downloads
                 cd Downloads
                 curl -L https://github.com/belaviyo/native-client/releases/download/0.4.6/linux.zip -oSend_to_VLC-native_client.zip
-                
+
             You can also clone the git repo with `mkdir -p ~/git && cd ~/git && git clone https://github.com/belaviyo/native-client.git && cd native-client`, but it's approximately two times bigger, because it's not compressed and it's so big because it contains `node` binaries, which the installation script relies on.
-                
+
             Install the native client
-            
+
                 unzip Send_to_VLC-native_client.zip -d "Send_to_VLC-native_client"
                 cd Send_to_VLC-native_client
                 ./install.sh
-                
+
             The native client is ready for use immediately after installation.
-            
+
             Test the plugin by navigating to any video on [RTVS](https://www.rtvs.sk/televizia/archiv/16350/251893) or [YouTube](https://www.youtube.com/watch?v=LXb3EKWsInQ), mute the video (for convenience later), start the video, pause the video. This initializes the plugin when it's forwarding video from the RTVS site - numbers may to appear at the extension's icon in the top right corner. If the icon is not diplayed there, pin it from the extensions menu. Click on the extension's icon. The video begins to play in VLC player.
-                
+
             The limitation of this method is that the VLC can only play online youtube streams at 720p resolution. Here is a [description of the bug](https://trac.videolan.org/vlc/ticket/10237#no1) and a [possible patch](https://trac.videolan.org/vlc/attachment/ticket/10237/dash.patch) for that.
-            
+
         - Check if the changes make effect at:
             - chrome://gpu/ - checking the status of `Graphics Feature Status`
             - chrome://media-internals/ - checking, whether the videos are accelerated through GPU `MojoVideoDecoder`
@@ -919,7 +919,7 @@
             - Example (excerpts)
                 - [`chromium-flags.conf` for AMDGPU](https://github.com/kyberdrb/Linux_utils_and_gists/blob/master/Chromium_modified_flags-HW_GPU_acceleration-performance/chromium-flags.conf.amd_gpu)
                 - [`chromium-flags.conf` for Intel GPU](https://github.com/kyberdrb/Linux_utils_and_gists/blob/master/Chromium_modified_flags-HW_GPU_acceleration-performance/chromium-flags.conf.intel_gpu)
-                
+
         - install plugin [`enhanced-h264ify`](https://chrome.google.com/webstore/detail/enhanced-h264ify/omkfmpieigblcllmkgbflkikinpkodlk) - HW acceleration for Youtube videos - better smoothness of videos + video tearing fix [Hardware Acceleration In Chromium](https://www.linuxuprising.com/2018/08/how-to-enable-hardware-accelerated.html)
         - [`chrome://flags/`](chrome://flags/)
             - Override software rendering list: #ignore-gpu-blocklist
@@ -934,12 +934,12 @@
             - I only mentioned the most essential flags. Try to enable more flags by [Modified chromium flags for desktop and mobile](https://github.com/kyberdrb/Linux_utils_and_gists/tree/master/Chromium_modified_flags-HW_GPU_acceleration-performance) and see how stable and effective they are.
             - I didn't enable the `Vulkan` decoding because it resulted in having white video screen on Youtube with videos using `h264` codecs which are hardware accelerated by GPU. This didn't happen when the video was decoded with VP8 or VP9 formats which are unfortunately decoded by CPU.
             - Sources: https://www.lifewire.com/hardware-acceleration-in-chrome-4125122
-            
+
         - check HW acceleration for videos at `chrome://media-internals/`. Look for `MojoVideoDecoder` which indicates that the video is decoded using hardware acceleration through GPU
             - [chromium: hardware video acceleration with VA-API](https://bbs.archlinux.org/viewtopic.php?id=244031)
 
         - Custom configuration files for Chrome/Chromium: https://github.com/kyberdrb/Linux_utils_and_gists/tree/master/Chromium_modified_flags-HW_GPU_acceleration-performance
-        
+
 * firefox
     - in the upper right corner click on a hamburger icon with a label `Open menu`
     - click on `Preferences`
@@ -951,37 +951,37 @@
     - Enable hardware acceleration
         - There are multiple methods how to enable HW video acceleration in Firefox. I'm listing some of them, for reference.
         - In any case, install the extension `h264ify` or [`enhanced-h264ify` (I'm using this one)](https://addons.mozilla.org/sk/firefox/addon/enhanced-h264ify/) extension to enable only, prefferably, h264 codecs because they're usually hardware accelerated by most GPUs and their drivers.
-        
+
         - Open videos in a separate player through Clipman
             Install Clipman
-            
+
                 sudo pacman -Syy xfce4-clipman-plugin
-            
+
             Setup Clipman: click on the status icon in the panel and select `Clipman settings...`. Go to `Actions` tab, turn on `Enable automatic actions`, select `Skip actions by holding Control`, i. e. actions will pop up when we **select** (not copy) text that matches the pattern, and click the `+` sign to create a new action. This action will handle the RTVS URLs.
-            
+
                 Action
                 Name: Youtube
                 Pattern: .*youtu\.?be.*
-                
+
                 Commands
                 Name: Open in mpv
                 Command: mpv --hwdec=auto \0
-                
+
             Click OK to save the action. Close the settings window.
-            
+
             -Test the functionality on any Youtube video, e.g. [this one](https://www.youtube.com/watch?v=LXb3EKWsInQ).). Mark the URL in the address bar or repeatedly click on the URL until it's marked entirely. The pop up menu should appear. Choose the option `Open in mpv` from the context menu. The mpv player opens plays the video more efficiently.
-            
+
             - Clipman start automatically at startup by itself, so we have this comfort right after the installation.
-        
+
         - Open videos in a separate player through an extension (easiest to set up)
             1. Install [Send to MPV player](https://addons.mozilla.org/en-US/firefox/addon/send-to-mpv-player/)
             1. Right click on the icon in the right top corner -- Manager Extension
             1. Click on item `Send to MPV player`
             1. Go to `Preferences` tab
             1. In the `Custom command:` field replace existing command with this one
-            
+
                     mpv --hwdec=auto
-                
+
                 The `--hwdec=auto` enables HW acceleration
             1. Click on `Save` button at the bottom of the section
             1. Test it on a video, e.g. [this one](https://www.youtube.com/watch?v=LXb3EKWsInQ).
@@ -1015,7 +1015,7 @@
                 which enables Firefox to use hardware acceleration under X11/Xorg server. Wayland uses different one: `MOZ_ENABLE_WAYLAND`.
 
             - reboot to reload variables in `/etc/environment`
-            - run firefox again from terminal with 
+            - run firefox again from terminal with
 
             - verify that the hardware acceleration is enabled:
                 - `about:support`
@@ -1036,9 +1036,9 @@
 * axel - accelerated file downloader; non-interactive and terminal-based
     - follows redirects by default
     - Example usage:
-    
+
             axel --verbose --num-connections=20 "URL" --output="/path/to/destination/file"
-            
+
             axel --verbose https://sourceforge.net/projects/clonezilla/files/clonezilla_live_alternative/20220103-impish/clonezilla-live-20220103-impish-amd64.zip/download --output="/tmp/clonezilla_latest.zip"
 
     - Sources:
@@ -1062,12 +1062,12 @@
         - f.lux - alternative to `redshift`
         - eyeblink, EyeLeo - alternatives for `safeeyes`
     - Create environment for the config file
-    
+
             mkdir -p ~/.config/redshift/
             cd ~/.config/redshift/
             vim redshift.conf
-    
-    - Sample [`redshift.conf`](https://github.com/kyberdrb/installed_packages_linux/blob/master/configs/redshift.conf)        
+
+    - Sample [`redshift.conf`](https://github.com/kyberdrb/installed_packages_linux/blob/master/configs/redshift.conf)
     - Add to autostart XFCE4 if you want in `Applications -> Settings -> Session and Startup -> Application autostart`. Set command as `redshift &`. I assume that the configuration file is present and correct.
 
     - Sources
@@ -1084,31 +1084,31 @@
 
 * virtualbox virtualbox-ext-oracle virtualbox-guest-iso
     - I rather use QEMU/KVM/libvirt/virt-manager/Cockpit combo instad of VirtualBox, because VirtualBox modules taint the kernel which may have unpredictable consequences. [[1]](https://duckduckgo.com/?q=Setting+dangerous+option+enable_guc+-+tainting+kernel&ia=web), [[2]](https://unix.stackexchange.com/questions/118116/what-is-a-tainted-kernel-in-linux#118117), [[3]](https://bugs.freedesktop.org/show_bug.cgi?id=111918) Therefore I feel safer and calmer when I use the native kernel hypervisor instead of additional one.
-    - choose the option 
-        - `virtualbox-host-modules-arch`, if you have the default arch kernel, ...  
+    - choose the option
+        - `virtualbox-host-modules-arch`, if you have the default arch kernel, ...
             ... but if you have any custom kernel installed, like `linux-pf` use the package `virtualbox-host-dkms` see https://wiki.archlinux.org/index.php/VirtualBox#Install_the_core_packages
         - if you install, or forget to install, the compatible package matching the kernel type, the virtualbox virtual machine will fail to start with an error message. [https://bbs.archlinux.org/viewtopic.php?id=258955](The VirtualBox Linux kernel driver is either not loaded or not set up correctly.)
     - after installation add the user to the VirtualBox group. This allows for USB mounting for the virtual machine
-    
+
             sudo gpasswd -a $USER vboxusers
-            
-        Source: https://wiki.archlinux.org/index.php/VirtualBox#Accessing_host_USB_devices_in_guest    
-        
+
+        Source: https://wiki.archlinux.org/index.php/VirtualBox#Accessing_host_USB_devices_in_guest
+
     - reboot
-            
+
             reboot
-          
+
 * intel-gpu-tools - provides `intel-gpu-top` Intel GPU utilization monitor - run as `sudo intel-gpu-top`
     - only useful if you have an Intel GPU
 
 * noto-fonts-emoji
     - test emoji rendering in a text editor browser on any page that contains emojis which render as rectangle or in black and white e.g. on some emoji test page, e.g. https://www.fileformat.info/info/emoji/browsertest.htm
     - according to '/etc/fonts/fonts.conf' the contents of the font directory '/usr/share/fonts/' is scanned automatically, so there is no need to modify any configs in the system
-    
-            (1/3) Arming ConditionNeedsUpdate... 
-            (2/3) Updating fontconfig cache... 
+
+            (1/3) Arming ConditionNeedsUpdate...
+            (2/3) Updating fontconfig cache...
             (3/3) Updating X fontdir indices...
-    
+
     - Sources
         - https://www.fileformat.info/info/emoji/browsertest.htm
         - https://duckduckgo.com/?q=arch+linux+font+emoji+support&ia=web
@@ -1120,19 +1120,19 @@
 * whonix - not an utiity, but an entire operating system for anonymous internet browsing
     - I [downloaded](https://www.whonix.org/wiki/Download) and set up the VirtualBox images of [CLI](https://www.whonix.org/wiki/VirtualBox/CLI) version for the Gateway and [XFCE](https://www.whonix.org/wiki/VirtualBox/XFCE) version for the workstation, imported images into VirtualBox, and deleted the rest, i. e. CLI Workstation and XFCE Gateway
     - inspired by [Qubes OS](https://www.qubes-os.org/intro/) and [Tor vs VPN](https://blokt.com/guides/tor-vs-vpn)
-    
+
 * gnaural gnaural-presets - binaural beats generator; check the research how and in what circumstances binaural therapy works
     - To add more presets:
         1. Download all presets from https://sourceforge.net/projects/gnaural/files/Presets/Mindstates/android/
         1. Move downloaded presets to gnaural directory for presets:
-        
+
                 sudo mv ~/Downloads/*.gnaural /usr/share/gnaural/presets/
-                
+
         1. Open `gnaural`
         1. To open a preset, go to File - Open From Preset Library
         1. Select desired preset.
         1. Listen to it by pressing `Play` (as if it wouldn't be obvious :P )
-        
+
 * **p7zip**/peazip-qt-bin - 7z archive creation and extraction utility / 7z GUI wrapper
     - use `peazip` for maximum compression rate: https://peazip.github.io/maximum-compression-benchmark.html
 * evince/**okular ebook-tools**
@@ -1157,40 +1157,40 @@
             convert "image-input.png" -crop 2330x140+20+164 "image-cropped.png"
 
         - simplified automation script: [`crop_image_by_coordinates.sh`](https://github.com/kyberdrb/Linux_utils_and_gists/blob/master/crop_image_by_coordinates.sh)
-        
+
     - Rotate image by 90 degrees clockwise
-    
+
             convert "image-input.png" -rotate 90 "image-rotated.png"
-    
+
     - Show DPI of image
-    
+
             identify -format '%x\n' "/path/to/image"
             identify -format '%y\n' "/path/to/image"
             identify -format '%x,%y\n' "/path/to/image"
-            
+
     - Sources:
         - `man convert`
         - `man identify`
         - https://www.imagemagick.org/script/identify.php
         - https://unix.stackexchange.com/questions/406454/how-to-get-the-dpi-of-an-image-file-png#406632
-            
-* ocrmypdf tesseract-data-eng tesseract-data-slk tesseract-data-dan tesseract-data-ces tesseract-data-deu - utility to make a PDF document searchable with trained datasets for the `tesseract` utility; 
+
+* ocrmypdf tesseract-data-eng tesseract-data-slk tesseract-data-dan tesseract-data-ces tesseract-data-deu - utility to make a PDF document searchable with trained datasets for the `tesseract` utility;
     - trained datasets for various languages are stored in directory `/usr/share/tessdata/`
         - the text after the last dash is the code of the language which is used by the `--language` option
     - A document is unsearchable, if it's composed of images, or the text cannot be searched, e.g. by `Ctrl + F`, or text cannot by selected
     - The command to make a PDF document searchable
-    
+
             ocrmypdf --verbose --language eng --sidecar -O 0 --png-quality 100 --force-ocr document_in_english-nonsearchable.pdf document_in_english-searchable.pdf
             ocrmypdf --verbose --language eng -O 1 --png-quality 100 document_in_english-nonsearchable.pdf document_in_english-searchable.pdf
-        
+
         or to convert image to searchable PDF
-        
+
             ocrmypdf --verbose --language eng --sidecar --optimize=0 --force-ocr --image-dpi 72 "/path/to/image.png" "/path/to/image-searchable.pdf"
-            
+
         - The `--language` option explicitely specifies the dataset that will be used for OCR (Optical Character Recognition); e.g. for `eng` it will use the  `tesseract-data-eng` dataset, i.e. the dataset for English language.
         - The `-O` option optimizes the final document. With value `1` the utility performs lossless optimizations which affect the size of the final document.
         - `sidecar` outputs the decoded text into a separate `txt` file
-    
+
     - Sources
         - https://unix.stackexchange.com/questions/301318/how-to-ocr-a-pdf-file-and-get-the-text-stored-within-the-pdf/421686#421686
         - https://aur.archlinux.org/packages/ocrmypdf/
@@ -1212,20 +1212,20 @@
         1. convert the file to the compatible format: audio rate 16kHz [-ar], mono (1 audio channel [-ac])
 
                 ffmpeg -i audio.mp3 -ar 16000 -ac 1 audio.wav
-            
+
         - Generate Speech to Text for audio files without timestamps
 
                 pocketsphinx_continuous -infile audio.wav 2> pocketsphinx.log > audio.txt
-            
+
         - Generate Speech to Text for audio files with timestamps (for better orientation in original/source media)
 
                 pocketsphinx_continuous -time yes -infile audio.wav 2> pocketsphinx.log > audio-with_timestamps.txt
-        
+
         The english language model is installed by default. More language models can be found in https://sourceforge.net/projects/cmusphinx/files/Acoustic%20and%20Language%20Models/. Then move the model to `/usr/share/pocketsphinx/model/`
-        
+
     - Source
         - https://askubuntu.com/questions/837408/convert-speech-mp3-audio-files-to-text/1030253#1030253
-    
+
 * libreoffice-still ttf-ms-win11 - office suite
     - `ttf-ms-win11` adds support for fonts in Windows
         - https://wiki.archlinux.org/title/Fonts
@@ -1235,15 +1235,15 @@
 * **gvfs-mtp** gvfs-gphoto2
     - automouning MTP devices, such as smartphones + automounting PTP devices, such as cameras
     - issue the command below to mount all MTP devices
-    
+
             gio mount -li | awk -F= '{if(index($2,"mtp") == 1)system("gio mount "$2)}'
-            
+
         All MTP devices will be mounted in their respective directories in `/run/user/$UID/gvfs/`, e.g. `/run/user/1000/gvfs/`
-        
+
     - reboot
-        
-        Source: https://wiki.archlinux.org/index.php/Media_Transfer_Protocol#gvfs-mtp        
-                
+
+        Source: https://wiki.archlinux.org/index.php/Media_Transfer_Protocol#gvfs-mtp
+
 * wmctrl - modify properties of windows
     - **Making a Webcam Mirror**
         1. Go to `Application Menu -> Settings -> Session and Startup -> Application Autostart [tab]`
@@ -1278,16 +1278,16 @@
           - https://www.cyberciti.biz/faq/how-do-i-find-out-screen-resolution-of-my-linux-desktop/
           - https://www.linuxquestions.org/questions/linux-desktop-74/wmctrl-moving-current-window-up-down-left-right-4175455312/#post4918676
           - https://unix.stackexchange.com/questions/102008/how-do-i-trim-leading-and-trailing-whitespace-from-each-line-of-some-output/102021#102021
-      - **Close window of program or tab in a browser gracefully by name from terminal**  
+      - **Close window of program or tab in a browser gracefully by name from terminal**
           When the program becomes unresponsive to controls - namely the 'X' button - in the window decoration or next to tab name
-      
+
             wmctrl -c "tab title"
-      
+
         - Source: https://stackoverflow.com/questions/20441793/how-to-close-a-chrome-browser-tab-via-terminal#42961199
 
 * sane-airscan ipp-usb - scanner support
     - Enable and start the scanner service
-    
+
         sudo systemctl enable --now ipp-usb.service
     - Scanning commands
             # List scanner devices. You may need to plug and unplug the scanner if not recognized
@@ -1304,7 +1304,7 @@
             # ... where 'dev' is the device name of the scanner given from the output of the command 'scanimage --list-devices'
             # If multiple scanners are available to the computer/system, show the device specific options with
             scanimage --help --device-name device_name
-        
+
       - Sources:
         - https://wiki.archlinux.org/title/SANE
         - https://wiki.archlinux.org/title/SANE#Verification
@@ -1312,21 +1312,21 @@
         - https://archlinux.org/packages/?name=sane-airscan
   - Image post-processing
     - Rotating image clockwise 90 degrees
-    
+
             convert -rotate 90 "original.png" "rotated.png"
-    
+
     - Crop rotated image
-        
+
             # find out dimensions
             identify "image.png"
             geeqie "image.png"
-            
+
             # crop rotated image by template 'WIDTHxHEIGHT+LEFT+TOP'
             #   explanation: cropped_image_width x cropped_image_height + beginning_x_coordinate_in_input_image + beginning_y_coordinate_in_input_image
             convert "original.png" -crop 2565x3094+4573+0 "cropped.png"
-            
+
         or use my simplified version in [`crop_image_by_coordinates.sh`](https://github.com/kyberdrb/Linux_utils_and_gists/blob/master/crop_image_by_coordinates.sh)
-            
+
         - Sources
             - https://duckduckgo.com/?q=crop+imagemagic+terminal+linux&ia=web&iax=qa
             - https://infoheap.com/crop-image-using-imagemagick-convert/
@@ -1376,12 +1376,12 @@
 
         ```
         Description:  Samsung_M2070_Series
-        Location: 
+        Location:
         Driver:       Samsung M2070 Series (grayscale) **ALSO WORKS WITH DRIVER 'Generic PCL Laser Printer (grayscale)'**
         Connection:   usb://Samsung/M2070%20Series?serial=ZF44B8KDCE01V0T&interface=1
         Defaults:     job-sheets=none, none media=iso_a4_210x297mm sides=one-sided
         ```
-    
+
     3. Print a test page to test the printer by going to `Printers` in the top menu banner and clicking on the first drop down menu - by default with `Mainenance` displayed - and selecting `Print Test Page`
     4. Tweak the settings if you wish at `Printers`, select the printer, open the second drop down menu - by default with `Administration` displayed - and select `Set Default Options`. Below I provide an example of my preferences:
         - General
@@ -1466,7 +1466,7 @@
 
         - https://markdown.land/markdown-code-block
         - https://duckduckgo.com/?q=vscode+print&ia=web
-    
+
     - Print server - share a local printer
 
         Server: Raspberry Pi
@@ -1515,7 +1515,7 @@
             DeviceURI ipp://raspberrypi:631/printers/EPSON_M2140_Series
 
         Then test page will then print.
-        
+
         - http://localhost:631/admin
         - https://duckduckgo.com/?q=share+printer+cups&ia=web
         - https://wiki.archlinux.org/title/CUPS/Printer_sharing#DNS-SD_advertisement
@@ -1557,13 +1557,13 @@
         - https://man.archlinux.org/man/usbipd.8
             - reference for more readable keyword options
         - https://archlinux.org/packages/community/x86_64/usbip/
-    
+
     - Limitations
         - the device needs to be connected to the same USB port on the server all the time
             - when using a different port, this solution needs to be modified entirely
         - when physically disconnecting the device from the USB/IP server, the server/systemd service needs to be restarted
         - only one user at a time can use an already exported/bound and connected/attached device.
-        
+
     1. **Server** - Installation
         - **Linux**
             - **Arch Linux**
@@ -1573,16 +1573,16 @@
             - **Ubuntu/Raspberry Pi OS**
 
                     sudo aptitude install usbip
-                
+
         - **Windows**
-        
+
                 TODO - not necessary yet
 
     1. **Server** - First configuration
         1. Load the kernel module for the USBIP server
-            
+
                 sudo modprobe usbip_host
-        
+
         1. Verify that the module is loaded
 
                 lsmod | grep usbip
@@ -1590,23 +1590,23 @@
         1. Load the module at system startup
 
             **Ubuntu/Raspberry Pi OS**
-                
+
                 echo 'usbip_host' | sudo tee --append /etc/modules
-                
+
             **Arch Linux**
-            
+
                 echo 'usbip_host' | sudo tee --append /etc/modules-load.d/usbip.conf
-                
+
             Verify whether the module loads at boot by restarting the system
-            
+
                 sudo reboot
-                
+
             - Sources:
                 - https://wiki.archlinux.org/title/Kernel_module
                 - https://wiki.archlinux.org/title/Kernel_module#Manual_module_handling
                 - https://wiki.archlinux.org/title/Kernel_module#Obtaining_information
                 - https://wiki.archlinux.org/title/Kernel_module#systemd
-                
+
         1. Make the USBIP server process start on boot (together with binding a particular device if desired) to reduce the accessing to the server each time we want to share and attach device to minimum - the server does the binding automatically at startup for us
             1. Create the base `usbipd.service` for starting and stopping USB/IP server
 
@@ -1626,7 +1626,7 @@
 
                     [Install]
                     WantedBy=multi-user.target
-                    
+
                 The option `RemainAfterExit=yes` assures, that the `systemd` executes only the `ExecStart` command (and `ExecStartPre` and `ExecStartPost` options). When we ommit the `RemainAfterExit` option or set it to `RemainAfterExit=no` then the systemd would execute the `ExecStart` commands and then jump immediatly to execution of `ExecStop` commands.
 
             1. Create the service for enabling and disabling device sharing, e.g. printer, via USB/IP server (the shared device is physically connected to the printer via USB port)
@@ -1665,7 +1665,7 @@
                 When everything went well, enable the service at startup and start it right away with
 
                     sudo systemctl enable --now usbip-printer.service
-                    
+
                 - Sources
                     - https://duckduckgo.com/?q=raspberry+pi+start+script+on+startup&ia=web
                     - https://www.wikihow.com/Execute-a-Script-at-Startup-on-the-Raspberry-Pi
@@ -1673,8 +1673,6 @@
 
                 Reboot the system. After reboot, the service `usbip-printer.service` starts the `usbipd.service` too and before starting the `usbip-printer.service`, because `usbip-printer.service` requires `usbipd.service`. The `systemd` takes care of starting all dependent/required services.
 
-                **TODO pridat navod na cronjob, ktory bude restartuje `usbip-printer.service` kazdych 5 min, aby sa tlaciaren znova spristupnila na zdielanie, keby niekto ju zabudol detachnut.**
-                
         - Sources:
             - https://duckduckgo.com/?q=execstop+executes+every+time&ia=web
             - https://superuser.com/questions/1223957/systemd-execstop-run-immediately-after-execstart/1287864#1287864
@@ -1690,28 +1688,216 @@
             - https://stackoverflow.com/questions/72665986/how-to-execute-multiple-command-in-execstart/72666379#72666379
             - https://duckduckgo.com/?q=execrestart&ia=web
             - https://serverfault.com/questions/1097312/unknown-key-name-execrestart-in-section-service
-    
+
+        - Restart the `usbip-printer.service` to make it sharable and available for for others to attach when somebody forgets to detach it.
+
+            - Automatically restart the `usbip-printer.service` - periodically - via a cron job - to ommit the access to the server
+
+                SERVER:
+
+                    sudo crontab -e
+
+                    */15 * * * * systemctl restart usbip-printer.service
+
+                This cron job restart the service that is responsible for enabling and disabling printer sharing every 15 minutes, i.e. every 0th, 15th, 30th and 45th minute every hour of every day.
+
+                    sudo crontab -l
+
+                    # Edit this file to introduce tasks to be run by cron.
+                    #
+                    <~~snip~~>
+                    #
+                    # For more information see the manual pages of crontab(5) and cron(8)
+                    #
+                    # m h  dom mon dow   command
+
+                    */15 * * * * systemctl restart usbip-printer.service
+
+                **TEST CASE:** The user of computer `CLIENT 1` (Windows) forgot to detach the printer after using it. The user of computer `CLIENT 2` (Linux) wants to use the printer.
+
+                In that case
+                - either the first user tells the second user to manually detach the printer, which makes it shareable again and visible and available for attaching for the first user
+                **or**
+                - the first user waits until the server restarts printer sharing to attach the printer.
+
+                In either case, in the meantime, the users can add tasks to the printing queue while the printer is still offline, i.e. disconnected or detached or locally unavailable.
+
+                SERVER
+
+                    sudo systemctl status usbip-printer.service
+
+                    ● usbip-printer.service - Share printer and scanner via USB/IP by binding them to server
+                        Loaded: loaded (/etc/systemd/system/usbip-printer.service; enabled; vendor preset: enabled)
+                        Active: active (exited) since Fri 2022-12-30 14:40:01 CET; 3min 44s ago
+                        Process: 27119 ExecStartPre=/usr/sbin/usbip unbind --busid=1-1.3 (code=exited, status=1/FAILURE)
+                        Process: 27121 ExecStart=/usr/sbin/usbip bind --busid=1-1.3 (code=exited, status=0/SUCCESS)
+                    Main PID: 27121 (code=exited, status=0/SUCCESS)
+                            CPU: 20ms
+
+                    Dec 30 14:40:01 raspberrypi systemd[1]: usbip-printer.service: Succeeded.
+                    Dec 30 14:40:01 raspberrypi systemd[1]: Stopped Share printer and scanner via USB/IP by binding them to server.
+                    Dec 30 14:40:01 raspberrypi systemd[1]: Starting Share printer and scanner via USB/IP by binding them to server...
+                    Dec 30 14:40:01 raspberrypi usbip[27119]: usbip: error: device is not bound to usbip-host driver
+                    Dec 30 14:40:01 raspberrypi usbip[27121]: usbip: info: bind device on busid 1-1.3: complete
+                    Dec 30 14:40:01 raspberrypi systemd[1]: Finished Share printer and scanner via USB/IP by binding them to server.
+
+                CLIENT 1
+
+                    usbip port
+
+                        TODO add image/terminal listing
+
+                    usbip list --remote=192.168.31.204
+
+                    usbip: info: no exportable devices found on 192.168.31.204
+
+                        TODO add image/terminal listing
+
+                CLIENT 2
+
+                    $ usbip list --remote=192.168.31.204
+
+                    usbip: info: no exportable devices found on 192.168.31.204
+
+                        TODO add image/terminal listing
+
+                    $ usbip port
+
+                        TODO add image/terminal listing
+
+                After automatic restart of the service, the printer is again visible on the network for other clients, i.e the printer is exported, thus is sharable from the USB/IP server attachable for all USB/IP clients.
+
+                SERVER
+
+                    sudo systemctl status usbip-printer.service
+
+                    ● usbip-printer.service - Share printer and scanner via USB/IP by binding them to server
+                        Loaded: loaded (/etc/systemd/system/usbip-printer.service; enabled; vendor preset: enabled)
+                        Active: active (exited) since Fri 2022-12-30 14:45:01 CET; 2min 51s ago
+                        Process: 27177 ExecStartPre=/usr/sbin/usbip unbind --busid=1-1.3 (code=exited, status=1/FAILURE)
+                        Process: 27180 ExecStart=/usr/sbin/usbip bind --busid=1-1.3 (code=exited, status=0/SUCCESS)
+                    Main PID: 27180 (code=exited, status=0/SUCCESS)
+                            CPU: 20ms
+
+                    Dec 30 14:45:01 raspberrypi systemd[1]: Starting Share printer and scanner via USB/IP by binding them to server...
+                    Dec 30 14:45:01 raspberrypi usbip[27177]: usbip: error: device is not bound to usbip-host driver
+                    Dec 30 14:45:01 raspberrypi usbip[27180]: usbip: info: bind device on busid 1-1.3: complete
+                    Dec 30 14:45:01 raspberrypi systemd[1]: Finished Share printer and scanner via USB/IP by binding them to server.
+
+                        TODO add image/terminal listing
+
+                CLIENT 1
+
+                    usbip list --remote=192.168.31.204
+
+                    Exportable USB devices
+                    ======================
+                    - 192.168.31.204
+                        1-1.3: Seiko Epson Corp. : unknown product (04b8:114a)
+                            : /sys/devices/platform/soc/3f980000.usb/usb1/1-1/1-1.3
+                            : (Defined at Interface level) (00/00/00)
+
+                        TODO add image/terminal listing
+
+                CLIENT 2
+
+                    $ date && usbip list --remote=192.168.31.204
+
+                    Fri Dec 30 02:48:37 PM CET 2022
+                    Exportable USB devices
+                    ======================
+                    - 192.168.31.204
+                        1-1.3: Seiko Epson Corp. : unknown product (04b8:114a)
+                            : /sys/devices/platform/soc/3f980000.usb/usb1/1-1/1-1.3
+                            : (Defined at Interface level) (00/00/00)
+
+                        TODO add image/terminal listing
+
+                - Sources:
+                    - https://duckduckgo.com/?q=linux+execute+command+periodically&ia=web
+                    - https://www.tecmint.com/run-repeat-linux-command-every-x-seconds/
+                    - https://duckduckgo.com/?q=cron+execute+every&ia=web
+                    - https://linuxize.com/post/cron-jobs-every-5-10-15-minutes/
+                    - https://linuxize.com/post/cron-jobs-every-5-10-15-minutes/#run-a-cron-job-every-5-minutes
+                        - `*/` trick
+                    - https://www.ibm.com/support/pages/how-run-cron-job-every-5-minutes
+                    - https://duckduckgo.com/?q=reload+systemd+service+interval&ia=web
+                    - https://www.baeldung.com/linux/systemd-service-periodic-restart
+                    - https://duckduckgo.com/?q=crontab+vs+sudo+crontab&ia=web&iax=qa
+                    - https://stackoverflow.com/questions/43237488/linux-difference-between-sudo-crontab-e-and-just-crontab-e#43237857
+
+            - Manually restart the `usbip-printer.service`
+
+                    [laptop@laptop ~]$ sudo usbip list --remote=192.168.31.204
+
+                    usbip: info: no exportable devices found on 192.168.31.204
+
+                    [laptop@laptop ~]$ ssh rpi@192.168.31.204
+                    rpi@192.168.31.204's password:
+                    Linux raspberrypi 5.15.74-v7+ #1595 SMP Wed
+
+                    rpi@raspberrypi:~ $ sudo systemctl status usbip-printer.service
+                    ● usbip-printer.service - Share printer and scanner via USB/IP by binding them to server
+                        Loaded: loaded (/etc/systemd/system/usbip-printer.service; enabled; vendor preset: enabled)
+                        Active: active (exited) since Thu 2022-12-29 13:28:03 CET; 50min ago
+                        Process: 17983 ExecStartPre=/usr/sbin/usbip unbind --busid=1-1.3 (code=exited, status=1/FAILURE)
+                        Process: 17988 ExecStart=/usr/sbin/usbip bind --busid=1-1.3 (code=exited, status=0/SUCCESS)
+                    Main PID: 17988 (code=exited, status=0/SUCCESS)
+                            CPU: 21ms
+
+                    Dec 29 13:28:03 raspberrypi systemd[1]: Starting Share printer and scanner via USB/IP by binding them to server...
+                    Dec 29 13:28:03 raspberrypi usbip[17983]: usbip: error: device is not bound to usbip-host driver
+                    Dec 29 13:28:03 raspberrypi usbip[17988]: usbip: info: bind device on busid 1-1.3: complete
+                    Dec 29 13:28:03 raspberrypi systemd[1]: Finished Share printer and scanner via USB/IP by binding them to server.
+
+                    rpi@raspberrypi:~ $ sudo systemctl reload usbip-printer.service
+
+                    rpi@raspberrypi:~ $ #sudo systemctl restart usbip-printer.service
+                    rpi@raspberrypi:~ $ # restarting the printer service makes the device exportable/sharable again
+
+                    rpi@raspberrypi:~ $ exit
+                    logout
+                    Connection to 192.168.31.204 closed.
+
+                    [laptop@laptop ~]$ sudo usbip list --remote=192.168.31.204
+                    Exportable USB devices
+                    ======================
+                    - 192.168.31.204
+                        1-1.3: Seiko Epson Corp. : unknown product (04b8:114a)
+                            : /sys/devices/platform/soc/3f980000.usb/usb1/1-1/1-1.3
+                            : (Defined at Interface level) (00/00/00)
+
+                    [laptop@laptop ~]$ sudo usbip attach --remote=192.168.31.204 --busid=1-1.3
+
+                    [laptop@laptop ~]$ sudo usbip port
+                    Imported USB devices
+                    ====================
+                    Port 00: <Port in Use> at High Speed(480Mbps)
+                        Seiko Epson Corp. : unknown product (04b8:114a)
+                        3-1 -> usbip://192.168.31.204:3240/1-1.3
+                            -> remote bus/dev 001/006
+
     1. **Server** - Connecting the USB device to the USB/IP server and exporting/binding/marking the USB device for sharing
         1. **Linux**
-        
+
             - Binding device for sharing with systemd service:
 
                 Mark the device for sharing by restarting the related systemd service:
 
                     sudo systemctl restart usbip-printer.service
-                    
+
                 Check the status of the service on the server
-                    
+
                     sudo systemctl status usbip-printer.service
-                    
+
                 As long as the client computers have the USB/IP driver installed, they will see the shared device in the output of the command
-                
+
                     # usbip list --remote=SERVER_IP_ADDRESS
-                    
-                either as sudo/root for Linux environments  
-                or  
+
+                either as sudo/root for Linux environments
+                or
                 in any terminal started with Administrator priviledges.
-                
+
                 - Sources:
                     - https://wiki.archlinux.org/title/USB/IP#Binding_by_vendor/device_ID
 
@@ -1767,7 +1953,7 @@
                             sudo usbipd --daemon
 
                         for output to the `journalctl`
-                    
+
         - **Windows**
             - TODO - not tested yet
 
@@ -1792,8 +1978,8 @@
                 1. Store location: `Local Machine`. Next.
                 1. If prompted with UAC, click Yes to continue.
                 1. File to import: leave as it is. Next.
-                1. Password: `usbip`  
-                    Import options: only check `Include all extended properties`  
+                1. Password: `usbip`
+                    Import options: only check `Include all extended properties`
                     Next.
                 1. Certificate store: Automatically select... Next.
                 1. Finish. A dialog window with text `The import was successful` will be displayed. Press `OK` to close it.
@@ -1804,29 +1990,29 @@
                     The operation completed successfully.
 
                 Reboot the PC to apply changes
-            
+
             1. Install USBIP driver. Open PowerShell as Administrator:
 
                     cd C:\Programme\usbip-win-0.3.6-dev
-                    
+
                     .\usbip.exe install
-                    
+
             - Sources:
                 - https://duckduckgo.com/?q=usbip+windows+client&ia=web
                 - How To Connect USB Devices Wirelessly To Your PC Over IP using Raspberry Pi | USBIP Raspberry Pi [Sid's E Classroom] - https://www.youtube.com/watch?v=lsMsl8LEZvs
                 - https://github.com/cezanne/usbip-win
                 - https://github.com/cezanne/usbip-win/tags
-    
+
     1. **Client** - First configuration
         - **Linux**
             1. Load kernel module for USBIP client
-                
+
                     sudo modprobe vhci-hcd
-                
+
             1. Verify loading of the module
-            
+
                     lsmod | grep vhci
-                    
+
             1. Make the module load on startup
 
                 **Ubuntu/Raspberry Pi OS**
@@ -1846,7 +2032,7 @@
                 1. Enter the value `C:\Programme\usbip-win-0.3.6-dev`
 
                     and press `Enter`
-                
+
                     The entered path needs to be **without** the last backslash, otherwise the binaries will not be autocompleted.
                 1. Confirm changes by clicking on the `OK` button in all dialog windows.
                 1. Sign out and back in, or reboot the computer alltogether, to reload changes.
@@ -1857,7 +2043,7 @@
             - Attaching with script: [`attach_printer.sh`](usbip_resources/client/attach_printer.sh)
 
                 Post-process the script to make it executable:
-                
+
                     chmod +x attach_printer.sh
 
                 Run the script as root/sudo:
@@ -1875,26 +2061,26 @@
             - In order to run Shell scripts `*.sh` on Windows a Linux Terminal is needed. This guide has been designed for `Git Bash` which is a part of `git` package available for download at https://git-scm.com/. Make sure to add directories `cmd`, `bin` from the git installation directory and the git installation directory itself to the `Path` system environment variable.
 
             - Attaching with script:
-                
+
                 Assuming, that the script resides in directory `C:\Programy`
-            
+
                 1. Reuse the Linux script for attaching device:
-                
+
                     To attach the printer, it's sufficient to start `Git Bash` as Administrator and run the attaching script mentioned in the **Linux** section above as follows:
-                    
+
                     ```
                     cd /c/Programy/
                     ./attach_printer.sh
                     ```
-                    
+
                     or with a one-line-command:
-                    
+
                     ```
                     /c/Programy/attach_printer.sh
                     ```
-                    
+
                     ---
-                        
+
                 1. For more convenient launching, continue along with following steps to create a shortcut that launches the attaching script without the UAC script, which is invoked by any program lauched as Administrator, i.e. with elevated priviledges.
 
                     Create a scheduled task: right click on Windows start menu -> Computer Management -> In the left pane click on `Task Scheduler` -> `Task Scheduler Library`
@@ -1905,7 +2091,7 @@
                         - check **Run with highest priviledges** - checking this option will bypass/skip the UAC prompt and executes the commands in `Action` tab as Administrator directly
                     - tab `Actions`
 
-                        _Program:_ `git-bash.exe`  
+                        _Program:_ `git-bash.exe`
                         _Arguments:_ `-c "/c/Programy/attach_printer.sh"`
 
                     - tab `Conditions` - uncheck all
@@ -1953,12 +2139,12 @@
                         usbipd: info: found requested device: 1-1.5
                         usbip: info: connect: 1-1.5
                         usbipd: info: request 0x8003(5): complete
-                        
+
             - Sources:
                 - client scripts for Windows were inspired by https://github.com/barbalion/usbip-win-client
                 - https://github.com/kyberdrb/Windows_tutorials
                 - https://github.com/kyberdrb/Windows_tutorials/blob/master/start_program_with_as_admin_i_e_with_elevated_priviledges_without_UAC_prompt/start_program_with_elevated_priviledges_without_UAC_prompt-OpenHardwareMonitor_example.md
-                    
+
             - **Example: Connecting and setting up the printer `Epson M2140` - Attaching to a Windows client and using the printer and the scanner**
                 - Epson M2140 support page: https://www.epson.sk/sk_SK/support/sc/epson-ecotank-m2140/s/s1672?selected-tab=&selected-os=Windows+10+64-bit
                 - To make the printer fully working, download the driver `2.60.01` for `Epson M2140`
@@ -1981,7 +2167,7 @@
             - Detaching with script: [`detach_printer.sh`](usbip_resources/client/detach_printer.sh)
 
                 Post-process the script to make it executable:
-                
+
                     chmod +x detach_printer.sh
 
                 Run the script as root/sudo:
@@ -2018,26 +2204,26 @@
             - In order to run Shell scripts `*.sh` on Windows a Linux Terminal is needed. This guide has been designed for `Git Bash` which is a part of `git` package available for download at https://git-scm.com/. Make sure to add directories `cmd`, `bin` from the git installation directory and the git installation directory itself to the `Path` system environment variable.
 
             - Detaching with script:
-                
+
                 Assuming, that the script resides in directory `C:\Programy`
-            
+
                 1. Reuse the Linux script for detaching device:
-                
+
                     To detach the printer, it's sufficient to start `Git Bash` as Administrator and run the detaching script mentioned in the **Linux** section above as follows:
-                    
+
                     ```
                     cd /c/Programy/
                     ./detach_printer.sh
                     ```
-                    
+
                     or with a one-line-command:
-                    
+
                     ```
                     /c/Programy/detach_printer.sh
                     ```
-                    
+
                     ---
-                        
+
                 1. For more convenient launching, continue along with following steps to create a shortcut that launches the detaching script without the UAC script, which is invoked by any program lauched as Administrator, i.e. with elevated priviledges.
 
                     Create a scheduled task: right click on Windows start menu -> Computer Management -> In the left pane click on `Task Scheduler` -> `Task Scheduler Library`
@@ -2048,7 +2234,7 @@
                         - check **Run with highest priviledges** - checking this option will bypass/skip the UAC prompt and executes the commands in `Action` tab as Administrator directly
                     - tab `Actions`
 
-                        _Program:_ `git-bash.exe`  
+                        _Program:_ `git-bash.exe`
                         _Arguments:_ `-c "/c/Programy/detach_printer.sh"`
 
                     - tab `Conditions` - uncheck all
@@ -2078,26 +2264,26 @@
                     or
 
                         usbip.exe detach --port=0
-    
+
     1. **Server** - Disconnecting the USB device from the USBIP server and reserving/unbinding the USB device
         - [Optional] Stop the USBIP server.
 
             For the USBIP sever started with command `sudo usbipd`
-        
+
                 Ctrl + C
-                
+
             or
-            
+
                 killall usbipd
-        
+
         - Disable sharing for a particular USB device
-        
+
                 sudo usbip unbind --busid=1-1.5
 
 * make cmake gdb clang lld lldb libc++ gtest perf valgrind ninja - C/C++ toolchain; `libc++`is a C++ standard library for LLVM
 * clion=2021.2.2-1 clion-cmake=2021.2.2-1 clion-gdb=2021.2.2-1 clion-jre=2021.2.2-1 clion-lldb=2021.2.2-1
     - C/C++ IDE from JetBrains with bundled toolchains and Google Test Framework; all packages must be installed to have a fully functional IDE
-        - **Maybe I'll switch later from CLion to CodeLite for IDE**  
+        - **Maybe I'll switch later from CLion to CodeLite for IDE**
           **and from Google Test to `doctest` for testing framework**
     - JetBrains now forbids creating an account with a disposable email address. I'll use my old Gmail account and try this procedure to keep using CLion indefinitely:
         1. Register with my old email address.
@@ -2106,7 +2292,7 @@
     - for CLion from version `2021.2.3` onwards, use [_disposable email_](https://temporarymail.com/), register with it on [jetbrains](https://account.jetbrains.com/login) in the section `Create JetBrains Account`, open CLion, click _Evaluation_, enter the disposable email address, and enjoy the development :) For more ways how to extend or reset the activation and trial evaluation, see **various methods of activation** further down in this section.
         - When the trial period expires, [delete expired account](https://account.jetbrains.com/profile-details) - in the _Your Profile_ tab click on `Delete JetBrains Account`, then use another disposable email address to create antoher jetbrains account, open CLion - after the evaluation expired, CLion will prompt you - Click `Enter License`, in the next dialog window `Licenses` click in the lower left corner on your account and select `Log out`, then click in the upper part on `Start trial` radio button, then click on `Log In to JetBrains account` and use this new disposable email to start another evaluation. Repeat indefinitely, until jetbrains figures it out :P Inventiveness and ingeniosity in the name of science, education and freedom.
     - The version 2021.2.2-1 is the last version in which can be activated offline i.e. locally i.e. the trial period depends on the local machine - offline evaluation - and thus the evaluation period can be reset indefinitely by saving current CLion configuration and relaunching a [evaluation reset script](https://github.com/kyberdrb/JetBrains_Utilities_Unlimited/blob/master/reset_clion_evaluation.sh) locally, as opposed to the version >=2021.2.3, in which the evaluation period depends on the user's JetBrains account which is controlled by the JetBrains company servers, not by the user. Once the evaluation period for CLion on the user's JetBrains account expires, the evaluation period cannot be resetted and the user some of these **various methods of activation:**
-        - roll back to the 2021.2.2-1 version and will be using this older version, 
+        - roll back to the 2021.2.2-1 version and will be using this older version,
             - To install CLion 2021.2.2-1 from the cache, I used the command
 
                     sudo pacman -U \
@@ -2115,14 +2301,14 @@
                         /var/cache/pacman/pkg/clion-gdb-1\:2021.2.2-1-x86_64.pkg.tar.zst \
                         /var/cache/pacman/pkg/clion-jre-1\:2021.2.2-1-x86_64.pkg.tar.zst \
                         /var/cache/pacman/pkg/clion-lldb-1\:2021.2.2-1-x86_64.pkg.tar.zst
-                        
-        - start using other IDE for C/C++ (i.e. Eclipse, CodeBlocks, **CodeLite**...)    
+
+        - start using other IDE for C/C++ (i.e. Eclipse, CodeBlocks, **CodeLite**...)
         - ~~use disposable email address for creating a JetBrains account~~ tested on 14.4.2022 - no longer works
         - create a JetBrains account with a legitimate email address, delete the JetBrains account after the trial expiration and then create a JetBrains account again with the same email address.
         - hosts - blocking jetbrains domains
 
             - example of `/etc/hosts` that blocks jetbrains activation servers
-            
+
                     $ sudo vim /etc/hosts
 
                     # Static table lookup for hostnames.
@@ -2154,20 +2340,20 @@
             - https://www.jetbrains.com/clion/buy/#discounts?billing=monthly
         - buy the license
     - I want to have all my project on my git repo. First I created a repo `CLionProjects` on GitHub which I cloned into `${HOME}/git/kyberdrb/`. Then I copied the content of the `${HOME}/CLionProjects` into `${HOME}/git/kyberdrb/CLionProjects`. Then I created the `.gitignore` file to exclude JetBrains IDE files. Finally I created a shortcut to redirect the default path for CLion projects from `${HOME}/CLionProjects` to `${HOME}/git/kyberdrb/CLionProjects` with command:
-    
+
             ln -s "${HOME}/git/kyberdrb/CLionProjects" "${HOME}/CLionProjects"
-            
+
         Now all new CLion projects will be by default redirected to my git repository for CLion Projects, thus changing the defaul directory for all subsequent CLion projects.
-    
+
     - perf - profiling tool for Linux kernel; useful for CLion; set it up in CLion under "File -> Settings -> Build, Execution, Deployment -> Dynamic analysis tools" - run profiler via "Run -> Profile '<ProjectName>'"
     - valgrind - memory leaks test; useful for CLion; set it up in CLion under "File -> Settings -> Build, Execution, Deployment -> Dynamic analysis tools" - run Valgrind via "Run -> Run '<ProjectName>' with Valgrind Memcheck"
     - gdb: I chose to disable colors in the GDB because I found some words harder to read on Terminal with black background, e.g. the `auto` keyword which was blue. Therefore, I created a file `~/.gdbinit` with this content
     - ´clang lld lldb libc++` - LLVM toolchain
 
             set style enabled off
- 
+
         The setting will be loaded for each gdb session, unless a project-specific configuration file for GDB is present in the directory of the project, which is the directory where we'll be launching the GDB utility.
-    
+
         - Sources:
             - https://sourceware.org/gdb/current/onlinedocs/gdb/Output-Styling.html
             - https://stackoverflow.com/questions/2045509/how-to-save-settings-in-gdb/2045532#2045532
@@ -2189,7 +2375,7 @@
                     - `File` tab
                         - `C++ Class Header`
                             - change the template from the default template
-        
+
                                     #parse("C File Header.h")
                                     #[[#ifndef]]# ${INCLUDE_GUARD}
                                     #[[#define]]# ${INCLUDE_GUARD}
@@ -2203,9 +2389,9 @@
                                     ${NAMESPACES_CLOSE}
 
                                     #[[#endif]]# //${INCLUDE_GUARD}
-                                    
+
                                 to the one with `#pragma once` header guard and optional namespace block
-        
+
                                     #parse("C File Header.h")
                                     #[[#pragma]]# once
 
@@ -2218,7 +2404,7 @@
                                     #if (${NAMESPACE})
                                     ${NAMESPACES_CLOSE}
                                     #end
-    
+
             - `Code Style`
                 - `General` tab
                     - `Hard wrap at:` 140 `columns`
@@ -2237,21 +2423,21 @@
                 - `Valgrind`
                     - `Valgrind Memcheck` section
                         - `Analysis options` text field
-                        
+
                                 --leak-check=full --leak-resolution=high --track-origins=yes --vgdb=no
-    
+
                             https://wiki.archlinux.org/title/Debugging#Valgrind
-    
+
         - `Languages & Frameworks`
             - `C/C++`
                 - `Clangd`
                     - `Clang Errors and Warnings` section
                         - `diagnostic flags`
-        
+
                                 -Wno-unused-variable,-Wno-infinite-recursion,-Werror=implicit-function-declaration,-Wshadow,-Wno-shadow-field-in-constructor-modified,-Wno-shadow-ivar,-Wuninitialized,-Wunused-label,-Wunused-lambda-capture, -Wbugprone-use-after-move, -Wperformance-move-const-arg
-    
+
                             maybe add `-fsized-deallocation` but it didn't make any difference in my case as for fixing the "problem" with  `clangd`: "In template: call to '__builtin_operator_delete' selects non-usual deallocation function"
-    
+
                             - Sources
                                 - https://duckduckgo.com/?t=ffab&q=c%2B%2B+std+move+on+const+variable+has+no+effect&ia=web
                                 - https://stackoverflow.com/questions/60372691/is-there-a-compile-warning-about-this-use-of-stdmove
@@ -2264,7 +2450,7 @@
         - `Advanced Settings`
             - `Terminal` section
                 - change `Terminal scrollback buffer size:` to `10000`
-        
+
     - Setting a unified black look
       1. File -- Settings... -- Appearance & Behavior -- UI Options -- Background Image...
       1. Select and image, e.g. `./configs/black.jpg`
@@ -2279,7 +2465,7 @@
           - _Editor -- Selection background_ -- check option _Background_: `C8C8C8`
           - _Errors and Warnings_ -- for _Typo_, _Warning_ and _Weak Warning_ check _Effects_ and change it from the original line type to `Underscored`
           - Editor -- Color Scheme -- Language Defaults -- `Function call` + `Function declaration`: changed `Foreground color` from `61AFEF` to `B9DFFF` - brighter color for clearer visibility on a dark background
-    
+
     - cmake
         - https://wiki.documentfoundation.org/ReleaseNotes/7.3#Performance_3
         - https://en.wikipedia.org/wiki/Interprocedural_optimization
@@ -2287,13 +2473,13 @@
 * qtcreator - IDE for Qt Framework
 * doxygen - documentation generator for software projects; UML and text docs
 * graphviz - utility for graphically generating UML diagrams
-    
+
 ---
 
 * musescore - music notation software. For development, uninstall `musescore` package via `sudo pacman -R musescore`. This will leave only one copy of the application installed on the system when we build it. The dependent packages will still remain present which will be helpful when compiling the application. For `musescore` dependencies see the [Arch-Based OS Compilation Instructions](https://musescore.org/en/handbook/developers-handbook/compilation/compile-instructions-archlinux-based-distros-git)
 * **wireshark**/wireshark-qt - network traffic inspector
     - In order to capture packets from network devices as a regular user, i.e. without root or sudo priviledges, add current or desired user to the `wireshark` group
-    
+
             sudo usermod -a -G wireshark $USER
         - Source: https://diego.assencio.com/?index=e48aa7b74bd7acb76c30de0a240108c2
 
@@ -2306,11 +2492,11 @@
     - AUR: https://aur.archlinux.org/packages/upd72020x-fw/
     - firmware for Renesas USB 3.0 controller
     - I installed it because `mkinitcpio` was reporting a warning message about missing firmware for `xhci_pci`.
-    - When I investigated it further I foud out that the `xhci_pci_renesas` was loaded from the output of  
-        `lsmod | grep xhci_pci` and `lsmod | grep renesas`  
-        but the command `lspci` and `lspci | grep -i renesas` don't report any Renesas device.  
+    - When I investigated it further I foud out that the `xhci_pci_renesas` was loaded from the output of
+        `lsmod | grep xhci_pci` and `lsmod | grep renesas`
+        but the command `lspci` and `lspci | grep -i renesas` don't report any Renesas device.
         According to the `lspci` and `lspci | grep -i usb` output, I have a different manufacturer of the USB 3.0 controller
-    
+
                 ...
                 00:14.0 USB controller: Intel Corporation Sunrise Point-LP USB 3.0 xHCI Controller (rev 21)
                 ...
@@ -2323,11 +2509,11 @@
         - https://aur.archlinux.org/packages/?O=0&SeB=nd&K=upd72020x-fw&outdated=&SB=n&SO=a&PP=50&do_Search=Go
         - https://aur.archlinux.org/packages/?O=0&K=xhci_pci
         - https://www.linuxquestions.org/questions/linux-newbie-8/possibly-missing-firmware-for-multiple-things-4175686320/
-        
+
                 Yeah, loads of firmware can go missing and it doesn't matter.
 
                 The key thing is - do all the little bits in your box work? If you have no wifi, no usb, etc, then it's a problem. If your box works, however all the firmware for the bits you do not have are not needed.
-    
+
 ---
 
 * thunar - favorite file manager
@@ -2359,9 +2545,9 @@
             pactl load-module module-bluetooth-discover
             pactl unload-module module-bluetooth-policy
             pactl load-module module-bluetooth-policy
-            
+
         To make the changes persistent and load the bluetooth audio modules at each pulseaudio server start, run `sudo vim /etc/pulse/system.pa` and add/append these lines:
-        
+
             ### Enable Bluetooth audio devices
             load-module module-bluetooth-policy
             load-module module-bluetooth-discover
@@ -2391,25 +2577,25 @@
         [2021-04-07T20:59:07+0200] [ALPM-SCRIPTLET] Consult /var/lib/dkms/vboxhost/6.1.18_OSE/build/make.log for more information.
         [2021-04-07T20:59:07+0200] [ALPM-SCRIPTLET] ==> Warning, `dkms install --no-depmod -m vboxhost -v 6.1.18_OSE -k 5.11.12-lqx1-1-lqx' returned 10
         ...
-        
+
         output of kernel compilation
-        
+
         ...
         ==> dkms install --no-depmod -m vboxhost -v 6.1.18_OSE -k 5.11.12-lqx1-1-lqx
         Error! Bad return status for module build on kernel: 5.11.12-lqx1-1-lqx (x86_64)
         Consult /var/lib/dkms/vboxhost/6.1.18_OSE/build/make.log for more information.
         ==> Warning, `dkms install --no-depmod -m vboxhost -v 6.1.18_OSE -k 5.11.12-lqx1-1-lqx' returned 10
         ...
-        
+
     I'm also sceptical of the robustness and have worries about system stability when I see messages about _kernel tainting_ in the system's log:
-    
+
         journalctl --boot --reverse
-        
+
         ...
         Apr 08 10:36:18 laptop kernel: vboxdrv: module verification failed: signature and/or required key missing - tainting kernel
         Apr 08 10:36:18 laptop kernel: vboxdrv: loading out-of-tree module taints kernel.
         ...
-        
+
     So therefore I want to have an alternative hypervisor, that on one hand is platform specific only for Linux-based operating systems, but on the other hand stable with any of my favourite kernels: `linux-muqss` and `linux-lqx`, and maybe `linux-lts` as a fallback. So far I'm satisfied with the functionality and performance of QEMU/KVM. Little bit slower than VirtualBox, but I am willing to wait, because I get freedom and stability in return.
 
     - `virt-manager` - GUI
@@ -2419,12 +2605,12 @@
     - `virt-viewer` - sharper, less blurred, image and fonts, of the virtual screen from the virtual machine - Desktop viewer for Cockpit
     - Configuration:
       - Enable QEMU/KVM server as daemon - deamon serves as a server that is doing all the backend operations
-        
+
               sudo systemctl enable libvirtd.service
               sudo systemctl start libvirtd.service
 
       - Enable default NAT bridge network. Prevention for error `Error starting domain: internal error Network 'default' is not active.` when starting a virtual machine from `virt-manager` [[1]](https://dwaves.de/2015/07/21/linux-kvm-how-to-fix-a-error-starting-domain-requested-operation-is-not-valid-network-default-is-not-active/), [[2]](https://github.com/kubernetes/minikube/issues/828), [[3]](https://github.com/kubernetes/minikube/issues/828#issuecomment-271781003)
-            
+
               sudo virsh net-autostart default
               sudo virsh net-start default
 
@@ -2471,7 +2657,7 @@
 
     - Use `Cockpit` for simpler virtual machines management [[1]](https://cockpit-project.org/running.html), [[2]](https://cockpit-project.org/running.html#archlinux)
         1. Cockpit is a web-based management tool for KVM virtual machines
-        
+
                 [laptop@laptop ~]$ #sudo systemctl enable --now cockpit.socket
                 [laptop@laptop ~]$ #sudo systemctl start cockpit.socket
                 [laptop@laptop ~]$ #sudo systemctl status cockpit.socket
@@ -2483,22 +2669,22 @@
 
     - Enable clipboard and folder sharing between Linux (host operating system - environment for virtual machines) and Windows (guest operating system - the virtual machine) [[1]](https://unix.stackexchange.com/questions/86071/use-virt-manager-to-share-files-between-linux-host-and-windows-guest)
         - SSH Filesystem [preferred and recommended for Windows VMs] [[1]](https://www.digitalocean.com/community/tutorials/how-to-use-sshfs-to-mount-remote-file-systems-over-ssh)
-        
+
            1. **Host (Linux-based OS):** ssh server configured to allow root login with password [[1]](https://linuxhint.com/arch_linux_ssh_server/), [[2]](https://www.liquidweb.com/kb/enable-root-login-via-ssh/)
-            
+
                 sudo pacman -S openssh
                 sudo systemctl status sshd
                 sudo systemctl enable --now sshd
                 [sudo systemctl status sshd
-            
+
             1. test the connection from the virtual machine, e.g. with the `ssh` from the PowerShell [[1]](https://devblogs.microsoft.com/powershell/using-the-openssh-beta-in-windows-10-fall-creators-update-and-windows-server-1709/), [[2]](https://winaero.com/enable-openssh-server-windows-10/), [[3]](https://docs.microsoft.com/en-us/windows-server/administration/openssh/openssh_install_firstuse):
-            
+
                     ssh laptop@192.168.0.12
-                
+
                 For me this didn't work because Xwrap error didn't allow me to proceed to the console. Therefore I enabled root login with password on default SSH port (22) [which I would rather don't do on a production machine for security reasons ;) ]
-                
+
             1. enable in the sshd config root login with `PermitRootLogin yes` (rest of the config is default)
-            
+
                     sudo vim /etc/ssh/sshd_config
                     cat /etc/ssh/sshd_config | grep -v '#' | grep -v "^$"
 
@@ -2511,20 +2697,20 @@
             1. Restart SSH daemon to apply changes
 
                     sudo systemctl restart sshd
-             
+
             1. connect from the virtual machine to the host via SSH again as root e.g. from PowerShell. The connection with the host will now be established through SSH.
             1. **Guest: (Windows OS)** set up SSH filesystem with the three guest utilities in this order
                 1. [winfsp](https://github.com/billziss-gh/winfsp) - [link of the latest WinFSP release](https://github.com/billziss-gh/winfsp/releases/latest)
                 1. [sshfs-win](https://github.com/billziss-gh/sshfs-win) - [link of the latest SSHFS-Win release](https://github.com/billziss-gh/sshfs-win/releases/latest)
                 1. [sshfs-win-manager](https://github.com/evsar3/sshfs-win-manager) - [link of the latest SSHFS-Win Manager release](https://github.com/evsar3/sshfs-win-manager/releases/latest)
             1. then open `SSHFS-Win Manager`, create a connection, fill parameters and connect to the host system. The SSH connection to the host directory will be mapped automatically in Windows guest as a separate local drive. Everything will function seamlessly as if it was mounted locally. Even without internet, because the connection is made locally ;)
-        
+
         - Filesystem Passtrough: `spice-webdavd` - Spice channel [preferred and recommended for Linux VMs] [[1 - GUI based]](https://dausruddin.com/how-to-enable-clipboard-and-folder-sharing-in-qemu-kvm-on-windows-guest/), [[2 - terminal based]](https://cialu.net/qemu-kvm-on-ubuntu-and-sharing-files-between-host-and-guests/#fromHistory), [[QEMU/KVM - Virt-Manager | Folder sharing and USB Redirection: until 6:08 - YouTube]](https://www.youtube.com/watch?v=crDuKm6XNv4), [[3]](https://askubuntu.com/questions/899916/how-to-share-folder-with-windows-10-guest-using-virt-manager-kvm), [[4]](https://www.guyrutenberg.com/2018/10/25/sharing-a-folder-a-windows-guest-under-virt-manager/), [[5]](https://unix.stackexchange.com/questions/528166/impossible-folder-sharing-by-virt-viewer-in-windows-client)
             - Didn't work for my Windows VM through `virt-viewer`. I was unable to launch the virtual machine because of a permissions issue with the directory I wanted to share, even after hours-long troubleshooting.
             - Not persistent after shutdown [[1]](https://gitlab.com/virt-viewer/virt-viewer/-/issues/13)
             - Possible solution for the permissions issue: [[host]](https://ask.fedoraproject.org/t/virt-manager-and-shared-folder-host-guest-permission-issue/10938/10), [[guest]](https://serverfault.com/questions/394645/qemu-virt-manager-no-permisson-on-shared-folder)
         - USB Redirection: usb storage device: USB drive/external disk [fallback option - when everything else fails] [[QEMU/KVM - Virt-Manager | Folder sharing and USB Redirection: from 6:08 - YouTube]](https://www.youtube.com/watch?v=crDuKm6XNv4&t=368s)
-            
+
                 [laptop@laptop ~]$ #shared folder in kvm
                 [laptop@laptop ~]$ #start VM in cockpit/virt-manager
                 [laptop@laptop ~]$ #insert USB
@@ -2586,42 +2772,42 @@ wget -> terminal downloader utility
 
 ---
 
-- masterpdfeditor-free - PDF editor; A complete solution for creation and editing PDF files - Free version without watermark  
+- masterpdfeditor-free - PDF editor; A complete solution for creation and editing PDF files - Free version without watermark
 - codelite - A multi purpose IDE specialized in C/C++/Rust/Python/PHP and Node.js. Written in C++
     - https://github.com/eranif/codelite
-    
+
 - atom - text editor
     - Installed packages - Edit → Preferences → Install:
         - asciidoc-preview
             - AsciiDoc support
         - highlight-selected
             - Highlights the current word selected when double clicking
-        
+
     - Configuration:
         - Disable welcome screen: uncheck the “Show Welcome Guide when opening Atom” box.
-        
+
             Source: https://discuss.atom.io/t/how-to-get-rid-of-welcome-md/12838/10
         - Edit -- Preferences -- Core -- disable _Allow Pending Pane Items_ - temporary preview of files - fixes the bug with opening a file permanently from the tree view
-        
+
             Source: https://discuss.atom.io/t/atom-doesnt-open-file-on-single-click-in-tree-view/27902/9
         - Edit -- Preferences -- Themes -- UI Theme: Atom Light; Syntax Theme: Atom Light
         - Edit -- Preferences -- Editor -- disable _Atomic Soft Tabs_
             - Font Family: `Source Code Pro, Menlo, Consolas, DejaVu Sans Mono, monospace`
                 - because these monospace fonts have clearly distinguishable among the characters 'iI1l' 'oO0 - especially the zero :)' 'sS5' 'A4' 'g9' 'B8' ''Z2
-            - Tab Length: 4  
+            - Tab Length: 4
             - Tab Type: soft
-        
+
             For the list of all avaliable fonts, execue this command in terminal
-                
+
                 fc-list | cut -d ':' -f2 | cut -d' ' -f1 --complement | less
-        
+
             Source: https://discuss.atom.io/t/how-do-you-use-spaces-instead-of-tabs/64730/2
         - Disable spell-cheking (it disturbs me when almost everything is red-squiggly-underlined)
             - Edit → Preferences → Packages → search for `spell` → disable package `spell-check`
-            
+
             Source: https://superuser.com/questions/999695/how-to-disable-spell-checking-in-atom/1022779#1022779
         - Keybindings -- click on _your keymap file_. Copy this to it:
-         
+
                 'atom-workspace atom-text-editor':
                     'ctrl-left': 'editor:move-to-previous-word-boundary'
                     'ctrl-right': 'editor:move-to-next-word-boundary'
@@ -2632,7 +2818,7 @@ wget -> terminal downloader utility
                     'ctrl-shift-S': 'window:save-all'
                     'ctrl-alt-S': 'core:save-as'
                     'alt-z':'editor:toggle-soft-wrap'
-                     
+
              Sources:
              - https://www.reddit.com/r/Atom/comments/534mno/how_to_configure_atom_to_properly_delete_words/
              - https://discuss.atom.io/t/ctrl-backspace-deletes-last-character-from-line-above/56256/3
@@ -2682,7 +2868,7 @@ pycharm-professional -> Python/HTML/CSS/JS IDE from JetBrains; the community edi
 mono - c# support for linux - see "https://wiki.archlinux.org/index.php/mono" for compilation and run instructions
 
 python -> python3 support
-    
+
 python-pip - pip package installer
 
 python-virtualenv python2-virtualenv -> virtualne prostredia pre python2 a python3
