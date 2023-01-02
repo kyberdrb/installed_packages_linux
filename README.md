@@ -2019,7 +2019,7 @@
 
                     echo 'vhci-hcd' | sudo tee --append /etc/modules
 
-                **Arch Linux** - see [example for Debian-based client](usbip_resources/client/Arch_Linux/etc/modules-load.d/usbip.conf)
+                **Arch Linux** - see [example for Arch Linux client](usbip_resources/client/Arch_Linux/etc/modules-load.d/usbip.conf)
 
                     echo 'vhci-hcd' | sudo tee --append /etc/modules-load.d/usbip.conf
 
