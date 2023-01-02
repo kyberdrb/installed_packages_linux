@@ -18,4 +18,3 @@ usbip detach --port="${PORT}"
 
 sleep 1
 usbip port
-

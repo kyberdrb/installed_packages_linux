@@ -1350,7 +1350,7 @@
             - Epson printer driver - https://bbs.archlinux.org/viewtopic.php?id=265822
                 - reference to `epson-inkjet-printer-escpr` - https://bbs.archlinux.org/viewtopic.php?pid=1969652#p1969652
 
-        - **in Ubuntu/Raspberry Pi OS** install an equivalent packages `printer-driver-escpr` and `epson-inkjet-printer-escpr`
+        - **in Debian/Ubuntu/Raspberry Pi OS** install an equivalent packages `printer-driver-escpr` and `epson-inkjet-printer-escpr`
             - the installation of `printer-driver-escpr` package doesn't add the support Epson M2140
             - **TODO test the installation of `epson-inkjet-printer-escpr` whether it add the support for Epson M2140 series printers**
             - Sources- Debian/Ubuntu specific
@@ -1570,7 +1570,7 @@
 
                     sudo pacman --sync --refresh usbip
 
-            - **Ubuntu/Raspberry Pi OS**
+            - **Debian/Ubuntu/Raspberry Pi OS**
 
                     sudo aptitude install usbip
 
@@ -1589,11 +1589,11 @@
 
         1. Load the module at system startup
 
-            **Ubuntu/Raspberry Pi OS**
+            **Debian/Ubuntu/Raspberry Pi OS** - see [example for Debian-based server](usbip_resources/server/Debian-Ubuntu-Raspberry_Pi_OS/etc/modules)
 
                 echo 'usbip_host' | sudo tee --append /etc/modules
 
-            **Arch Linux**
+            **Arch Linux** - see [example for Arch Linux server](usbip_resources/server/Arch_Linux/etc/modules-load.d/usbip.conf)
 
                 echo 'usbip_host' | sudo tee --append /etc/modules-load.d/usbip.conf
 
@@ -1607,7 +1607,7 @@
                 - https://wiki.archlinux.org/title/Kernel_module#Obtaining_information
                 - https://wiki.archlinux.org/title/Kernel_module#systemd
 
-        1. Make the USBIP server process start on boot (together with binding a particular device if desired) to reduce the accessing to the server each time we want to share and attach device to minimum - the server does the binding automatically at startup for us
+        1. Make the USB/IP server process start on boot (together with binding a particular device if desired) to reduce the accessing to the server each time we want to share and attach device to minimum - the server does the binding automatically at startup for us
             1. Create the base `usbipd.service` for starting and stopping USB/IP server
 
                     $ sudo vim /etc/systemd/system/usbipd.service
@@ -1699,7 +1699,7 @@
 
                     */15 * * * * systemctl restart usbip-printer.service
 
-                This cron job restart the service that is responsible for enabling and disabling printer sharing every 15 minutes, i.e. every 0th, 15th, 30th and 45th minute every hour of every day.
+                This cron job restart the service that is responsible for enabling and disabling printer sharing every 15 minutes, i.e. every 0th, 15th, 30th and 45th minute every hour of every day, which is enough time to remember, plan and print approximately 15 pages (with hiccups).
 
                     sudo crontab -l
 
@@ -1963,7 +1963,7 @@
 
                     sudo pacman --sync --refresh usbip
 
-            - **Ubuntu/Raspberry Pi OS**
+            - **Debian/Ubuntu/Raspberry Pi OS**
 
                     sudo aptitude install linux-tools-generic
 
@@ -2015,11 +2015,11 @@
 
             1. Make the module load on startup
 
-                **Ubuntu/Raspberry Pi OS**
+                **Debian/Ubuntu/Raspberry Pi OS** - see [example for Debian-based client](usbip_resources/client/Debian-Ubuntu-Raspberry_Pi_OS/etc/modules)
 
                     echo 'vhci-hcd' | sudo tee --append /etc/modules
 
-                **Arch Linux**
+                **Arch Linux** - see [example for Debian-based client](usbip_resources/client/Arch_Linux/etc/modules-load.d/usbip.conf)
 
                     echo 'vhci-hcd' | sudo tee --append /etc/modules-load.d/usbip.conf
 
