@@ -450,7 +450,7 @@
     - https://github.com/ckolivas/interbench
     - https://linux.die.net/man/8/interbench
 
-* eidklient disig-web-signer - aplikacie pre pripojenie k portalu www.slovensko.sk
+* eidklient disig-web-signer - aplikacie pre pripojenie k portalu www.slovensko.sk a k dalsim statnym instituciam napr. Socialna poistovna
     - Spustime SmardCard sluzbu: `systemctl start pcscd.service`
     - pripravit si hesla k elektronickemu OP
     - spustit aplikaciu eID [XFCE: Applications - Other - Aplikacia pre eID]
@@ -462,6 +462,59 @@
         - https://wiki.archlinux.org/index.php/Smartcards#Installation
         - https://aur.archlinux.org/packages/eidklient/
         - https://aur.archlinux.org/packages/disig-web-signer/
+    - Elektronicke podpisovanie PDF dokumentov obcianskym preukazom
+        - Na stranke https://qesportal.sk/Portal/sk nahrame dokument cez tlacidlo `Vybrat súbor` a klikneme na `Podpisat`
+        - Na nasledujucej stranke klikneme na tlacidlo `Podpisat` v pravej casti
+        - Skontrolujeme, ci 
+            - je obciansky preukaz vlozeny do citacky, 
+            - je citacka je pripojena k pocitacu a
+            - su spustene aplikacie `Office -> eID client` a `Other -> Web Signer`
+        - Po kliknuti na tlacidlo digitalneho podpisu sa otvori aplikacia `Web Signer`, v ktorej dokument podpiseme kliknutim na tlacidlo `Podpisat` v pravom hornom rohu okna. Potom v dialogovom okne vyberieme obciansk preukaz a certifikat, ktory je na nom ulozeny - tymto certifikatom bude dokument podpisany. Po potvrdeni sa otvori aplikacia `eID client`, do ktorej zadame podpisovy PIN.
+        - Stiahneme si elektronicky podpisany dokument z webstranky.
+        - Zdroje
+            - https://duckduckgo.com/?q=podpisovanie+dokumentov+obcianskym+preukazom&ia=web
+            - https://www.firmaren.sk/clanky/ako-podpisat-dokument-s-obcianskym-preukazom/
+            - https://qesportal.sk/Portal/sk
+    - Elektronicke podpisovanie formularov na portali www.slovensko.sk obcianskym preukazom
+        - Stiahnut zo stranky https://www.slovensko.sk/sk/na-stiahnutie este
+            - `D.Launcher 2` aplikaciu - odporucaju nainstalovat si obe verzie, ale nainstaloval som si iba verziu 2 - `Aplikácia v2.x [.run 29,6 MB]`
+                - Instalacia aplikacie `D.Launcher 2` Otvorime terminal a nainstalujeme `D.Launcher 2`
+                
+                        cd ~/Downloads
+                        chmod +x DLauncher2.linux.x86_64.run
+                        ./DLauncher2.linux.x86_64.run
+
+                    Postupujeme podla instrukcii na obrazovke
+
+                    Otvorime aplikaciu: Applications -> Internet -> D.Launcher 2
+
+                    Vykoname prvotnu konfiguraciu aplikacie
+            - `D.Bridge 2` rozsirenie do prehliadaca - sluzi na komunikaciu s aplikaciou `D.Launcher 2` (aplikacia `D.Launcher 1` taketo rozsirenie nepotrebuje)
+                - Instalacia rozsirenia
+                    - Chromium s Chrome Web Store: Nainstalujeme si rozsirenie zo stranky https://chrome.google.com/webstore/detail/dbridge-2/fngbdhimbgbonhlibfmiemipheabfdmj?hl=sk
+            - **Po nainstalovani aplikacie a rozsirenia zavrieme prehliadac a znovu ho otvorime, aby sa inicializovala komunikacia medzi rozsirenim v prehliadaci a lokalne nainstalovanou `D.Launcher` aplikaciou.**
+            - **Pred podpisom akehokolvek formulara skontrolujeme, ci je obciansky preukaz vlozeny do citacky, citacka je pripojena k pocitacu a su spustene aplikacie `Office -> eID client`, `Other -> Web Signer` a `Internet -> D.Launcher 2`. Podkliknuti na tlacidlo `Podpisat` sa po chvili otvori dialogove `xdg-open`, ktore po potvrdeni otvori `D.Launcher 2` aplikaciu. Formulare som podpisoval prvym dostupnym certifikatom na obcianskom preukaze - `Sig_ZEP` - v spomenutej aplikacii.**
+            - Zdroje:
+                - https://duckduckgo.com/?q=sig_zep+sig_ep+elektronicky+obciansky+preukaz&ia=web
+                - https://www.slovensko.sk/sk/zep
+                - https://www.slovensko.sk/sk/faq/faq-zep/#co6
+                - https://www.slovensko.sk/sk/slovnik/detail/_sukromny-kluc
+                - https://www.slovensko.sk/_img/CMS4/Navody/Nove_ES/navod_vytvorenie_kep_dsigner.pdf
+                - https://duckduckgo.com/?q=ditech-dlauncher&ia=web
+                - https://www.slovensko.sk/sk/pomoc/technicka-podpora-pre-pouzivat
+                - https://www.slovensko.sk/sk/pomoc/technicka-podpora-pre-pouzivat/ako-vyriesit-neuspesne-podpiso
+                - https://www.slovensko.sk/sk/pomoc/technicka-podpora-pre-pouzivat/ako-vyriesit-neuspesne-podpis1
+                - https://duckduckgo.com/?q=arch+linux+d.launcher&ia=web
+                - https://www.slovensko.sk/sk/na-stiahnutie
+                - https://www.financnasprava.sk/_img/pfsedit/Dokumenty_PFS/Elektronicke_sluzby/Elektronicka_komunikacia/Elektronicka_komunikacia_dane/Prirucky_navody/2017/2017.04.25_PFS_Linux_DLauncher_v10.pdf
+                - PN verzus ePN: hlavné rozdiely - stručne a zrozumiteľne: https://www.youtube.com/watch?v=Nie4ozQnZ6M
+                - https://www.socpoist.sk/socialne-poistenie/nemocenske-poistenie/epn-elektronicka-praceneschopnost/epn-zakladna-informacia
+                - https://www.socpoist.sk/socialne-poistenie/nemocenske-poistenie/epn-elektronicka-praceneschopnost/epn-obcan-poistenec#kontrola-epn-online
+                - **https://esluzby.socpoist.sk/portal/**
+                - https://www.socpoist.sk/nastroje-sluzby/elektronicky-ucet-poistenca
+                - https://www.socpoist.sk/socialne-poistenie/platenie-poistneho/ako-poziadat-o-pristup-do-esluzieb#do-esluieb-je-mon-prihlasova-sa-aj-s-elektronickm-obianskym-preukazom
+                - https://zive.aktuality.sk/diskusia/141141/do-e-sluzieb-socialnej-poistovne-sa-je-mozne-prihlasit-aj-s-eid-obcianskym-preukazom/
+                - Súpisné či orientačné číslo domu? Aký je rozdiel?: https://www.youtube.com/watch?v=lizB_jm0gbk
 
 * aic94xx-firmware wd719x-firmware linux
     - missing firmwares for my laptop
