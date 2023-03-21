@@ -10,7 +10,7 @@
             VerbosePkgLists
             ...
 
-        - https://ostechnix.com/enable-parallel-downloading-in-pacman-in-arch-linux/
+        - https://ostechnix.com/enable-parallel-d ̣ownloading-in-pacman-in-arch-linux/
         - https://bbs.archlinux.org/viewtopic.php?pid=1488827#p1488827
     - Find dependent packages of a package
 
@@ -194,6 +194,13 @@
                 ff = no
             [pull]
                 ff = yes
+                
+    - Enable long paths under Windows
+
+            git config --system core.longpaths true
+
+        - https://duckduckgo.com/?t=ffab&q=filename+too+long+Clone+succeeded%2C+but+checkout+failed&ia=web
+        - https://stackoverflow.com/questions/39542177/warning-clone-succeeded-but-checkout-failed#39825039
 
     - link local directory to a remote git repository
 
@@ -1809,6 +1816,28 @@
 * qtcreator - IDE for Qt Framework
 * doxygen - documentation generator for software projects; UML and text docs
 * graphviz - utility for graphically generating UML diagrams
+* eclipse - general purpose IDE
+    - https://wiki.archlinux.org/title/Eclipse
+    - https://www.youtube.com/results?search_query=eclipse+c%2B%2B
+    - https://www.youtube.com/watch?v=nNfrpxL_w7M&t=317s
+    - https://www.youtube.com/watch?v=XdisTzxTia0
+    - https://duckduckgo.com/?q=eclipse+valgrind&ia=web
+    - https://valgrind.org/downloads/guis.html
+    - https://www.eclipse.org/linuxtools/projectPages/valgrind/
+    - https://www.eclipse.org/linuxtools/
+    - https://www.youtube.com/watch?v=bb1bTJtgXrI&t=523s
+    - https://duckduckgo.com/?q=eclipse+c%2B%2B+memory+viewer&ia=web
+    - https://www.eclipse.org/articles/Article-MemoryView/index.html
+    - https://duckduckgo.com/?q=eclipse+cmake+automatically+add&ia=web&iax=qa
+    - https://github.com/15knots/cmake4eclipse
+    - https://duckduckgo.com/?q=eclipise+add+files+to+cmake&ia=web
+    - https://stackoverflow.com/questions/9453851/how-to-configure-eclipse-cdt-for-cmake
+    - https://duckduckgo.com/?q=program+file+does+not+exist+eclipse&ia=web
+    - https://stackoverflow.com/questions/48253887/eclipse-c-c-program-file-does-not-exist
+    - https://duckduckgo.com/?q=debugging+c%2B%2B+eclipise&ia=web
+    - https://stackoverflow.com/questions/3758794/how-do-i-use-gdb-in-eclipse-for-c-c-debugging#3760094
+    - https://duckduckgo.com/?q=No+source+available+for+%22main()+at+0x5555555551bd%22&ia=web&iax=qa
+        - error happens when we try to run project without building it first: first build, then run. press `Ctrl + B` and then run the project - the program will then start executing immediately
 
 ---
 
