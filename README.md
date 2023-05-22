@@ -195,7 +195,7 @@
             [pull]
                 ff = yes
                 
-    - Enable long paths under Windows
+    - Enable long paths under Windows to fix error `Filename too long` at cloning repository
 
             git config --system core.longpaths true
 
