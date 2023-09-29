@@ -587,6 +587,15 @@
 * imagemagick - image and graphics processing set of utilities
 
 * pulseaudio - enables sound support
+    - restart audio services to troubleshoot issues with no sound:
+
+        ```
+        pulseaudio --kill && sudo alsactl kill quit
+        ```
+
+        - https://duckduckgo.com/?q=restart+audio+linux&ia=web
+        - https://askubuntu.com/questions/230888/is-there-another-way-to-restart-the-sound-system-if-pulseaudio-alsa-dont-work#230893
+      
     - When the HDMI audio seems to be delayed for a few seconds (1-3s), observe the output of the states of audio sinks when you start playing of some audio/video with audio with the command:
 
             watch --interval 1 pactl list sinks short
