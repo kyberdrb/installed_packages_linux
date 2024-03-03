@@ -1912,7 +1912,7 @@
     - REMOVE `pcmanfm-qt` and replace it by `thunar` as a file manager
 * filezilla -> FTP client
 * mousepad -> po instalacii otvorit mousepad, ist do Edit->Preferences->View->Colour scheme->Cobalt (biele pismena na ciernom pozadi)
-* bluez bluez-utils blueman pulseaudio-bluetooth pipewire-pulse - enable Bluetooth support
+* bluez bluez-utils blueman pulseaudio-bluetooth pulseaudio-alsa pipewire-pulse - enable Bluetooth support
 
     After installation of mentioned packages, run the bluetooth service now and at each system startup:
 
@@ -1921,7 +1921,7 @@
     sudo systemctl status bluetooth.service
     ```
     
-    - `pulseaudio-bluetooth` adds support for Bluetooth audio devices. Installation of this package resolves the error in Blueman applet `Connection Failed:  Protocol not available` when connencting to a bluetooth audio device. First try to reboot. If that doesn't help, load the bluetooth audio modules at runtime via `pactl` or reboot the system. `pactl` commands:
+    - `pulseaudio-bluetooth` adds support for Bluetooth audio devices. Installation of this package resolves the error in Blueman applet `Connection Failed:  Protocol not available` when connencting to a bluetooth audio device. **First try to reboot.** If that doesn't help, load the bluetooth audio modules at runtime via `pactl` or reboot the system. `pactl` commands:
 
             pactl unload-module module-bluetooth-discover
             pactl load-module module-bluetooth-discover
@@ -1934,14 +1934,26 @@
             load-module module-bluetooth-policy
             load-module module-bluetooth-discover
 
+        Enable bluetooth service at startup and start it immediately
+
+            sudo systemctl enable --now bluetooth.service
+            sudo systemctl status bluetooth.service 
+
         Test the Bluetooth audio device
 
         1. Enable Bluetooth. Pair/Connect to the bluetooth device via Blueman applet.
         1. Start playing some audio stream.
         1. The audio will start playing from the Bluetooth device.
-        1. If the audio doesn't play from the Bluetooth device, left click on the speaker icon on the taskbar. There will be an arrow underneath the output volume slider. Select the bluetooth device from there. The sound will start playing from the Bluetooth audio device.
-        1. If the audio still doesn't play from the bluetooth device, but instead plays from the original output, open the `Audio mixer...` from the `Volume applet` in the taskbar.
-        1. Go to the `Output Devices` tab and click on the green checkmark icon in the section of the bluetooth device. This makes the Bluetooth audio device the **default** audio device. This allows for adjusting the volume of the Bluetooth audio device, as opposed to only switching it on the `Playback` tab.
+
+            If the audio doesn't play from the Bluetooth device, left click on the speaker icon on the taskbar. There will be an arrow underneath the output volume slider. Select the bluetooth device from there. The sound will start playing from the Bluetooth audio device.
+
+            If the audio still doesn't play from the bluetooth device, but instead plays from the original output, open the `Audio mixer...` from the `Volume applet` in the taskbar. Go to the `Output Devices` tab and click on the green checkmark icon in the section of the bluetooth device. This makes the Bluetooth audio device the **default** audio device. This allows for adjusting the volume of the Bluetooth audio device, as opposed to only switching it on the `Playback` tab.
+
+            If the audio still doesn't play from the bluetooth device, restart the bluetooth service
+
+                sudo systemctl restart bluetooth.service
+                sudo systemctl status bluetooth.service 
+           
         - Sources:
             - https://wiki.archlinux.org/title/Bluetooth_headset
             - https://wiki.archlinux.org/title/Bluetooth_headset#Headset_via_PipeWire
