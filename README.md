@@ -576,7 +576,7 @@
         - `Ctrl + W` and then `h` (left) `j` (down) `k` (up) `l` (right)
         - Source: https://superuser.com/questions/280500/how-does-one-switch-between-windows-on-vim/280501#280501
 
-* vscodium-bin-marketplace - debranded Visual Studio Code with Visual Studio Code's marketplace feature
+* code/**vscodium-bin** - debranded Visual Studio Code with Visual Studio Code's marketplace feature
     - Extensions:
         - AsciiDoc - `.adoc` files preview
     - Preferences
