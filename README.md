@@ -1208,11 +1208,13 @@
     - PDF readers
     - Evince (GTK)
     - Okular (Qt) (my preferred option - more features)
-        - backend: **phonon-qt5-gstreamer**/phonon-qt5-vlc
+        - backend: **phonon-qt5-vlc**/phonon-qt5-gstreamer
             - https://www.reddit.com/r/kde/comments/5w9wty/gstreamer_or_vlc_as_phonon_backend/
             - https://wiki.archlinux.org/index.php/KDE#Which_backend_should_I_choose.3F
+                - the **vlc** one, because the _gstreamer_ backend is poorly/no longer? maintained
+            - https://www.reddit.com/r/kde/comments/5w9wty/gstreamer_or_vlc_as_phonon_backend/
         - Text-to-Speech packages: `espeak-ng 1.49.2-6 speech-dispatcher 0.9.1-1`
-            - TTS: https://bugs.archlinux.org/task/62629
+            - FS#62629 - [okular] Speak Document or Page not working: https://bugs.archlinux.org/task/62629
         - `ebook-tools` adds support to okular for ebooks in `epub` format
             - https://bbs.archlinux.org/viewtopic.php?pid=1418697#p1418697
         - Hide/Show menu bar: Ctrl + M
