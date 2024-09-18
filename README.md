@@ -110,6 +110,54 @@
     - https://duckduckgo.com/?q=adobe-source-han-serif-otc-fonts&ia=web
     - https://duckduckgo.com/?q=adobe-source-han-sans-otc-fonts&ia=software
 
+* Wayland display server
+    - base: https://github.com/SolDoesTech/HyprV2
+
+        ```
+        sudo pacman -S hyprland kitty qt5-wayland qt6-wayland
+        
+        echo "100" | sudo tee /sys/class/backlight/intel_backlight/brightness
+        echo "558" | sudo tee /sys/class/backlight/intel_backlight/brightness
+        
+        modified ~/.bash_profile: commented out line `#exec startx` to start Xorg or Hyprland manually by commands `startx` or `Hyprland` respectively
+        modified hyprland.conf, waybar's ~/.config/waybar/style.css and ~/.config/waybar/config.jsonc
+        modified /etc/systemd/logind.conf to disable suspend on lid close
+        modified ~/.config/swaylock/config to adjust colors
+        modified `~/.config/kitty/kitty.conf` to adjust alarm bell sound
+            - kitty
+                - change default alarm sound from (annoying) droplet to something different, which will be played with minimum delay; adjusting the configuration at `~/.config/kitty/kitty.conf`
+        
+                    ```
+                    enable_audio_bell no
+                    command_on_bell mpv /home/laptop/Downloads/drop_battery_on_wooden_floor-mono.ogg
+                    ```
+        
+                    - https://duckduckgo.com/?q=kitty+enable_audio_bell+no&ia=web
+                    - https://www.reddit.com/r/KittyTerminal/comments/ptxada/help_changing_default_terminal_beep_in_kitty/
+                    - https://duckduckgo.com/?q=kitty+%22command_on_bell%22&ia=web
+                    - https://manpages.ubuntu.com/manpages/lunar/man5/kitty.conf.5.html
+                    - https://sw.kovidgoyal.net/kitty/conf/
+                    - https://github.com/kovidgoyal/kitty/issues/4489
+        
+        - make waybar on SUPER + W toggable: OK
+        - add commented out entry to hyprland.conf to mirror display - OK
+        - backup current waybar configuration (kill waybar, rename config dir) + make new waybar layout by copying the one from `coffeebar` - OK
+            - https://github.com/coffebar/dotfiles/tree/main/.config/waybar
+        - install hyprpm + install workspace overview plugin
+            - failed: compilation error - writing my own shell (then C++) utility for workspaces overview with windows list
+            1. sudo pacman -Sy hyprwayland-scanner meson
+            1. hyprpm update --verbose --no-shallow
+            1. hyprpm add https://github.com/KZDKM/Hyprspace
+            1. hyprpm enable Hyprspace
+        
+        - chromium: to get rid of the semitransparent rectangle under context menu after right clicking:
+            1. chrome://flags/
+            1. search for `Preferred Ozone platform` / `#ozone-platform-hint` and set it to `Wayland`
+            1. Relaunch Chromium
+            1. Right click anywhere on a page area to invoke context menu. The semitransparent rectangle will be gone, showing only the context menu alone.
+            1. As I only use light theme for web browsers, and the GTK theme didn't supported light theme, I chose to use the `Classic` theme: go to `Settings -> Appearance` and in the `Theme` option click on `Use Classic` and in the `Mode` option select `Light` .
+        ```
+
 * android-tools - Android platform tools; for `adb` utility etc.; make sure to have "USB Debugging" activated on Android device otherwise it will be hidden from `adb devices` command
     - When you can't edit files directly due to the lack of write access, use this "pull-push" method
         1. Pull desired file
@@ -154,9 +202,10 @@
 
 * lxde-icon-theme - XFCE icon pack
 
-* linux-firmware-iwlwifi-git - linux firmware with the support of Intel wireless devices, such as bluetooth and Wi-Fi. Replaces the default `linux-firmware` package.
-    - In my case it provided newer firmware for my
-        - Intel bluetooth device
+* linux-firmware - linux firmware with the support of Intel wireless devices, such as Bluetooth and Wi-Fi
+    - package `linux-firmware-iwlwifi-git` had been deprecated; using `linux-firmware` package with merged updated Intel wireless drivers
+    - In my case it provided newer firmware for my:
+        - Intel Bluetooth device
 
                 Intel Wireless 8260 Bluetooth
                 [journalctl] Bluetooth: hci0: Found device firmware: intel/ibt-11-5.sfi)
@@ -169,6 +218,64 @@
                 Intel(R) Dual Band Wireless AC 8260, REV=0x208
                 ...
                 kernel: iwlwifi 0000:01:00.0: loaded firmware version 36.ad812ee0.0 8000C-36.ucode op_mode iwlmvm
+
+         After uninstalling `linux-firmware-iwlwifi-git` package the Bluetooth and Wi-Fi became dysfunctional. Below are the steps to restore the functionality of Intel wireless adapters
+
+         ```
+         :: warning: Following packages cannot be found in AUR:
+             eclipse-cpp    
+             linux-firmware-iwlwifi-git    
+             linux-pf-headers-skylake    
+             linux-pf-skylake    
+             python-exceptiongroup    
+         Resolving AUR dependencies...
+         
+         sudo pacman -Runs eclipse-cpp linux-firmware-iwlwifi-git linux-pf-headers-skylake linux-pf-skylake python-exceptiongroup
+         
+         WIFI/BLUETOOTH NOT WORKING
+         
+         lspci <brief>
+         01:00.0 Network controller: Intel Corporation Wireless 8260 (rev 3a)
+         
+         lspci <full>
+         00:00.0 Host bridge: Intel Corporation Xeon E3-1200 v5/E3-1500 v5/6th Gen Core Processor Host Bridge/DRAM Registers (rev 08)
+         00:02.0 VGA compatible controller: Intel Corporation Skylake GT2 [HD Graphics 520] (rev 07)
+         00:04.0 Signal processing controller: Intel Corporation Xeon E3-1200 v5/E3-1500 v5/6th Gen Core Processor Thermal Subsystem (rev 08)
+         00:14.0 USB controller: Intel Corporation Sunrise Point-LP USB 3.0 xHCI Controller (rev 21)
+         00:14.2 Signal processing controller: Intel Corporation Sunrise Point-LP Thermal subsystem (rev 21)
+         00:16.0 Communication controller: Intel Corporation Sunrise Point-LP CSME HECI #1 (rev 21)
+         00:16.3 Serial controller: Intel Corporation Sunrise Point-LP Active Management Technology - SOL (rev 21)
+         00:17.0 SATA controller: Intel Corporation Sunrise Point-LP SATA Controller [AHCI mode] (rev 21)
+         00:1c.0 PCI bridge: Intel Corporation Sunrise Point-LP PCI Express Root Port #5 (rev f1)
+         00:1d.0 PCI bridge: Intel Corporation Sunrise Point-LP PCI Express Root Port #11 (rev f1)
+         00:1f.0 ISA bridge: Intel Corporation Sunrise Point-LP LPC Controller (rev 21)
+         00:1f.2 Memory controller: Intel Corporation Sunrise Point-LP PMC (rev 21)
+         00:1f.3 Audio device: Intel Corporation Sunrise Point-LP HD Audio (rev 21)
+         00:1f.4 SMBus: Intel Corporation Sunrise Point-LP SMBus (rev 21)
+         00:1f.6 Ethernet controller: Intel Corporation Ethernet Connection I219-LM (rev 21)
+         01:00.0 Network controller: Intel Corporation Wireless 8260 (rev 3a)
+         02:00.0 Unassigned class [ff00]: Realtek Semiconductor Co., Ltd. RTS525A PCI Express Card Reader (rev 01)
+         
+         
+         ./remount_boot_part_as_writable.sh
+         sudo pacman -Sy linux-firmware
+         
+         core/linux-firmware-whence  20240809.59460076-1    0.27 MiB       0.03 MiB
+         core/linux-firmware         20240809.59460076-1  238.92 MiB     234.12 MiB
+         
+         sudo vim /etc/modules-load.d/iwlwifi.conf
+         iwlwifi
+         
+         sudo mkinitcpio -P
+         
+         lsmod | grep iwlwifi
+         
+         Reboot the computer
+         
+         manually enable Bluetooth and Wifi in bluetooth manager and in the context menu of Wifi/network manager applet in waybar
+         
+         The functionality of Wi-Fi and Bluetooth is restored
+         ```
 
 * shellcheck - shell script analysis tool and syntax checker
 
@@ -457,19 +564,24 @@
     - https://github.com/ckolivas/interbench
     - https://linux.die.net/man/8/interbench
 
-* eidklient disig-web-signer - aplikacie pre pripojenie k portalu www.slovensko.sk a k dalsim statnym instituciam napr. Socialna poistovna
+* eidklient-native d.launcher2 - aplikacie pre pripojenie k portalu www.slovensko.sk a k dalsim statnym instituciam napr. Socialna poistovna
+    - `eidklient-native` is Wayland compatible
+        - https://www.slovensko.sk/sk/na-stiahnutie
+        - https://duckduckgo.com/?t=ffab&q=eidklient+arch+linux&ia=web
+        - https://aur.archlinux.org/packages/eidklient-native
+        - https://aur.archlinux.org/packages/d.launcher2
+    - legacy packages: `eidklient disig-web-signer`
+        - https://wiki.archlinux.org/index.php/Smartcards#Installation
+        - https://aur.archlinux.org/packages/eidklient/
+        - https://aur.archlinux.org/packages/disig-web-signer/
     - Spustime SmardCard sluzbu: `systemctl start pcscd.service`
     - pripravit si hesla k elektronickemu OP
     - spustit aplikaciu eID [XFCE: Applications - Other - Aplikacia pre eID]
     - vlozit elekronicky obciansky preukaz (OP) cipom nahor do lubovolnej SmartCard citacky: bud integrovanej v notoebooku/PC alebo externej citacky [napriklad do tej, ktora bola dodana spolu s OP]
     - nasledovat instrukcie v aplikacii eID
-    - pripojit sa k portalu [slovensko.sk](slovensko.sk)
+    - pripojit sa k portalu slovensko.sk
     - pre vacsie pohodlie mozeme zapnut automaticke spustanie smartcard sluzby pri kazdom spusteni pocitaca alebo restarte prikazom `systemctl enable pcscd.service`
-    - Sources:
-        - https://wiki.archlinux.org/index.php/Smartcards#Installation
-        - https://aur.archlinux.org/packages/eidklient/
-        - https://aur.archlinux.org/packages/disig-web-signer/
-    - Elektronicke podpisovanie PDF dokumentov obcianskym preukazom
+    - **Elektronicke podpisovanie PDF dokumentov obcianskym preukazom**
         - Na stranke https://qesportal.sk/Portal/sk nahrame dokument cez tlacidlo `Vybrat súbor` a klikneme na `Podpisat`
         - Na nasledujucej stranke klikneme na tlacidlo `Podpisat` v pravej casti
         - Skontrolujeme, ci 
@@ -499,9 +611,10 @@
             - `D.Bridge 2` rozsirenie do prehliadaca - sluzi na komunikaciu s aplikaciou `D.Launcher 2` (aplikacia `D.Launcher 1` taketo rozsirenie nepotrebuje)
                 - Instalacia rozsirenia
                     - Chromium s Chrome Web Store: Nainstalujeme si rozsirenie zo stranky https://chrome.google.com/webstore/detail/dbridge-2/fngbdhimbgbonhlibfmiemipheabfdmj?hl=sk
-            - **Po nainstalovani aplikacie a rozsirenia zavrieme prehliadac a znovu ho otvorime, aby sa inicializovala komunikacia medzi rozsirenim v prehliadaci a lokalne nainstalovanou `D.Launcher` aplikaciou.**
-            - **Pred podpisom akehokolvek formulara skontrolujeme, ci je obciansky preukaz vlozeny do citacky, citacka je pripojena k pocitacu a su spustene aplikacie `Office -> eID client`, `Other -> Web Signer` a `Internet -> D.Launcher 2`. Podkliknuti na tlacidlo `Podpisat` sa po chvili otvori dialogove `xdg-open`, ktore po potvrdeni otvori `D.Launcher 2` aplikaciu. Formulare som podpisoval prvym dostupnym certifikatom na obcianskom preukaze - `Sig_ZEP` - v spomenutej aplikacii.**
+                    - **Po nainstalovani aplikacie a rozsirenia zavrieme prehliadac a znovu ho otvorime, aby sa inicializovala komunikacia medzi rozsirenim v prehliadaci a lokalne nainstalovanou `D.Launcher` aplikaciou.**
+                    - **Pred podpisom akehokolvek formulara skontrolujeme, ci je obciansky preukaz vlozeny do citacky, citacka je pripojena k pocitacu a su spustene aplikacie `Office -> eID client`, `Other -> Web Signer` a `Internet -> D.Launcher 2`. Podkliknuti na tlacidlo `Podpisat` sa po chvili otvori dialogove `xdg-open`, ktore po potvrdeni otvori `D.Launcher 2` aplikaciu. Formulare som podpisoval prvym dostupnym certifikatom na obcianskom preukaze - `Sig_ZEP` - v spomenutej aplikacii.**
             - Zdroje:
+                - https://aur.archlinux.org/packages/eidklient
                 - https://duckduckgo.com/?q=sig_zep+sig_ep+elektronicky+obciansky+preukaz&ia=web
                 - https://www.slovensko.sk/sk/zep
                 - https://www.slovensko.sk/sk/faq/faq-zep/#co6
