@@ -120,13 +120,68 @@
         echo "558" | sudo tee /sys/class/backlight/intel_backlight/brightness
         
         modified ~/.bash_profile: commented out line `#exec startx` to start Xorg or Hyprland manually by commands `startx` or `Hyprland` respectively
-        modified hyprland.conf, waybar's ~/.config/waybar/style.css and ~/.config/waybar/config.jsonc
-        modified /etc/systemd/logind.conf to disable suspend on lid close
+
+            #
+            # ~/.bash_profile
+            #
+            
+            [[ -f ~/.bashrc ]] && . ~/.bashrc
+            
+            #exec startx
+        
+        modified hyprland.conf, waybar's ~/.config/waybar/style.css and ~/.config/waybar/config.jsonc - see fork for details
+        modified /etc/systemd/logind.conf to disable suspend on lid close by uncommenting options `HandleLidSwitch` and `HandleLidSwitchExternalPower` and setting them to `ignore`
+
+            ...
+            HandleLidSwitch=ignore
+            HandleLidSwitchExternalPower=ignore
+            ...
+        
         modified ~/.config/swaylock/config to adjust colors
+
+            daemonize
+            show-failed-attempts
+            clock
+            screenshot
+            effect-blur=9x5
+            effect-vignette=0.5:0.5
+            color=1f1d2e80
+            font="Inter"
+            indicator
+            indicator-radius=200
+            indicator-thickness=20
+            line-color=1f1d2e
+            ring-color=191724
+            inside-color=1f1d2e
+            key-hl-color=00e600
+            separator-color=00000000
+            text-color=e0def4
+            text-caps-lock-color=""
+            line-ver-color=1f1d2e
+            ring-ver-color=ffff66
+            inside-ver-color=1f1d2e
+            text-ver-color=e0def4
+            ring-wrong-color=ff0000
+            text-wrong-color=bbbbbb
+            inside-wrong-color=1f1d2e
+            inside-clear-color=1f1d2e
+            text-clear-color=e0def4
+            ring-clear-color=9ccfd8
+            line-clear-color=1f1d2e
+            line-wrong-color=1f1d2e
+            bs-hl-color=31748f
+            #grace=2
+            grace-no-mouse
+            grace-no-touch
+            datestr=%a, %B %e
+            timestr=%I:%M %p
+            fade-in=0.5
+            ignore-empty-password
+        
         modified `~/.config/kitty/kitty.conf` to adjust alarm bell sound
             - kitty
                 - change default alarm sound from (annoying) droplet to something different, which will be played with minimum delay; adjusting the configuration at `~/.config/kitty/kitty.conf`
-        
+
                     ```
                     enable_audio_bell no
                     command_on_bell mpv /home/laptop/Downloads/drop_battery_on_wooden_floor-mono.ogg
@@ -138,18 +193,18 @@
                     - https://manpages.ubuntu.com/manpages/lunar/man5/kitty.conf.5.html
                     - https://sw.kovidgoyal.net/kitty/conf/
                     - https://github.com/kovidgoyal/kitty/issues/4489
-        
-        - make waybar on SUPER + W toggable: OK
-        - add commented out entry to hyprland.conf to mirror display - OK
+
+        - make waybar on SUPER + W toggable: OK - editted `hyprland.conf`
+        - add commented out entry to hyprland.conf to mirror display - OK - editted `hyprland.conf`
         - backup current waybar configuration (kill waybar, rename config dir) + make new waybar layout by copying the one from `coffeebar` - OK
             - https://github.com/coffebar/dotfiles/tree/main/.config/waybar
         - install hyprpm + install workspace overview plugin
             - failed: compilation error - writing my own shell (then C++) utility for workspaces overview with windows list
-            1. sudo pacman -Sy hyprwayland-scanner meson
-            1. hyprpm update --verbose --no-shallow
-            1. hyprpm add https://github.com/KZDKM/Hyprspace
-            1. hyprpm enable Hyprspace
-        
+                1. sudo pacman -Sy hyprwayland-scanner meson
+                1. hyprpm update --verbose --no-shallow
+                1. hyprpm add https://github.com/KZDKM/Hyprspace
+                1. hyprpm enable Hyprspace
+
         - chromium: to get rid of the semitransparent rectangle under context menu after right clicking:
             1. chrome://flags/
             1. search for `Preferred Ozone platform` / `#ozone-platform-hint` and set it to `Wayland`
