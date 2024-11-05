@@ -750,7 +750,16 @@
     - Preferences
         - Text Editor -- Font -- Font Family: `'Source Code Pro', 'Menlo', 'Consolas', 'DejaVu Sans Mono', 'monospace', monospace, 'Droid Sans Fallback'`
             - because these monospace fonts have clearly distinguishable among the characters 'iI1l' 'oO0 - especially the zero :)' 'sS5' 'A4' 'g9' 'B8' 'Z2'
+    - In version 1.95.x there is a bug in VSCode/VSCodium, where after clicking on the `File` menu the application crashes. To fix this:
+        1. Open VSCode/VSCodium with `Ctrl + ,`
+        1. Search for `titleBarStyle` and in the select `custom`
+        1. Restart application
+        1. Click on the `File` menu again: it will open without crashing. Also, the app will look nicer too.
 
+        - https://duckduckgo.com/?t=ffab&q=vscodium+crashing+file+menu&ia=web
+        - https://github.com/VSCodium/vscodium/issues/2082
+        - https://github.com/VSCodium/vscodium/issues/2082#issuecomment-2453379818
+    
 * geeqie - image viewer with coordinates indicator for X an Y axis
 * imagemagick - image and graphics processing set of utilities
 
