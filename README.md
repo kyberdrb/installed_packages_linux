@@ -211,6 +211,321 @@
             1. Relaunch Chromium
             1. Right click anywhere on a page area to invoke context menu. The semitransparent rectangle will be gone, showing only the context menu alone.
             1. As I only use light theme for web browsers, and the GTK theme didn't supported light theme, I chose to use the `Classic` theme: go to `Settings -> Appearance` and in the `Theme` option click on `Use Classic` and in the `Mode` option select `Light` .
+
+        - dunst - notification daemon
+
+            # restrain xfce4-notifyd to only X11 sessions
+            cat /usr/share/dbus-1/services/org.xfce.xfce4-notifyd.Notifications.service 
+            [D-BUS Service]
+            Name=org.freedesktop.Notifications
+            #Exec=/usr/lib/xfce4/notifyd/xfce4-notifyd
+            Exec=/bin/sh -c '[ "$XDG_SESSION_TYPE" = "x11" ] && exec /usr/lib/xfce4/notifyd/xfce4-notifyd'
+            SystemdService=xfce4-notifyd.service
+
+            cat /usr/share/dbus-1/services/org.xfce.xfce4-notifyd.Notifyd.service
+            [D-BUS Service]
+            Name=org.xfce.Notifyd
+            #Exec=/usr/lib/xfce4/notifyd/xfce4-notifyd
+            Exec=/bin/sh -c '[ "$XDG_SESSION_TYPE" = "x11" ] && exec /usr/lib/xfce4/notifyd/xfce4-notifyd'
+            SystemdService=xfce4-notifyd.service
+
+            # Install Wayland/Hyprland notification daemon
+            sudo pacman -Sy dunst
+            ps aux | grep -e notify -e dunst
+            notify-send "Test Notification from Hyprland"
+            cp --recursive /etc/dunst/ ~/.config/
+            vim ~/.config/dunst/dunstrc
+
+            # FINAL CONFIGURATION EDITS
+            ```
+            ...
+            font = Monospace 12
+            ...
+            [blueman_headphones]
+                appname = blueman
+                icon = battery
+                new_icon = audio-headset
+            ...
+            ```
+
+            # change `font` property by increasing font size e.g. `font = Monospace 12`
+            notify-send "Test Notification from Hyprland"
+
+            # Adjusting picture in notifications when connecting bluetooth headphones, replacing the notification with the picture of a battery with a audio headset picture
+            $ pkill dunst && dunst -print
+            {
+                appname: 'blueman'
+                summary: 'JBL VIBE300TWS'
+                body: 'Disconnected'
+                icon: 'audio-headset'
+                raw_icon set: false
+                icon_id: '(null)'
+                desktop_entry: ''
+                category: 
+                timeout: 10000
+                start: 0
+                timestamp: 1388791395
+                urgency: NORMAL
+                transient: 0
+                formatted: '<b>JBL VIBE300TWS</b>
+            Disconnected'
+                fg: #ffffffff
+                bg: #285577ff
+                frame: #aaaaaaff
+                highlight: #1745d1ff
+                fullscreen: show
+                format: <b>%s</b>\n%b
+                progress: -1
+                stack_tag: 
+                id: 2
+                actions: {}
+                script_count: 0
+            }
+
+            {
+                appname: 'blueman'
+                summary: 'JBL VIBE300TWS'
+                body: 'Connected'
+                icon: 'audio-headset'
+                raw_icon set: false
+                icon_id: '(null)'
+                desktop_entry: ''
+                category: 
+                timeout: 10000
+                start: 0
+                timestamp: 1398701605
+                urgency: NORMAL
+                transient: 0
+                formatted: '<b>JBL VIBE300TWS</b>
+            Connected'
+                fg: #ffffffff
+                bg: #285577ff
+                frame: #aaaaaaff
+                highlight: #1745d1ff
+                fullscreen: show
+                format: <b>%s</b>\n%b
+                progress: -1
+                stack_tag: 
+                id: 3
+                actions: {}
+                script_count: 0
+            }
+            {
+                appname: 'blueman'
+                summary: 'JBL VIBE300TWS'
+                body: 'Connected 100%'
+                icon: 'audio-headset'
+                raw_icon set: false
+                icon_id: '(null)'
+                desktop_entry: ''
+                category: 
+                timeout: 10000
+                start: 1399346332
+                timestamp: 1399346308
+                urgency: NORMAL
+                transient: 0
+                formatted: '<b>JBL VIBE300TWS</b>
+            Connected 100%'
+                fg: #ffffffff
+                bg: #285577ff
+                frame: #aaaaaaff
+                highlight: #1745d1ff
+                fullscreen: show
+                format: <b>%s</b>\n%b
+                progress: -1
+                stack_tag: 
+                id: 3
+                actions: {}
+                script_count: 0
+            }
+            {
+                appname: 'blueman'
+                summary: 'JBL VIBE300TWS'
+                body: 'Connected 100%'
+                icon: 'battery'
+                raw_icon set: false
+                icon_id: '(null)'
+                desktop_entry: ''
+                category: 
+                timeout: 10000
+                start: 1399363275
+                timestamp: 1399363256
+                urgency: NORMAL
+                transient: 0
+                formatted: '<b>JBL VIBE300TWS</b>
+            Connected 100%'
+                fg: #ffffffff
+                bg: #285577ff
+                frame: #aaaaaaff
+                highlight: #1745d1ff
+                fullscreen: show
+                format: <b>%s</b>\n%b
+                progress: -1
+                stack_tag: 
+                id: 3
+                actions: {}
+                script_count: 0
+            }
+
+            vim .config/dunst/dunstrc # Add the section below at the end of the file which replaces the battery icon with the headphones icon for all blueman notifications
+
+            ```
+            [blueman_headphones]
+                appname = blueman
+                icon = battery
+                new_icon = audio-headset
+            ```
+
+            # Verify icons for blueman at connecting and disconnecting bluetooth headphones
+
+            $ pkill dunst && dunst -print
+            {
+                appname: 'blueman'
+                summary: 'JBL VIBE300TWS'
+                body: 'Disconnected'
+                icon: 'audio-headset'
+                raw_icon set: false
+                icon_id: '(null)'
+                desktop_entry: ''
+                category: 
+                timeout: 10000
+                start: 0
+                timestamp: 2061633909
+                urgency: NORMAL
+                transient: 0
+                formatted: '<b>JBL VIBE300TWS</b>
+            Disconnected'
+                fg: #ffffffff
+                bg: #285577ff
+                frame: #aaaaaaff
+                highlight: #1745d1ff
+                fullscreen: show
+                format: <b>%s</b>\n%b
+                progress: -1
+                stack_tag: 
+                id: 2
+                actions: {}
+                script_count: 0
+            }
+
+            {
+                appname: 'blueman'
+                summary: 'JBL VIBE300TWS'
+                body: 'Connected'
+                icon: 'audio-headset'
+                raw_icon set: false
+                icon_id: '(null)'
+                desktop_entry: ''
+                category: 
+                timeout: 10000
+                start: 0
+                timestamp: 2067601440
+                urgency: NORMAL
+                transient: 0
+                formatted: '<b>JBL VIBE300TWS</b>
+            Connected'
+                fg: #ffffffff
+                bg: #285577ff
+                frame: #aaaaaaff
+                highlight: #1745d1ff
+                fullscreen: show
+                format: <b>%s</b>\n%b
+                progress: -1
+                stack_tag: 
+                id: 3
+                actions: {}
+                script_count: 0
+            }
+            {
+                appname: 'blueman'
+                summary: 'JBL VIBE300TWS'
+                body: 'Connected 100%'
+                icon: 'audio-headset'
+                raw_icon set: false
+                icon_id: '(null)'
+                desktop_entry: ''
+                category: 
+                timeout: 10000
+                start: 2068225532
+                timestamp: 2068225508
+                urgency: NORMAL
+                transient: 0
+                formatted: '<b>JBL VIBE300TWS</b>
+            Connected 100%'
+                fg: #ffffffff
+                bg: #285577ff
+                frame: #aaaaaaff
+                highlight: #1745d1ff
+                fullscreen: show
+                format: <b>%s</b>\n%b
+                progress: -1
+                stack_tag: 
+                id: 3
+                actions: {}
+                script_count: 0
+            }
+            {
+                appname: 'blueman'
+                summary: 'JBL VIBE300TWS'
+                body: 'Connected 100%'
+                icon: 'audio-headset'
+                raw_icon set: false
+                icon_id: '(null)'
+                desktop_entry: ''
+                category: 
+                timeout: 10000
+                start: 2068261926
+                timestamp: 2068247714
+                urgency: NORMAL
+                transient: 0
+                formatted: '<b>JBL VIBE300TWS</b>
+            Connected 100%'
+                fg: #ffffffff
+                bg: #285577ff
+                frame: #aaaaaaff
+                highlight: #1745d1ff
+                fullscreen: show
+                format: <b>%s</b>\n%b
+                progress: -1
+                stack_tag: 
+                id: 3
+                actions: {}
+                script_count: 0
+            }
+
+            Edit the file again and set up / shorten timeouts
+
+            $ vim .config/dunst/dunstrc
+            [urgency_low]
+                # IMPORTANT: colors have to be defined in quotation marks.
+                # Otherwise the "#" and following would be interpreted as a comment.
+                background = "#222222"
+                foreground = "#888888"
+                timeout = 4 
+                # Icon for notifications with low urgency
+                default_icon = dialog-information
+
+            [urgency_normal]
+                background = "#285577"
+                foreground = "#ffffff"
+                timeout = 4 
+                override_pause_level = 30
+                # Icon for notifications with normal urgency
+                default_icon = dialog-information
+
+            [urgency_critical]
+                background = "#900000"
+                foreground = "#ffffff"
+                frame_color = "#ff0000"
+                timeout = 0 
+                override_pause_level = 60
+                # Icon for notifications with critical urgency
+                default_icon = dialog-warning
+
+            Restart the daemon to put the changes into effect
+
+            pkill dunst && dunst -print
+            pkill dunst && dunst &
         ```
 
 * android-tools - Android platform tools; for `adb` utility etc.; make sure to have "USB Debugging" activated on Android device otherwise it will be hidden from `adb devices` command
@@ -971,6 +1286,7 @@
             - background color 255, 255, 255 or even 255, 255, 254 in Chromium reverts back the default black color for transparent background images
         - uBlock Origin
             - [adfilter](https://raw.githubusercontent.com/DandelionSprout/adfilt/master/BrowseWebsitesWithoutLoggingIn.txt) - use for annoyances
+        - Tiny Suspender - unload unused tabs from RAM to use HW resources effectively; set delay interval to 5 mins
         - Tab Suspender
             - prevents from loading tabs - tabs are loaded only when they're active; tabs are unloaded from memory after a time period
             - https://superuser.com/questions/811965/how-to-make-chrome-not-load-tabs-until-they-are-selected/883096#883096
@@ -1193,7 +1509,8 @@
         - check `Restore previous session`
         - uncheck `Ctrl+Tab cycles through tabs in recently used order`
     - Extensions
-        - uBlock Origin - see `uBlock Origin` setup somewhere here
+        - uBlock Origin - see `uBlock Origin` setup somewhere in this file
+        - Auto Tab Discard - set tab unloading delay to 5 mins in `Discard inactive tabs after [] minutes (zero to disable) ...`
     - Enable hardware acceleration
         - There are multiple methods how to enable HW video acceleration in Firefox. I'm listing some of them, for reference.
         - In any case, install the extension `h264ify` or [`enhanced-h264ify` (I'm using this one)](https://addons.mozilla.org/sk/firefox/addon/enhanced-h264ify/) extension to enable only, prefferably, h264 codecs because they're usually hardware accelerated by most GPUs and their drivers.
