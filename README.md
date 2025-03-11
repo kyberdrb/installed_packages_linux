@@ -103,6 +103,93 @@
         - https://www.linuxquestions.org/questions/slackware-14/ntpd-kernel-reports-time_error-0x2041-clock-unsynchronized-4175636606/#post5892954
         - https://forums.freebsd.org/threads/ntpd-kernel-reports-time_error-0x2041-clock-unsynchronized.80575/
 
+* nvme-cli solidigm-sst-storage-tool-cli
+    - `nvme-cli` - general NVMe storage device management
+    - `solidigm-sst-storage-tool-cli` - AUR package - Solidigm storage device management
+    - check NVMe disks
+ 
+        ```
+        sudo nvme list
+        sudo sst -d /dev/nvme0n1
+        sudo sst -d /dev/nvme0n1 version
+        sudo nvme id-ctrl -H /dev/nvme0n1
+        nvme id-ctrl -H /dev/nvme0n1
+        ```
+
+    - Upgrade firmware
+
+         ... on single Solidigm SSD
+
+         ```
+         sudo sst show -ssd
+         sudo sst load -ssd <SERIAL_NUMBER_FROM_SST_SHOW>
+         or
+         sudo sst load -ssd <INDEX_FROM_SST_SHOW>
+
+         OR
+
+         sudo sst show -ssd | grep SerialNumber | rev | cut --delimiter=' ' --fields=1 | rev | tr -d '[[:space:]]'
+         ```
+
+         ... on multiple Solidigm SSDs
+
+         ```
+         sudo sst show -ssd | grep SerialNumber | rev | cut --delimiter=' ' --fields=1 | rev | tr -d '[[:space:]]' | xargs --open-tty -I "%" sudo sst load -ssd "%"
+         ```
+
+    - Optimizations
+
+        ```
+        cat /sys/block/nvme0n1/queue/{scheduler,nr_requests,read_ahead_kb}
+
+        echo 'none' | sudo tee /sys/block/nvme0n1/queue/scheduler
+        echo 1023 | sudo tee /sys/block/nvme0n1/queue/nr_requests
+        echo 128 | sudo tee /sys/block/nvme0n1/queue/read_ahead_kb
+
+        cat /sys/block/nvme0n1/queue/{scheduler,nr_requests,read_ahead_kb}
+
+        sudo vim /etc/udev/rules.d/99-nvme-optimization.rules
+
+        cat /etc/udev/rules.d/99-nvme-optimization.rules
+        ACTION=="add|change", KERNEL=="nvme[0-9]n[0-9]*", SUBSYSTEM=="block", ATTR{queue/scheduler}="none"
+        
+        cat /sys/block/nvme0n1/queue/{scheduler,nr_requests,read_ahead_kb}
+        sudo udevadm control --reload-rules && sudo udevadm trigger --verbose --subsystem-match=block --action=add
+        ```
+
+* fwupd - Simple daemon to allow session software to update firmware
+    - Update firmware on all available devices
+
+        ```
+        ./remount_boot_part_as_writable.sh # Remount boot partition as writable - the firmwares are downloaded to the '/boot' directory at '/boot/EFI/systemd/fw'; check 'lsblk', 'df' and '/etc/fstab' for more information about boot partition and its labeling
+        sudo fwupdtool refresh # Download the database of latest firmwares
+        sudo fwupdtool get-upgrades # Perform the upgrade for all specific devices
+        sudo fwupdtool update -vv 2>&1
+        ```
+
+        Reboot as necessary after installation of firmware upgrades.
+
+        Upgrading BIOS might break USB boot device detection: restore BIOS to factory defaults to make bootable UEFI USB drives detecable by the BIOS again. Also make sure that HDD mode is set to 'AHCI'. If detection still fails, select 'Thorough' in POST-startup settings.
+
+
+        The problem with
+
+        ```
+        507  Loading…                 [************************************** ]
+        22:24:07.861 FuEngine             failed to update history database: failed to do post-reboot cleanup: Error removing file /boot/EFI/systemd/fw/fwupd-3b8c8162-188c-46a4-aec9-be43f1d65697.cap: Read-only file system`
+        ```
+
+        can be resolved by remounting boot part as rw and running 'sudo fwupdtool refresh' again which cleans up the 'fw' dir '/boot/EFI/systemd/fw' after firmware installation reboot - check with 'ls -l' . The download dir at the boot partition is not being deleted after firmware installation bootup, because the boot partition is being mounted as read-only 'ro' in `/etc/fstab` for security reasons
+
+      Also, use `fwupdtool` instead of `fwupdmgr` to prevent errors during actual upgrading
+
+      ```
+      sudo fwupdmgr refresh
+      sudo fwupdmgr get-updates
+      ./remount_boot_part_as_writable.sh 
+      sudo fwupdmgr update
+      ```
+
 * adobe-source-han-sans-otc-fonts adobe-source-han-serif-otc-fonts - displaying Asian characters
     - https://duckduckgo.com/?q=asian+font+arch+linux+chrome+firefox&ia=web
     - https://bbs.archlinux.org/viewtopic.php?id=110153
