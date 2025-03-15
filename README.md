@@ -1800,6 +1800,9 @@
             - https://bbs.archlinux.org/viewtopic.php?pid=1418697#p1418697
         - Hide/Show menu bar: Ctrl + M
             - https://forums.opensuse.org/showthread.php/403839-Menu-bar-and-Tool-bar-lost-in-Okular-KDE4
+* xournalpp
+    - PDF editor - can add signature as an PNG image with transparent background without distorting the text like LibreOffice Draw
+    - for image editing after it had been inserted and other edits on other places had been made, use the `Select Object` from the dropdown menu next to the `Select Rectangle` toolbar button
 
 * imagemagick imagemagick-doc - An image viewing/manipulation program; with docs referenced from man pages
     - Crop an image
