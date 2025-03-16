@@ -1802,7 +1802,9 @@
             - https://forums.opensuse.org/showthread.php/403839-Menu-bar-and-Tool-bar-lost-in-Okular-KDE4
 * xournalpp
     - PDF editor - can add signature as an PNG image with transparent background without distorting the text like LibreOffice Draw
-    - for image editing after it had been inserted and other edits on other places had been made, use the `Select Object` from the dropdown menu next to the `Select Rectangle` toolbar button
+        - https://duckduckgo.com/?q=add+png+signature+to+pdf+stackoverflow+linux&ia=web
+        - https://unix.stackexchange.com/questions/85873/how-can-i-add-a-signature-png-to-a-pdf-in-linux#225245
+    - for image editing after it had been inserted and other edits on other places had been made, use the `Select Object` from the dropdown menu next to the `Select Rectangle` toolbar button 
         - https://duckduckgo.com/?q=xournal%2B%2B+delete+image+from+pdf&ia=web
         - https://xournalpp.github.io/guide/tools/selecsnap/
 
