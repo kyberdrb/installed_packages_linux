@@ -1803,6 +1803,8 @@
 * xournalpp
     - PDF editor - can add signature as an PNG image with transparent background without distorting the text like LibreOffice Draw
     - for image editing after it had been inserted and other edits on other places had been made, use the `Select Object` from the dropdown menu next to the `Select Rectangle` toolbar button
+        - https://duckduckgo.com/?q=xournal%2B%2B+delete+image+from+pdf&ia=web
+        - https://xournalpp.github.io/guide/tools/selecsnap/
 
 * imagemagick imagemagick-doc - An image viewing/manipulation program; with docs referenced from man pages
     - Crop an image
