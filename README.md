@@ -1971,6 +1971,12 @@
 
             # Request an image scan from a currently connected/default scanner
             scanimage --format=png --output-file "${HOME}/Downloads/output_image.png" --progress --resolution 600
+ 
+            # color scan
+            scanimage --format=png --progress --resolution 600 --mode Color --output-file "${HOME}/Downloads/scan.png"
+
+            # efficient output file size & quality balanced grayscale scan
+            scanimage --format=png --progress --resolution 600 --mode Halftone --output-file "${HOME}/Downloads/scan.png"
 
             # Request an image scan from a particular scanner
             scanimage --device "xerox_mfp:libusb:001:032" --format=png --output-file "${HOME}/Downloads/output_image.png" --progress --resolution 600
@@ -1986,6 +1992,7 @@
         - https://wiki.archlinux.org/title/SANE#Verification
         - https://archlinux.org/packages/?name=ipp-usb
         - https://archlinux.org/packages/?name=sane-airscan
+        - https://www.perplexity.ai/search/i-m-doing-a-scan-600dpi-is-max-.UFgt1KGTVSmUqh_pUOq_A#0
   - Image post-processing
     - Rotating image clockwise 90 degrees
 
